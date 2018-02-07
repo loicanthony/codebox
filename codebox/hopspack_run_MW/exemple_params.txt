@@ -1,0 +1,89 @@
+# $Id: example1_params.txt 166 2010-03-22 19:58:07Z tplante $
+# $URL: svn+ssh://software.sandia.gov/svn/private/hopspack/trunk/examples/1-var-bnds-only/example1_params.txt $
+#
+# ************************************************************************
+#         HOPSPACK: Hybrid Optimization Parallel Search Package
+#                Copyright 2009-2010 Sandia Corporation
+#
+#   Under the terms of Contract DE-AC04-94AL85000 with Sandia Corporation,
+#   the U.S. Government retains certain rights in this software.
+# ************************************************************************
+
+# HOPSPACK parameters for example 1.
+# See var_bnds_only.c for the definition of the objective function.
+
+
+#-- SUBLIST TO DEFINE THE NUMBER OF UNKNOWNS, VARIABLE BOUNDS, ETC.
+
+@ "Problem Definition"
+"Display" int 0
+"Initial X" vector 3 1 1 1
+"Nonlinear Active Tolerance" double 1.0e-7
+"Number Nonlinear Eqs" int 0
+"Number Nonlinear Ineqs" int 0
+"Number Objectives" int 1
+"Number Unknowns" int 3
+"Ojective Type" string "Minimize"
+"Scaling" vector 3  0.1 0.1 0.1
+@@
+
+
+#-- SUBLIST TO DEFINE HOW THE OBJECTIVE FUNCTION IS EVALUATED.
+
+@ "Evaluator"
+"Debug Eval Worker" bool false
+"Evaluator Type"  string "System Call"
+"Executable Name" string "python bb.py"
+"File Precision" int 14
+"Input Prefix"    string "input"
+"Output Prefix"   string "output"
+"Debug Eval Worker" bool false
+"Save IO Files" bool false
+@@
+
+
+#-- SUBLIST OF MEDIATOR CONTROL PARAMETERS.
+
+@ "Mediator"
+"Cache Comparison Tolerance" double 1e-15
+"Cache Enabled" bool true
+"Cache Output File" string "cache"
+"Cache Output Precision" int 14 
+"Citizen Count" int 1
+"Display" int 0
+"Maximum Evaluations" int 3000
+"Maximum Echange Return" int 1000
+"Minimum Exchange Return" int 1
+"Number Processors" int 1
+"Number Threads" int 1
+"Precision" int 3
+"Reserved Citizen Workers" int 0
+"Solution File" string "solution"
+"Solution File Precision" int 14
+"Synchronous Evaluations" bool false
+@@
+
+
+#-- SUBLISTS TO DEFINE EACH CITIZEN (ONLY ONE IN THIS EXAMPLE).
+
+@ "Citizen 1"                             # Citizen name
+"Add Projected Compass" bool false
+"Add Projected Normals" bool true
+"Citizen Priorit" int 1
+"Contraction Factor" double 0.5
+"Display" int 0
+"Epsilon Max" double 0.02
+"Ignore Other Points" bool false
+"Initial Step" double 1.0
+"Maximum Evaluations" int 3000
+"Maximum Queue Size" int 0
+"Minimum Step" double 0.02
+"Penalty Parameter" double 1.0
+"Penalty Smoothing Value" double 0.0
+"Snap Distance" double 0.005
+"Snap To Boundary" bool false
+"Step Tolerance" double 0.01
+"Sufficient Improvement Factor" double 0.01
+"Type" string "GSS"
+"Use Random Order" bool true
+@@

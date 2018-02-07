@@ -1,0 +1,11 @@
+DIMENSION      6
+BB_EXE         ../../bb.exe
+BB_OUTPUT_TYPE obj pb pb pb pb
+LOWER_BOUND    *     0
+UPPER_BOUND    *   2000
+x0 ptdept
+DISPLAY_DEGREE 0
+MAX_BB_EVAL           6000
+SEED 1
+HISTORY_FILE name
+
