@@ -1,0 +1,36 @@
+    vecto = [];
+    in (1:pold) = false;
+for k1 = 1 : pold
+    for k2 = k1+1 : pold
+        if sum((test(:,k1)-test(:,k2))~=0) == 1
+            vecto = [vecto;k1 k2];
+            in(k1)=true;
+            in(k2)=true;
+            break
+        end
+    end
+    if in(k1) == false
+        vecto = [vecto;k1 0];
+    end
+end
+
+    case 'l'
+        % Avec ordonnancement lexicographique
+        [xp1, order] = iol(xp1);
+        dx1=dx1(:,order);
+    case 's'
+        % Avec ordonnancement par strat�gie du dernier succ�s
+        [xp1, order] = ios(xp1,x,complete_history);
+        dx1=dx1(:,order);
+    case 'm'
+        % Avec ordonnancement omniscient
+        [xp1, order] = iom(xp1,x,complete_history);
+        dx1=dx1(:,order);
+    case 'o'
+        % Avec ordonnancement negatif omniscient
+        [xp1, order] = ioo(xp1,'f_easy');
+        dx1=dx1(:,order);
+    case 'n'
+        % Avec ordonnancement avec mod�le
+        [xp1, order] = ion(xp1,'f_easy');
+        dx1=dx1(:,order);

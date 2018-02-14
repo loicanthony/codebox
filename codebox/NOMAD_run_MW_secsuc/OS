@@ -1,0 +1,3 @@
+####Ordering strategy#### 
+MODEL_EVAL_SORT no 
+OPPORTUNISTIC_EVAL yes

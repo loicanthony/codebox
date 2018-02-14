@@ -7,7 +7,7 @@ def execute(s):
     call(['$NOMAD_HOME/bin/nomad ' + s], shell=True)
     return
 
-seeds = [str(x) for x in range(2,11)]
+seeds = [str(x) for x in range(1,11)]
 prob_name = 'STYRENE'
 pts_depart = ['x0','x1']
 #pts_depart = ['x2','x3']
