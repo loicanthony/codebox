@@ -9,8 +9,6 @@ def execute(s):
 seeds = [str(x+1) for x in xrange(10)]
 instances = [str(x+1) for x in xrange(53)]
 types = ['SMOOTH','NONDIFF','NOISY3']
-#algos = {'c':'CS'} #on roule juste CS avec le mesh de 0
-#algos = {'c':'CS','g':'GPS','m':'MADS'}
 algos = {'c':'CS','g':'GPS','m':'MADS','t':'TRUE'}
 #strategies = ['or'] #reroule uniquement avec surrogate random
 strategies = ['ol','os','om','or','oo','0n']
