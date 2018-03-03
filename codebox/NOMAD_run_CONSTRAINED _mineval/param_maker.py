@@ -3,7 +3,7 @@ import pickle
 import copy
 import shlex
 from subprocess import call
-import shutil
+from math import ceil
 
 
 os.system("python save_settings.py")
@@ -162,8 +162,8 @@ if generate_paramfiles:
                             ligne[1] = seed
                         if ligne and ligne[0] == 'x0':
                             ligne[1] = '../x0' + ext
-						if ligne and ligne[0] == 'DIMENSION':  # Ici quand jai la dimension je mets le mineval
-							param.append(['OPPORTUNISTIC_MIN_EVAL',str(int(ceil(float(ligne[1]))))]
+                        if ligne and ligne[0] == 'DIMENSION':  # Ici quand jai la dimension je mets le mineval
+                            param.append(['OPPORTUNISTIC_MIN_EVAL',str(int(ceil(float(ligne[1])/2)))])
 							
                     param.append(param_settings[algo_types[algo]])
                     param.append(param_settings[strat.upper()])
