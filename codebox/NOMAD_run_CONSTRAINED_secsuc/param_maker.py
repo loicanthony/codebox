@@ -5,7 +5,6 @@ import shlex
 from subprocess import call
 import shutil
 
-
 os.system("python save_settings.py")
 pickle_file = open('param_file.pkl', 'rb')
 param_settings = pickle.load(pickle_file)
@@ -13,12 +12,12 @@ pickle_file.close()
 
 ## Pour adapter le script rapidement pour une autre blackbox
 # Nom du probleme
-prob_names = ['CHENWANG_F2','CHENWANG_F3','CRESCENT','DISK','G2_10',
-              'G2_20','HS19','HS83','HS114','MAD6','MEZMONTES','OPTENG_RBF',
-              'PENTAGON','PIGACHE','SNAKE','SPRING','TAOWANG_F2','ZHAOWANG_F5']
+prob_names = ['CHENWANG_F2', 'CHENWANG_F3', 'CRESCENT', 'DISK', 'G2_10',
+              'G2_20', 'HS19', 'HS83', 'HS114', 'MAD6', 'MEZMONTES', 'OPTENG_RBF',
+              'PENTAGON', 'PIGACHE', 'SNAKE', 'SPRING', 'TAOWANG_F2', 'ZHAOWANG_F5']
 # Les instances sont comme les points de depart
 pts_depart = ['x0']
-#pts_depart = ['x2','x3']
+# pts_depart = ['x2','x3']
 # Les options du script
 save_settings = True
 make_bb = True
@@ -89,21 +88,21 @@ if make_bb:
         # Compile la boite noire
         call(['g++ -o bb.exe bb.cpp'], shell=True, cwd=problem)
 
-        # Mets la dans le root du script
-        # if os.path.exists('bb.exe'):
-        #     os.remove('bb.exe')
-        # shutil.move('bb/bb.exe','.')
+    # Mets la dans le root du script
+    # if os.path.exists('bb.exe'):
+    #     os.remove('bb.exe')
+    # shutil.move('bb/bb.exe','.')
 
-        #Claire les object file de la compilation
-        # file_list = os.listdir('bb')
-        # for item in file_list:
-        #     if item.endswith(".o"):
-        #         os.remove(os.path.join('bb', item))
+    # Claire les object file de la compilation
+    # file_list = os.listdir('bb')
+    # for item in file_list:
+    #     if item.endswith(".o"):
+    #         os.remove(os.path.join('bb', item))
 
 if make_nesgt:
 
     for problem in prob_names:
-    # Compile le surrogate negatif de la boite noire pour ordonnancement negatif
+        # Compile le surrogate negatif de la boite noire pour ordonnancement negatif
         call(['g++ -o nesgt.exe nesgt.cpp'], shell=True, cwd=problem)
 
     # Mets la dans le root du script
@@ -111,34 +110,34 @@ if make_nesgt:
     #     os.remove('nesgt.exe')
     # shutil.move('nesgt/nesgt.exe','.')
 
-    #Claire les object file de la compilation
+    # Claire les object file de la compilation
     # file_list = os.listdir('nesgt')
     # for item in file_list:
     #     if item.endswith(".o"):
     #         os.remove(os.path.join('nesgt', item))
 
-#if make_directories:  PAS BESOIN ICI CAR ON A DEJA LES DIRECTORIES
+    # if make_directories:  PAS BESOIN ICI CAR ON A DEJA LES DIRECTORIES
 
-        # Les instances sont comme les points de depart
-        # Creer un folder par instance comme pour MW
-        # for problem in prob_names:
-        #     for pt in pts_depart:
-        #         dir_name = prob_name + '_' + pt
-        #         if not os.path.exists(dir_name):
-        #             os.makedirs(dir_name)
-        #
-        #         #On y met la black box et le nesgt
-        #         shutil.copy('bb.exe',dir_name+'/bb.exe')
-        #         shutil.copy('nesgt.exe',dir_name+'/nesgt.exe')
+    # Les instances sont comme les points de depart
+    # Creer un folder par instance comme pour MW
+    # for problem in prob_names:
+    #     for pt in pts_depart:
+    #         dir_name = prob_name + '_' + pt
+    #         if not os.path.exists(dir_name):
+    #             os.makedirs(dir_name)
+    #
+    #         #On y met la black box et le nesgt
+    #         shutil.copy('bb.exe',dir_name+'/bb.exe')
+    #         shutil.copy('nesgt.exe',dir_name+'/nesgt.exe')
 
 if generate_paramfiles:
 
     for problem in prob_names:
-        seeds = ['1','2','3','4','5','6','7','8','9','10']
-        algo_types = {'c': 'CS', 'g': 'GPS', 'm': 'MADS','t':'TRUE'}
-        ordering_strategies = ['n','ol','os','om','or','oo','0n']
+        seeds = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+        algo_types = {'c': 'CS', 'g': 'GPS', 'm': 'MADS', 't': 'TRUE'}
+        ordering_strategies = ['n', 'ol', 'os', 'om', 'or', 'oo', '0n']
 
-        with open(problem+"/param.txt", 'r') as file:
+        with open(problem + "/param.txt", 'r') as file:
             # Ouvrir le param.txt
             param_base = file.readlines()
             file.close()
@@ -148,38 +147,39 @@ if generate_paramfiles:
             ligne = list(map(str, (x.split())))  # creer la ligne de float
             table.append(ligne)  # ajoute a la table
         param_base = table
-        ext='.txt'
+        ext = '.txt'
 
         for seed in seeds:
             for algo in algo_types:
                 for strat in ordering_strategies:
-                    param=copy.deepcopy(param_base)
+                    param = copy.deepcopy(param_base)
                     for ligne in param:
                         if ligne and ligne[0] == 'HISTORY_FILE':
                             typeOfFile = 'history'
-                            ligne[1] = problem +'_'+typeOfFile + '_'+seed+'_'+algo+strat + ext
+                            ligne[1] = problem + '_' + typeOfFile + '_' + seed + '_' + algo + strat + ext
                         if ligne and ligne[0] == 'SEED':
                             ligne[1] = seed
                         if ligne and ligne[0] == 'x0':
                             ligne[1] = '../x0' + ext
 
-					param.append(['OPPORTUNISTIC_MIN_EVAL','1'])
+                    param.append(['OPPORTUNISTIC_MIN_NB_SUCCESS', '2'])
                     param.append(param_settings[algo_types[algo]])
                     param.append(param_settings[strat.upper()])
-                    param.append(('HISTORY_FILE ' + problem +'_history_'+seed+'_'+algo+strat + ext + '\n').split(' '))
+                    param.append(
+                        ('HISTORY_FILE ' + problem + '_history_' + seed + '_' + algo + strat + ext + '\n').split(' '))
 
                     dir_name = problem
-                    #lors quon a fini les modif de param
-                    newFileName = dir_name + "/" + algo+strat+'/'+seed+"_"+"param.txt"
+                    # lors quon a fini les modif de param
+                    newFileName = dir_name + "/" + algo + strat + '/' + seed + "_" + "param.txt"
 
                     if not os.path.exists(dir_name + "/" + algo + strat):
                         os.mkdir(dir_name + "/" + algo + strat)
 
-                    #if os.path.exists(dir_name + "/" + algo + strat):
-                        #shutil.rmtree(dir_name + "/" + algo + strat)
-                        
-                    if os.path.exists(dir_name + "/" + algo + strat + '/'+"param.txt"):
-                        os.remove(dir_name + "/" + algo + strat + '/'+"param.txt")
+                    # if os.path.exists(dir_name + "/" + algo + strat):
+                    # shutil.rmtree(dir_name + "/" + algo + strat)
+
+                    if os.path.exists(dir_name + "/" + algo + strat + '/' + "param.txt"):
+                        os.remove(dir_name + "/" + algo + strat + '/' + "param.txt")
 
                     thefile = open(newFileName, 'w')
                     for item in param:
