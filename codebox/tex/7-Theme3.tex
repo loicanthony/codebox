@@ -1,806 +1,845 @@
 \Chapter{RESULTATS NUMÉRIQUES}\label{sec:Theme3}
-\section{Outils de comparaison et problèmes}
-Les premieres recherches visant à comparer les performances de solveurs sur un problème unique ou une série de problème utilisaient des métriques facilement quantifiables telles que le nombre d'appels à la fonction~\cite{BoCoGoTo1995} ainsi que le temps de résolution en secondes~\cite{Mi99}. Cependant, ces indicateurs sont moins appropriés lorsqu'on est en situation de résolution d'un grand nombre de problèmes puisqu'ils sont spécifiques à un problème, ce qui rends le banc d'essai très volumineux. Ainsi, certains outils ont été dévloppés pour analyser une série de problème test avec des dimensions et des spécificités différentes.
-	\subsection{Graphe et test de convergence}
-	Pour comparer la performance d'un ensemble d'algorithme sur un seul problème, on aura recours au graphe de convergence. Le graphe de convergence trace la courbe de la meilleure valeur de la fonction objectif obtenue en fonction du nombre d'appel à la fonction donné.\\
-	En DFO, rien n'assure que le solveur arrivera à l'optimum global, ou encore qu'un optimum soit atteint dans le budget alloué. De plus, en situation de résolution de boîte noire, il est impossible de connaître l'optimum théorique du problème, et ce si celui-ci existe. On aimerait tout de même quantifier la performance d'un solveur.  Il est donc entendu dans la littérature de faire appel à un test de convergence qui mesure la capacité à l'algorithme à s'approcher de la meilleure solution obtenue par l'ensemble des algorithmes à l'étude, tel que le suivant issu de~\cite{MaNo02a} : 
-	\begin{equation*}
-	f(x_0) - f(x) \geq (1-\tau)(f(x_0)-f_L)\\
-	\end{equation*} 
-	Avec $x_0$ le point initial, $x$ le point courant, $f$ la fonction à optimizer, $\tau\geq0$ un seuil de tolérance et $f_L$ la meilleure solution courante trouvée par un solveur sur ce problème. Le choix de $f_L$ peut-être soit la meilleure solution connue, ou encore trouvée par les solveurs à l'étude. Le test de convergence peut être utilisé à plusieurs sauces, soient à savoir si un solveur atteint au moins une solution proche de la meilleure en utilisant un $\tau$ grossier, par exemple $\tau = 0.1$, ou encore à savoir si le solveur est capable d'obtenir $f_L$ en utilisant $\tau =0$. Il est possible d'observer la satisfaction du test de convergence sur un graphe de convergence en regardant quand la courbe d'un certain solveur atteint une zone de $\tau(f(x_0)-f_L)$ précédent l'ordonné représentant $f_L$. Il est possible que le test ne soit jamais réussi si on observe la résolution avec un budget d'évaluation fixe, ce qui sera nécessaire pour des boîtes noires bruitées, pour lesquelles la convergence admise par l'algorithme ne dépends pas d'une autre résolution du problème.
-	\subsection{Profil de performance}
-	Un outil établi par la suite pour la comparaison de solveurs, pas nécessairement des solveurs d'optimization sans-dérivées, est le profil de performance~\cite{DoMo02}. La performance est donnée par une mesure $t_{p,s}$, qui peut être par exemple le nombre d'évaluations nécessaire pour l'obtention du minimal global, pour une paire de $p$ un problème, et $s$ un solveur. Pour la DFO, on choisira le nombre d'itérations nécessaire à la satisfaction du test de convergence énoncé précédemment. Afin de comparer les solveurs sur chaque problème, on défini le ratio de comparaison suivant
-	\begin{equation*}
-	r_{p,s}=\frac{t_{p,s}}{\min\{t_{p,s} : s\  \epsilon \  S\}}\\
-	\end{equation*}
-	On peut alors définir le profil de performance d'un solveur sur un ensemble de problème $P$ ainsi
-	\begin{equation*}
-	\rho_s(\alpha)=\frac{1}{|P|}\text{size}\{p\ \epsilon \ P : r_{p,s} \leq \alpha \}\\
-	\end{equation*}
-	Pour un $\alpha$, soit un indice de performance tel que le ratio de comparaison $r_{p,s}$, on peut savoir la proportion de problème que chaque solveur a su résoudre en se rapprochant à un facteur de $(1-\tau)$ de la meilleure solution trouvée par l'ensemble des solveurs pour chaque problème.Le test de convergence varie selon la nature des problèmes à résoudre. On peut utiliser un profil de performance pour des outils d'optimisation avec dérivés avec un $t_{p,s}$ qui agit sur les informations de premier ordre de la fonction, tel que le nombre d'évaluations pour atteindre $x$ tel que $f'(x)=0$. Ainsi, $\rho_s(\tau)$ revient à être la probabilité que le ratio de performance $r_{p,s}$ du solveur $s$ soit à un facteur $\tau$ du meilleur ratio possible. Une lacune des profils de performance est que le ratio utilisé n'est pas en mesure de prendre en compte la dimension du problème.\\
-	Il est important de noter que les profils  de performance ont une faille tel qu'élaboré dans~\cite{GoSc2016}. Les auteurs concluent au terme d'une étude que l'utilisation de $f_L$ dans le test de convergence implique que la simple observation des courbes sur un graphe n'est pas suffisante pour classes les algorithmes. Puisque la comparaison se fait avec le nombre d'itération minimal observé, il se peut que, lorsqu'on compare enrte-eux deux solveurs qui n'ont pas performés en tant que meilleur, l'ordre apparent ne soit pas celui qu'on observerait si on éliminait du graphe les données du meilleur. On se doit alors d'utiliser un autre outil pour mesurer les performances des solveurs sur un ensemble de données.
-	\subsection{Profil de données}
-	Moré et Wild proposent~\cite{MoWi2009} une définition d'un profil de donnée, 
-	\begin{equation*}
-	d_s(\alpha)=\frac{1}{|P|}\text{size}\{p\ \epsilon \ P : \frac{t_{p,s}}{n_p+1} \leq \alpha \}\\
-	\end{equation*}
-	avec $t_p$ le nombre d'évaluations pour atteindre la convergence nécessité par le solveur $s$ sur le problème $p$. Le facteur $n_p+1$ est le nombre d'évaluations nécessaire pour le calcul de l'estimation finie d'un gradient pour un problème de taille $n_p$. Il est alors possible de mesurer la performance relative des solveurs comme une fonction du budget d'évaluations, sans la comparaison que le ratio de performance imposait. Ainsi, pour un $\alpha$, soit une quantité de $n+1$ évaluations de la fonction objectif, on peut savoir la proportion de problèmes que chaque solveur a su résoudre en se rapprochant à un facteur de $(1-\tau)$ de la meilleure solution trouvée par l'ensemble des solveurs pour chaque problème. L'avantage des profils de données sur les profils de performance est qu'on peut dorénavant quantifier la performance du meilleur algorithme puisque celui-ci n'est plus comparé à lui-même.\\
-	\subsection{En optimisation sous-contraintes}
-\section{Problèmes}
-	\subsection{Ensemble de problèmes Moré-Wild}
-	L'échantillon de problèmes caractéristiques $\Pset$ utilisé est celui issu de~\cite{MoWi2009}. Cet ensemble de problèmes a été réutilisé dans la communautée~\cite{CoLed2011,VaVi07}, ce qui justifie son utilisation comme base de problème analytique pour la comparaison d'algorithme ou de stratégies algorithmiques.\\
-	L'ensemble de problème est déclinée de 22 fonctions non linéaires de moindres carrés, lesquelles sont tirées de la collection $\mathrm{CUTEr}$~\cite{GoOrTo03}. Ces 22 fonctions sont remaniées pour donner un ensemble de 53 problèmes. L'indice $k_p$ pour un problème $p \in \mathcal{P}$ fait référence à la fonction de base issue de $\mathrm{CUTEr}$ utilisée pour ce problème.\\
-	Chaque problème possède trois autres paramètres en plus de l'indice $k_p$, soient $n_p$ pour la dimension du problème, $m_p$ de nombre de composantes du problème et le paramètre binaire $x_p$, pour lequel, si activé, le point de départ $x_s$ subit une homotéthie de facteur 10. L'ensemble $\Pset$ contient 53 problèmes avec un vecteur $ (k_p,n_p,m_p,s_p) $ unique. Aucune fonction sous-jacente n'est surreprésentée puisque au plus six problèmes possèdent le même $k_p$. Les bornes sur les paramètres vont telles que 
-	\begin{equation*}
-	1 \leq x_p \leq 22,\ \ 2 \leq n_p \leq 12,\ \ 2\leq m_p\leq 65,\ \ s_p \in \{0,1\},\ \ p=1,\dots,53
-	\end{equation*}
-	avec $n_p \leq m_p$.\\
-	La structure par morceaux des problèmes de $\Pset$ permet de dériver l'ensemble en d'autres classes de problèmes. On entend ainsi permettre la comparaison d'algorithmes ou de stratégies algorithmiques sur différentes classes de problèmes. Les classes utilisées dans~\cite{MoWi2009} qui sont réutilisées ici sont : les problèmes lisses, les problèmes lisses définis par partie et les problèmes bruités. Les problèmes lisses sont formés tels que : 
-	\begin{gather*}
-	f(x)=\sum_{i=1}^{m}{\left(f_i(x)\right)}^2.
-	\end{gather*}
-	\textbf{Les problèmes non-différentiables} sont obtenus à l'aide d'une transformation apportée à l'expression des problèmes lisses telle que : 
-	\begin{gather*}
-	f(x)=\sum_{i=1}^{m}{|f_i(x)|}.
-	\end{gather*}
-	Ainsi, l'expression du gradient $\nabla f_i(x)$ est inexistante lorsque $f_i(x)=0$. Afin d'assurer que chaque déclinaison de problème possède un minimum global, pour l'ensemble $k_p = [8,9,13,16,17,18]$, la fonction est redéfinie dans l'orthan positif tel que
-	\begin{gather*}
-	f(x)=\sum_{i=1}^{m}{|f_i(x_+)|}.
-	\end{gather*}
-	\textbf{Les problèmes bruités} sont obtenus à l'aide d'une transformation apportée à l'expression des problèmes lisses, soit multipliant un terme induisant un bruit à la fonction , tel que : 
-	\begin{gather*}
-	f(x)=(1+\epsilon_{f}\theta(x))\sum_{k=1}^{m}{f_{i}(x)^{2}}.
-	\end{gather*}
-	Le terme $\theta(x)$ est issu d'une composition d'une fonction trigonométrique $\theta_0(x)$ avec un polynôme de Chebyshev de degré 3 tel que $T_{3}(\alpha) = \alpha(4\alpha^{2}-3)$
-	\begin{gather*}
-	\theta_0(x)=0.9\sin(100||x||_{1})\cos(100||x||_\infty)+0.1\cos(||x||_2) \\
-	\theta(x) = T_3(\theta_0(x)) = T_{3}(0.9\sin(100||x||_{1})\cos(100||x||_\infty)+0.1\cos(||x||_2))
-	\end{gather*} 
-	Cette composition élimine la périodicité de $\theta_{0}$. La formulation est aussi composée du terme $\epsilon_f$, le niveau du bruit relatif, qui est fixé à $\epsilon_f = 10^{-3}$.  \\
-	\subsection{Problèmes analytiques contraints}
-	tableau des problèmes avec sources
-	\subsection{STYRENE}
-	description + pre analyse des stratégies
-	\subsection{LOCKWOOD}
-	description + pre analyse des stratégies
-\section{Méthodologie}
-	\subsection{Méthodologie commune}
-	Les valeurs de $\tau = 0.1$,$\tau =  0.01$ et $ \tau = 0.001$ sont utilisées pour les différents profils lors des résolutions des problèmes de Moré-Wild. nomad bla bla pour CS GPS MADS\clearpage
-	\subsection{CS}
-	CS a été obtenu a l'aide d'un tel paramètrage de NOMAD...
-	\subsection{GPS}
-	GPS a été obtenu a l'aide d'un tel paramètrage de NOMAD...
-	\subsection{MADS}
-	Dans le but d'oberserver en premier lieu les impacts des différentes stratégies sur le coeur de MADS on désactive les options suivantes, de façon à isoler la sonde
-	\subsection{MADS par défaut de NOMAD}
-	Réactivons les paramètres par défaut de nomad pour voir l'impact de l'ordonnancement sur le logiciel sans égard à l'isolement de la sonde.
-	\subsection{GSS}
-	tel tel paramètre avec GSS, opportunisme déja implanté dans hopspack + paramètre (determination du scaling volée dans dynamic scaling)
-	\subsection{Implicit Filtering}
-	toutes les gogosses que j'ai fait pour que son code roule
-	\clearpage
-\section{Comparaison des stratégies}
-	\subsection{CS}
-	\begin{figure}[!htb] % CS-SMOOTH
+\section{Outils de comparaison}\label{sec:out}
+Les premières recherches visant à comparer les performances de solveurs sur un problème unique ou une série de problème utilisaient des métriques facilement quantifiables telles que le nombre d'appels à la fonction~\cite{BoCoGoTo1995} ainsi que le temps de résolution en secondes~\cite{Mi99}. Cependant, ces indicateurs sont moins appropriés en situation de résolution d'un grand nombre de problèmes. Puisque ces métriques sont spécifiques à un problème, le banc d'essai qui incorpore chacune d'entre-elles prends des proportions énormes. Dans cet ordre d'esprit, certains outils ont été développés pour analyser une série de problèmes test, avec des dimensions et des spécificités différentes, sans qu'il en devienne laborieux d'en tirer des conclusions.
+\subsection{Test et graphe de convergence}\label{sec:con}
+Pour comparer la performance d'un ensemble d'algorithmes sur un seul problème, on aura recours au graphe de convergence. On y trace la courbe de la meilleure valeur de la fonction objectif obtenue en fonction du nombre d'appel à la fonction objectifs.
+
+En optimisation sans-dérivées, contrairement à  en optimisation classique, rien n'assure qu'un solveur arrivera à l'optimum global, ou encore qu'un optimum soit atteint dans le budget alloué. De plus, en situation de résolution de boîte noire, il est impossible de connaître l'optimum théorique du problème, et ce si celui-ci existe. On aimerait tout de même quantifier la performance d'un solveur.  À cette fin, il est entendu dans la littérature de faire appel à un test de convergence qui mesure la capacité à l'algorithme à s'approcher de la meilleure solution obtenue par l'ensemble des algorithmes à l'étude, soit 
+\begin{equation*}
+f(x^0) - f(x) \geq (1-\tau)(f(x^0)-f^*)
+\end{equation*}
+issu de~\cite{MaNo02a} avec $x^0$ le point initial, $x$ le point courant, $f$ la fonction objectif, $\tau\geq0$ un seuil de tolérance et $f^*$ la meilleure solution courante trouvée par un des solveurs comparés sur ce problème. Le test de convergence peut être utilisé pour savoir si un solveur atteint au moins une solution proche de la meilleure en utilisant un $\tau$ grossier, par exemple $\tau = 0.1$, ou encore pour savoir si le solveur est capable d'obtenir $f^*$ en utilisant $\tau =0$. Il est possible que le test ne soit jamais réussi si on observe la résolution avec un budget d'évaluation fixe, ce qui sera nécessaire pour des boîtes noires bruitées, pour lesquelles la convergence de l'algorithme n'est pas assurée.
+
+En situation de barrière progressive, le test de convergence doit être adapté pour tenir compte de l'impertinence de $f(x)$ pour $x\notin \Omega$. Afin de comparer seulement des points réalisables, on utilisera le test
+\begin{equation*}
+\bar{f}_{\textsf{fea}} - f(x_e) \geq(1-\tau)(\bar{f}_{\textsf{fea}}-f^*).
+\end{equation*}
+issu de~\cite{AuTr17}. $\bar{f}_{\textsf{fea}}$ y représente la valeur moyenne des premiers points réalisables obtenus dans les résolutions des différentes instances du même problème et $f(x_e)$ le meilleure valeur de la fonction objectif obtenue à un point réalisable.
+\subsection{Profil de performance}\label{sec:pdp}
+Un outil établi pour la comparaison de solveurs d'optimisation classique est le profil de performance~\cite{DoMo02}. La performance est donnée par une mesure $t_{p,s}$, qui peut être par exemple le nombre d'évaluations nécessaire pour l'obtention du minimal global, pour une paire de $p$ et $s$, un problème et un solveur. En optimisation sans-dérivées, on choisira le nombre d'itérations nécessaire à la satisfaction du test de convergence énoncé précédemment. Afin de comparer les solveurs sur chaque problème, on défini le ratio de comparaison suivant
+\begin{equation*}
+r_{p,s}=\frac{t_{p,s}}{\min\{t_{p,s} : s\  \epsilon \  S\}}
+\end{equation*}
+On peut alors définir le profil de performance d'un solveur sur un ensemble de problème $P$ ainsi
+\begin{equation*}
+\rho_s(\alpha)=\frac{1}{|P|}\text{size}\{p\ \epsilon \ P : r_{p,s} \leq \alpha \}
+\end{equation*}
+Pour un $\alpha$, soit un indice de performance tel que le ratio de comparaison $r_{p,s}$, on peut savoir la proportion de problème que chaque solveur a su résoudre en se rapprochant à un facteur de $(1-\tau)$ de la meilleure solution trouvée par l'ensemble des solveurs. Le test de convergence varie selon la nature des problèmes à résoudre. On peut utiliser un profil de performance pour des outils d'optimisation avec dérivés avec un $t_{p,s}$ qui agit sur les informations de premier ordre de la fonction, tel que le nombre d'évaluations pour atteindre $x$ tel que $f'(x)=0$. Ainsi, $\rho_s(\tau)$ revient à être la probabilité que le ratio de performance $r_{p,s}$ du solveur $s$ soit à un facteur $\tau$ du meilleur ratio possible. La lacune principale des profils de performance consiste en l'incapacité du ratio utilisé de prendre en compte la dimension du problème.
+
+Il est important de noter que les profils  de performance ont une faille tel qu'élaboré dans~\cite{GoSc2016}. Les auteurs concluent que l'utilisation de $f^*$ dans le test de convergence implique que la simple observation des courbes sur un graphe n'est pas suffisante pour classes les algorithmes. Puisque la comparaison se fait avec le nombre d'itérations minimal observé, il se peut que, lorsqu'on compare entre-eux deux solveurs qui n'ont pas performés en tant que meilleur, l'ordre apparent ne soit pas celui qu'on observerait si on éliminait du graphe les données du meilleur. On se doit alors d'utiliser un autre outil pour mesurer les performances des solveurs sur un ensemble de données.
+\subsection{Profil de données}\label{sec:pdd}
+Moré et Wild proposent~\cite{MoWi2009} une définition d'un profil de donnée, 
+\begin{equation*}
+d_s(\alpha)=\frac{1}{|P|}\text{size}\{p\ \epsilon \ P : \frac{t_{p,s}}{n_p+1} \leq \alpha \}\\
+\end{equation*}
+avec $t_p$ le nombre d'évaluations pour atteindre la convergence nécessité par le solveur $s$ sur le problème $p$. Le facteur $n_p+1$ est le nombre d'évaluations nécessaire pour le calcul de l'estimation finie d'un gradient pour un problème de taille $n_p$. Il est alors possible de mesurer la performance relative des solveurs comme une fonction du budget d'évaluations, sans la comparaison que le ratio de performance imposait. Ainsi, pour un $\alpha$, soit une quantité de $n+1$ évaluations de la fonction objectif, on peut savoir la proportion de problèmes que chaque solveur a su résoudre en se rapprochant à un facteur de $(1-\tau)$ de la meilleure solution trouvée par l'ensemble des solveurs. L'avantage des profils de données sur les profils de performance est qu'il est possible de quantifier la performance du meilleur algorithme, compte tenu que celui-ci n'est plus comparé à lui-même. La faille évoquée par Gould et Scott~\cite{GoSc2016} n'est pas applicable aux profils de données puisqu'ils ne nécessitent
+\section{Problèmes test}\label{sec:pro}
+La comparaison des stratégies se fait sur plusieurs ensembles de problèmes tests. En premier lieu, un ensemble de problèmes non-linéaires sans contraintes et sans bornes est décrit afin de caractériser le comportement des algorithmes opportunistes sur un large ensemble de problèmes. En deuxième lieu, un échantillon de problèmes avec des contraintes relaxables et quantifiables est décrit afin d'observer la performance des différentes versions de la stratégies opportuniste en situation de barrière progressive. Enfin, on décrit en détails des cas de problèmes d'ingénierie connus comme pouvant être résolus avec des outils d'optimisation sans-dérivées dans le but de déterminer si la stratégie opportuniste a le potentiel d'influer la résolution d'une boîte noire d'expression non analytique.
+\subsection{Ensemble de problèmes Moré-Wild}\label{sec:mw}
+L'échantillon de problèmes analytiques caractéristiques $\Pset$ utilisé est celui proposé par Moré et Wild~\cite{MoWi2009}. Cet ensemble de problèmes est fréquemment réutilisé dans la communauté~\cite{VaVi07,CuRoVi10,ZhCoSc10,CoLed2011,AdAuBeYa2014,,AuLedTr2014}, ce qui justifie son utilisation comme base de problème analytique pour la comparaison d'algorithme ou de stratégies algorithmiques. Il s'agit d'une banque de problème sans contraintes et sans bornes.
+
+L'ensemble de problèmes est décliné de 22 fonctions non linéaires de moindres carrés tirées de la collection $\mathrm{CUTEr}$~\cite{GoOrTo03}. Ces 22 fonctions sont remaniées pour donner un ensemble de 53 problèmes. L'indice $k_p$ pour un problème $p \in \mathcal{P}$ fait référence à la fonction de base issue de $\mathrm{CUTEr}$ utilisée pour ce problème. 
+
+Chaque problème possède trois autres paramètres en plus de l'indice $k_p$, soient $n_p$ pour la dimension du problème, $m_p$ le nombre de composantes du problème et le paramètre binaire $s_p$, indiquant si une homothétie de facteur 10 est activé ou non sur le point de départ $x_0$. L'ensemble $\Pset$ contient 53 problèmes pour lesquels existe un vecteur $ (k_p,n_p,m_p,s_p) $ unique. Aucune fonction sous-jacente n'est surreprésentée puisque au plus six problèmes possèdent le même $k_p$. Les bornes sur les paramètres sont 
+\begin{equation*}
+1 \leq k_p \leq 22,\ \ 2 \leq n_p \leq 12,\ \ 2\leq m_p\leq 65,\ \ s_p \in \{0,1\},\ \ p=1,\dots,53
+\end{equation*}
+avec $n_p \leq m_p$.
+
+La structure par morceaux des problèmes de $\Pset$ permet de dériver l'ensemble en d'autres classes de problèmes. On entend ainsi permettre la comparaison d'algorithmes ou de stratégies algorithmiques sur différentes classes de problèmes dont les caractéristiques peuvent être représentés dans des problèmes de boîtes noires. Les classes utilisées dans~\cite{MoWi2009} qui sont réutilisées ici sont : les problèmes lisses, les problèmes lisses définis par partie, les problèmes à bruit stochastique et les problèmes à bruit déterministe.  \textbf{Les problèmes lisses} sont formés tels que : 
+\begin{gather*}
+f(x):=\sum_{i=1}^{m}{\left(f_i(x)\right)}^2.
+\end{gather*}
+\textbf{Les problèmes non-différentiables} sont obtenus à l'aide d'une transformation apportée à l'expression des problèmes lisses telle que : 
+\begin{gather*}
+f(x):=\sum_{i=1}^{m}{|f_i(x)|}.
+\end{gather*}
+Ainsi, l'expression du gradient $\nabla f_i(x)$ est inexistante lorsque $f_i(x)=0$. Afin d'assurer que chaque déclinaison de problème possède un minimum global, pour les fonctions issues d'un ensemble de problèmes sous-jacent $k_p \in\{ 8,9,13,16,17,18\}$, la fonction est redéfinie dans l'orthant positif tel que
+\begin{gather*}
+f(x):=\sum_{i=1}^{m}{|f_i(\max(x,0))|}.
+\end{gather*}
+\textbf{Les problèmes à bruit déterministe} sont obtenus à l'aide d'une transformation apportée à l'expression des problèmes lisses. On multiplie la fonction $f(x)$ par le terme $(1+\epsilon_{f}\theta(x))$ qui induit une oscillation 
+\begin{gather*}
+f(x):=(1+\epsilon_{f}\theta(x))\sum_{k=1}^{m}{f_{i}(x)^{2}}.
+\end{gather*}
+Le terme $\theta(x)$ est issu d'une composition d'une fonction trigonométrique $\theta_0(x)$ avec un polynôme de Chebyshev de degré 3 tel que $T_{3}(\alpha) = \alpha(4\alpha^{2}-3)$
+\begin{gather*}
+\theta_0(x)=0.9\sin(100||x||_{1})\cos(100||x||_\infty)+0.1\cos(||x||_2) \\
+\theta(x) = T_3(\theta_0(x)) = T_{3}(0.9\sin(100||x||_{1})\cos(100||x||_\infty)+0.1\cos(||x||_2)).
+\end{gather*} 
+Cette composition élimine la périodicité de $\theta_{0}$. La formulation est aussi composée du terme $\epsilon_f$, le niveau du bruit relatif, qui est fixé à $\epsilon_f = 10^{-3}$.  
+
+\textbf{Les problèmes à bruit stochastique} sont obtenus avec une transformation apportée à chaque composante de la sommation 
+\begin{gather*}
+f(x):=\sum_{k=1}^{m}{{((1+\epsilon_f u_i)f_{i}(x))}^{2}}.
+\end{gather*}
+Le scalaire $u_i$ est issu du vecteur $u=(u_1,u_2,\dots,u_m)$ dont chaque valeur $-0.5<u_i<0.5$ est déterminée aléatoirement. La formulation est aussi composée du terme de bruit relatif fixé à $\epsilon_f = 10^{-3}$.
+\subsection{Problèmes analytiques contraints}\label{sec:pac}
+Les problèmes Moré-Wild n'ont pas de contraintes ni de bornes.  L'impact observé de l'opportunisme et de l'ordonnancement sur ces problèmes n'est pas nécessairement transférable en optimisation sous contraintes, compte tenu des différences que comporte la sonde lorsqu'on se trouve un situation de barrière active. Un ensemble de problèmes contraints issu de ~\cite{CoLed2011,AuTr17} est mis en place pour former un banc d'essai. Il s'agit de problèmes analytiques recueillis dans la littérature comportant des contraintes relaxables de type \textsf{QR*K}. Le nombre $n$ de variables varie de 2 à 20 et le nombre $m$ de contraintes de 2 à 11.
+\begin{table}[h]
+\centering
+\begin{tabular}{||c r r r r||c r r r r||}
+\hline
+\# & Nom & Source & $n$ & $m$ & \# & Nom & Source & $n$ & $m$\\
+\hhline{||=====||=====||}
+1 & CHENWANG\_F2 & \cite{ChWa2010} & 8 & 6 & 10 & MAD6 & \cite{HoSc1981} & 5 & 7\\ 
+2 & CHENWANG\_F3 & \cite{ChWa2010} & 10 & 8 & 11 & MEZMONTES & \cite{Montes2009} & 2 & 2\\ 
+3 & CRESCENT & \cite{AuDe09a} & 10 & 2 & 12 & OPTENG\_RBF & \cite{KiArYa2011} & 3 & 4\\ 
+4 & DISK & \cite{AuDe09a} & 10 & 1 & 13 & PENTAGON & \cite{LuVl00} & 6 & 15\\ 
+5 & G2\_10 & \cite{AuDeLe08} & 10 & 2 & 14 & PIGACHE & \cite{PiMeNo2007} & 4 & 11\\ 
+6 & G2\_20 & \cite{AuDeLe08} & 20 & 2 & 15 & SNAKE & \cite{HoSc1981} & 2 & 2\\ 
+7 & HS19 & \cite{HoSc1981} &  2 & 2 & 16 & SPRING & \cite{AuDe09a} & 3 & 4\\ 
+8 & HS83 & \cite{LuVl00} & 5 & 6 & 17 & TAOWANG\_F2 & \cite{TaWa08} & 7 & 4\\ 
+9 & HS114 & \cite{HoSc1981} & 9 & 6 & 18 & ZHAOWANG\_F5 & \cite{ChWa2010b} & 13 & 9\\  
+\hline
+\end{tabular}
+\caption{Description de l'ensemble de problèmes contraints}
+\end{table}
+\subsection{STYRENE}\label{sec:sty}
+Les méthodes de recherche directe sont appliquées à la résolution d'un problème issue de l'ingénierie de procédé proposé par Audet et al.~\cite{AuBeLe08}. Il s'agit d'une simulation de la production de styrène, un composé organique utilisé dans la fabrication de plastique, particulièrement le polystyrène. Cette simulation comprends quatres étapes principales.
+\begin{enumerate}[label=\roman*.]
+\item La préparation des réactifs par pressurisation et par chauffage précède la réaction chimique. Cette étape est influencée par la pression à la sortie de la pompe $x_1$, en atm, et la température à la sortie du réchauffeur $x_2$, en K, qui constituent des variables du problème. Il est à noté que les entrées dans le système proviennent d'une source externe et d'un retour de matière recyclé provenant de la sortie du procédé chimique. 
+\item La réaction chimique prenant place dans le réacteur, faisant intervenir $x_3$, en m, la longueur du réacteur.
+\item La récupération du styrène par la distillation des produits de la réaction. Les produits sont initialement refroidis à une certaine température $x_4$, en K. Les produits sont dégazés et les gaz indésirables sont ensuite brulés et éjectés par la cheminée, dont la fraction d'air excédentaire $x_5$  pour la combustion figure comme variable d'optimisation. Les produits refroidis et dégazés vont ensuite au séparateur à styrène, dans lequel a lieu la première distillation. Le séparateur nécessite deux composantes, soit la lourde et la légère. La fraction $x_6$ de composante légère utilisée dans le séparateur constitue une variable du problème. À la sortie du séparateur, les résidus (ethylbenzène) peuvent être réutilisés comme réactifs. La fraction des résidus $x_7$ qui retourne à la première étape est une variable nécessaire pour la simulation.
+\item La portion non-recyclée des résidus est ensuite distillée à son tour pour en retirer le benzène des éléments réactifs restants, lesquels sont aussi retourné à la première étape. La fraction $x_8$ de composante légère utilisée dans le séparateur à benzène constitue une variable du problème.
+\end{enumerate}
+Avec $x = (x_1,x_2,x_3,x_4,x_5,x_6,x_7,x_8)$ le vecteur de variables, le simulateur peut estimer la valeur nette estimée du projet de production de styrène, en agrégeant des facteurs comme les coûts d'opérations, le profit issus des ventes du styrène produit, les investissements nécessaires pour maintenir la production et la dépréciation du projet sur un nombre donné d'années.  
+
+Le problème comporte 11 contraintes de type \textsf{K} et un nombre indéfini de type \textsf{H}. Les contraintes cachées sont des contraintes de type \textsf{NUSH} (Non-quatifiable, non-relaxable,, encourue durant la simulation et cachée). Les contraintes connues sont explicitées au tableau \ref{tab:sty} avec leur taxonomie respective.
+\begin{table}[h]
+\centering
+\begin{tabular}{||r l l l||}
+\hline
+\# & Type & Description & Taxonomie\\
+\hhline{||====||}
+1 & Simulateur & Succès de la simulation & \textsf{NUSK}\\
+2 & Procédé & Structure du séparateur à styrène acceptable & \textsf{NUSK}\\
+3 & ~ & Structure du séparateur à benzène acceptable & \textsf{NUSK}\\
+4 & ~ & Combustion des gaz possible et réglementaire & \textsf{NUSK}\\
+5 & ~ & Borne minimale sur la pureté du styrène produit & \textsf{QRSK}\\
+6 & ~ & Borne minimale sur la pureté du benzène produit & \textsf{QRSK}\\
+7 & ~ & Borne minimale sur la conversion des résidus en styrène & \textsf{QRSK}\\	
+8 & Économique & Borne maximale sur le temps requis pour atteindre la rentabilité & \textsf{QRSK}\\	
+9 & ~ & Borne minimale sur les flux de trésorerie actualisés & \textsf{QRSK}\\
+10 & ~ & Borne maximale sur l'investissement total & \textsf{QRSK}\\
+11 & ~ & Borne maximale sur le coût annuel & \textsf{QRSK}\\
+\hline
+\end{tabular}
+\caption{Contraintes de STYRENE groupées par type}\label{tab:sty}
+\end{table}
+\subsection{LOCKWOOD}\label{sec:loc}
+description + pre analyse des stratégies
+\section{Méthodologie}\label{sec:met}
+Cette section décrit la méthodologie employée pour obtenir les algorithmes et leurs implémentations opportunistes.
+\subsection{NOMAD}\label{sec:nom}
+L'implémentation des l'algorithme \CS, \GPS et \MADS utilisée est NOMAD 3.8.1~\cite{Le09b} (Non-linear Optimization with the Mesh Adaptive Direct search), disponible sur son site officiel~\cite{AuCo04a}. Initialement une implémentation de \MADS pour la recherche non-linéaire, NOMAD est aujourd'hui un des solveurs principaux dans la littérature pour l'optimisation de boîtes noires~\cite{CoScVibook}, ~\cite{RiSa2010} à l'aide de recherche directe. L'architecture de NOMAD est telle que chaque point $t \in P^k$ ou $t \in S^k$ doit figurer sur le maillage $M^k:=\{x^k+\delta^kDy:y\in \N^p\}$ et ce même pour les algorithmes dont l'analyse de convergence n'est pas basée sur les contractions successives d'un maillage, soient \CS et \GPS. Chaque point déterminé avec sa direction correspondante $t = x^k + \delta^k d : d \in D^k$ qui ne corresponds pas à un point sur le maillage sera remplacé par un point sur le maillage $\tilde{t} \in M^k$ correspondant au point existant sur le maillage le plus près. Un paramétrage spécifique est nécessaire à NOMAD afin que le logiciel soit en mesure d'appliquer \CS, \GPS et \MADS selon leurs définitions des sections \ref{sec:cs}, \ref{sec:gps} et \ref{sec:mad}. L'ensemble des descriptions des différents paramètres sont issues de~\cite{Le09a}.   
+  
+Afin de ne pas obtenir le comportement d'un maillage granulaire, la valeur \texttt{XMESH}, qui corresponds au maillage anisotrope décrit dans~\cite{AuLedTr2014} est affectée au paramètre \texttt{MESH\_TYPE}.
+\subsubsection{\CS}\label{sec:ncs}
+La valeur \texttt{GPS 2N STATIC} est donnée au paramètre \texttt{DIRECTION\_TYPE}, qui contrôle l'algorithme et la mécanique gérant la génération des directions. En ayant \texttt{GPS} comme méthode de génération de directions, on a qu'un seul paramètre pour les directions, soit $\delta^k$, la longueur du pas. En ayant $2n$ directions définies de manière statique (en opposition à aléatoire), le logiciel génère toujours les mêmes directions, qui sont par défaut les directions coordonnées. Pour l'option \texttt{GPS} dans NOMAD, le maillage est obligatoirement isotrope, ce qui corresponds à la définition de \CS et qui annule l'anisotropie induite par l'option \texttt{XMESH}. 
+ 
+Puisque l'ajustement du maillage dans \CS ne se fait qu'en cas de sonde fructueuse, on affecte au paramètre \texttt{MESH\_COARSENING\_COEFFICIENT} la valeur \texttt{0}.  
+  
+L'implémentation de l'opportunisme dans la recherche par coordonnées permets d'observer l'impact de la stratégie sur  la plus archaïque et la plus grossière des méthodes de recherche directe. Afin de désactiver les stratégies de recherche globale présente par défaut dans NOMAD, les certains paramètres se doivent d'être désactivés.
+\begin{table}[h]
+	\centering
+	\begin{tabular}{||l l l||}
+		\hline
+		Nom & Description & Valeur\\
+		\hhline{||===||}
+		\texttt{MODEL\_SEARCH} & \SEARCH basée sur des modèles quadratiques~\cite{CoLed2011}& \texttt{no}\\
+		\texttt{SPECULATIVE\_SEARCH} & \emph{Dynamic search} de \cite{AuDe2006} & \texttt{no}\\
+		\texttt{SNAP\_TO\_BOUND} & Accolement des points aux bornes & \texttt{no}\\
+		\hline
+	\end{tabular}
+	\caption{Paramètres de \SEARCH désactivés pour \CS dans NOMAD}\label{tab:pdc}
+\end{table}
+\subsubsection{GPS}\label{sec:ngp}
+L'algorithme de \GPS a été obtenu a l'aide d'un paramétrage similaire à celui de \CS. Afin de correspondre à la définition de l'auteure~\cite{Torc97a} sans imposer de variations arbitraires, on utilise les directions coordonnées en affectant \texttt{GPS 2N STATIC} à \texttt{DIRECTION\_TYPE}, qui annule encore une fois l'anisotropie du maillage.
+
+La différence se situe au niveau du \texttt{MESH\_REFINING\_COEFFICIENT} prenant la valeur \texttt{1}, qui corresponds à la puissance affectant le paramètre d'ajustement de maillage en cas de succès $\tau^{-1}$ de l'Algorithme \ref{alg:gps}. En laissant la valeur par défaut, on a que l'exposant $-1$ affecte le $\tau = 2$, contrairement à l'exposant $0$ dans le cas de \CS.
+
+Étant donné la volonté, en premier lieu, d'isoler les étapes de \POLL des algorithmes, les mêmes paramètres figurant dans le tableau \ref{tab:pdc} sont désactivés pour \GPS.
+\subsubsection{MADS}\label{sec:nma}
+L'implémetation de \MADS est \textsf{OrthoMADS}~\cite{AbAuDeLe09} avec $n+1$ directions obtenue avec l'affection de \texttt{ORTHO N+1 NEG}. Il s'agit d'une instance de \MADS déterministe produisant $n$ direction orthogonales. La génération des directions $\D_\Delta^k$ est effectuée en quatre étapes.
+\begin{enumerate}[label=\roman*.]
+\item La séquence quasi-aléatoire de Halton~\cite{Ha60} produit un vecteur $u_{t,p} \in [0,1]^n$, avec $t$ l'indice de Halton.
+\item Le vecteur $u_{t}$ est ensuite arrondie et accolée au maillage, pour être transformé en une direction de Halton ajustée $q_{t,l}$, avec $t$ l'indice de Halton du terme et $l$ l'indice du maillage.
+\item La direction $q_{t,l}$ subit une transformation de Householder~\cite{Ho58}. Cette transformation génère une base orthogonale positive de $\R^n$ composée de vecteurs d'entiers, qu'on dénote $[H_{t,l}]$.
+\end{enumerate}
+On choisit le nombre $n+1$ de directions afin d'avoir le minimum de directions dans l'ensemble générateur positif, ce qui accélère la convergence. On choisit \texttt{NEG} pour indiquer au logiciel de fabriquer la $(n+1)$-ième direction en prenant la direction opposée à la somme des directions issues de la transformation de Householder $d_{n+1}=-\sum_{d\in H_{t,l}}$. L'ensemble $D^k_\Delta = [H_{t,l}~d_{n+1}]$ est ainsi une base positive et donc un ensemble générateur positif, condition nécessaire pour \MADS tel qu'évoqué à la section \ref{sec:mad}. On choisit cette méthode à celle de la complétion par modèle quadratique proposée par Audet et al.~\cite{AuIaLeDTr2014} par soucis d'interférence avec les paramètres nécessaires à l'obtention des stratégies d'ordonnancement. 
+
+Les valeurs des paramètres du maillages et celles des paramètres figurant dans le tableau \ref{tab:pdc} sont identiques à celles de \GPS.
+\subsubsection{MADS par défaut de NOMAD}\label{sec:ntr}
+Afin d'observer l'impact de l'ordonnancement sur la résolution complète des problèmes d'optimisation identifiés, on résout l'ensemble des problèmes décrits à la section \ref{sec:pro} avec une instance de \MADS en communicant à NOMAD seulement les valeurs de paramètre indispensables. Ceci implique l'activation des étapes de \SEARCH désactivées pour les autres algorithmes, soient ceux du Tableau \ref{tab:pdc}, l'utilisation du maillage granulaire \texttt{GMESH}~\cite{Le09a} et la génération de direction \texttt{DIRECTION\_TYPE ORTHO N+1 QUAD}. Cette méthode de génération de directions indique la complétion de la base positive issue de Householder avec une direction $d_{n+1}$ qui permet l'obtention d'un ensemble générateur positif tout en minimisant l'approximation de $f$ au point candidat $x^k+\delta^k d_{n+1}$.   
+Les résultats obtenus pour cet algorithme ne sont pas à l'abris d'interférences entre les paramètres nécessaires pour l'obtention des différentes stratégies d'ordonnancement et les paramètres de génération de directions. Ils sont aussi grandement influencés par les heuristiques présentes dans les étapes de \SEARCH. Dans ces mesures, on utilisera ces résultats avec de visualiser l'apport possible de l'opportunisme et de l'ordonnancement sur une résolution réaliste, plutôt que sur l'étape de sonde seulement.
+\subsubsection{Opportunisme et stratégies d'ordonnancement}\label{sec:mop}
+NOMAD permet à l'utilisateur de déterminer si la \POLL ou la \SEARCH se doit d'être opportuniste. Le paramètre nécessaire à la sonde opportuniste est \texttt{OPPORTUNISTIC\_EVAL}, pour lequel la valeur \texttt{YES} implique l'opportunisme simple tel que décrit dans la Définition~\ref{def:ops} et la valeur \texttt{NO} implique la sonde complète de la Définition~\ref{def:completepoll}. L'obtention des autres déclinaisons de la stratégie opportuniste se fait à l'aide des paramètres \texttt{OPPORTUNISTIC\_MIN\_NB\_SUCCES} suivi de son argument pour la stratégie opportuniste au $p^{\text{ème}}$ succès de la Définition~\ref{def:oppemesucces} et du paramètre \texttt{OPPORTUNISTIC\_MIN\_EVAL} suivi de son paramètre pour l'obtention de la stratégie opportuniste avec un minimum de $q$ évaluations de la Définition \ref{def:opmineval}.
+
+Les stratégies d'ordonnancement lexicographique, en fonction de la direction du dernier succès et en fonction d'un modèle sont implémentées dans NOMAD et accessibles à l'utilisateur avec la bonne combinaison de paramètres. Le Tableau~\ref{tab:ppo} décrit les combinaisons nécessaires à l'obtention des stratégies.
+\begin{table}[h]
+	\centering
+	\begin{tabular}{||l|c|c|c||}
+		\hline
+		Paramètre & \texttt{OPPORTUNISTIC\_EVAL} & \texttt{DISABLE} & \texttt{MODEL\_EVAL\_SORT} \\
+		\hhline{||====||}
+		Sonde complète & \texttt{NO} & N/A & N/A\\
+		Lexicographique & \texttt{YES} & \texttt{EVAL\_SORT} & \texttt{NO}\\
+		Dernier succès & \texttt{YES} & N/A & \texttt{NO}\\
+		Avec modèles & \texttt{YES} & N/A & \texttt{YES}\\
+		\hline
+	\end{tabular}
+	\caption{Paramètres pour l'obtention de certaines stratégies d'ordonnancement}\label{tab:ppo}
+\end{table}
+Les stratégies restantes sont obtenues à l'aide de l'activation du paramètre \texttt{SGTE\_EVAL\_SORT}. La stratégie omnisciente est obtenue en attribuant au paramètre \texttt{SGTE\_EXE} l'exécutable destiné à servir même de la boîte noire. Dans le même ordre d'esprit, la stratégie négative-omnisciente est obtenue en fournissant à ce même paramètre le nom d'un exécutable retournant $\tilde{f}:=-f(x)$ en argument. Enfin, on lui donne un exécutable retournant un nombre aléatoire en argument pour obtenir la stratégie d'ordonnancement aléatoire.
+\subsection{GSS}\label{sec:hop}
+La comparaison de certaines stratégies dans \GSS est possible grace à son implémentation présente dans le logiciel d'optimisation HOPSPACK 2.0~\cite{Plan09,GrKoLe2008}, héritier de APPSPACK~\cite{GrKo06}. Le logiciel est avant tout destiné à l'interfaçage de différents algorithmes d'optimisation de tout genre en parallèle, mais contient une implémentation de \GSS présente par défaut. La gestion des contraintes est possible seulement si les contraintes sont formulables dans leurs formes analytiques, ce qui ne convient pas à la définition du domaine d'optimisation sans-dérivées étudié dans cet ouvrage.
+
+L'implémention de \GSS de HOPSPACK est opportuniste simple, sans option pour désactiver la stratégie. Cependant, l'implémentation offre de changer la changer la stratégie d'ordonnancement à l'aide du paramètre \texttt{Use Random Order}, pour lequel l'argument \texttt{False} entraine un ordonnancement déterministe non précisée, tandis que \texttt{True} entraine la stratégie d'ordonnancement aléatoire.
+\subsection{Implicit Filtering}\label{sec:mim}
+L'algorithme \imfil est indissociable de son implémentation en MATLAB, dénommée imfil 1.0~\cite{Kelley2011,Kelley2011b}. Il s'agit d'une implémentation de l'algorithme définit à la section \ref{sec:imf} munie d'un méchanisme de gestion d'échec de la fonction objectif à retourner une valeur, ce qui en fait un solveur applicable aux boîtes noires. Ces contraintes cachées sont traitées avec un procédé similaire à la barrière extrême. L'implémentation nécessite que des bornes soit fournies pour chaque problème.
+
+Tel que mentionné à la Section~\ref{sec:mis}, l'auteur et architecte de l'implémentation C.T. Kelley reconnaît la pertinence de l'opportunisme mais ne l'incorpore pas dans son implémentation. L'implémentation de la stratégie est effectuée en modifiant les portions \texttt{imfil\_poll\_stencil} pour y implémenter les stratégies opportunistes et d'ordonnancement voulues. L'idée principale de l'implémentation de l'opportunisme dans \imfil est qu'on y simule que les points non-évalué suivant l'arrêt prématuré de la sonde ont échoués à retourner une valeur. L'implémentation procède ensuite au \textsf{BLS} avec seulement une portion des valeurs aux points évalués. Les points artificiellement communiqués comme des échecs sont réinitialisés avant la prochaine itération.
+\section{Comparaison des stratégies algorithmiques}\label{sec:com}
+Le banc d'essai comporte une banque de problèmes analytique non-contraints, une banque de problèmes contraints et des exemples de boîtes noires à haut coût d'évaluation. 
+
+Les résolutions sont effectuées avec un budget d'évaluations de $1000(n+1)$. Les profils de donnés présents dans le corps du travail sont tracés avec les seuils de tolérance $\tau = 10^{-3}$ et $\tau = 10^{-7}$ pour avoir un aperçu des résolutions à basse et haute précision. Chaque combinaison de problème, de stratégie opportuniste et de stratégie d'ordonnancement sont résolues avec 10 germes aléatoires différentes. Les algorithmes issus de NOMAD qui peuvent bénéficier de la gestion des contraintes par barrière progressive sont testés sur chaque banque de problème. Pour la stratégie opportuniste de la Définition \ref{def:oppemesucces}, on statue que $p=2$, afin d'observer l'arrêt de la sonde après deux succès. Pour la stratégie opportuniste de la Définition \ref{def:opmineval}, on déterminera que $q = \text{ceil}(n/2)$, afin de permettre à un algorithme d'explorer au moins un orthant.
+
+En raison de l'incapacité de leurs implémentations à gérer les contraintes de type boîte noire, \GSS et \imfil sont testées seulement avec l'ensemble de problèmes Moré-Wild. Les profils de données incluent les 212 instances possibles des problèmes Moré-Wild. Les détails des résolutions par type de problème et à différentes précisions sont fournis en annexe.
+\subsection{CS}\label{sec:ccs}
+	\begin{figure}[!htb]\label{fig:cs_mw}
 		\centering
 		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_c_SMOOTH_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
+			\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-3_log.png}
+			\label{fig:data_c_TOUS_1E-3_log}
 		\end{subfigure}%\hspace*{\fill}
 		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_SMOOTH_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_c_SMOOTH_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_SMOOTH_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_c_SMOOTH_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_SMOOTH_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
+			\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-7_log.png}
+			\label{fig:data_c_TOUS_1E-7_log}
 		\end{subfigure}
 		\smallskip
 		\begin{subfigure}{0.95\textwidth}
 			\includegraphics[width=\linewidth]{images/legende_nomad.png}
 		\end{subfigure}
-		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS} \label{fig:1}
+		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS}
 	\end{figure}
-	\clearpage
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_c_NONDIFF_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_NONDIFF_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_c_NONDIFF_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_NONDIFF_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_c_NONDIFF_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_NONDIFF_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
-	\end{figure}
-	\clearpage
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_c_NOISY3_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_NOISY3_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_c_NOISY3_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_NOISY3_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_c_NOISY3_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_NOISY3_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
-	\end{figure}
-	\clearpage
-	La recherche par coordonnée offre une opportunité sans pareille d'observer l'impact de l'ordonnancement. Puisqu'il s'agit essentiellement d'une étape de sonde rudimentaire, elle sera très sensible à l'opportunisme et à la stratégie d'ordonnancement qui le guidera. On s'attend ici à des profils très distincts. Sur les problèmes lisses, les algorithmes se comportent en moyenne de façon plus stable. On en déduit qu'il ne sera pas pertinent de qualifier une stratégie d'ordonnancement spécialement sur son comportement en situation d'optimisation de problème lisse; les déductions dans cette section seront plutôt de nature générale. \\\\
-	Outre de rappeler la pertinence des profils de données, les profils de performances montrent que la stratégie aléatoire et la stratégie d'ordonnancement par modèles sont de performances comparables. On peut y comprendre ici que les stratégies sont uniquement comparées à la stratégie omnisciente pour la tolérance la plus haute $\tau = 0.1$. La marge d'erreur est aussi limitée pour les autres valeurs de $\tau = 0.01$ et $\tau = 0.001$, alors que pour près de $95\%$ on utilise la stratégie omnisciente pour comparer le résultat. Dans cette situation, on peut prendre directement l'allure du profil pour hierarchiser les stratégies sur l'ensemble de problème sans se soucier de l'erreur induite par la nature des profils de performance~\cite{GoSc2016}. Sur les profils de performance avec $\tau = 0.1$, on voit que la stratégie d'ordonnancement en fonction du dernier succès est supérieure à la stratégie aléatoire jusqu'à un ratio de performance avoisinant $2$, après coup elle est reléguée à la quatrième plus performante. Malgré que cette stratégie soit plus raffinée que la stratégie aléatoire, elle ne prendra avantage de la forme du problème que si celui-ci n'est pas composé de plusieurs minimums locaux et de points de selle. On pourrait conclure que l'ensemble de problèmes utilisé ici possède une proportion de problèmes dont la structure n'est pas idéale pour un ordonnancement basé uniquement sur le succès précédent. La stratégie lexicographique n'est pas comparable en terme de performance. La stratégie pousse l'algorithme à épuiser ses sources de directions de déscente une par une. Au fil des évaluations, les directions de déscente déjà épuisées seront évaluées en début de sonde, et celles prometteuses seront toujours à la fin de la liste, ce qui aura pour effet de décaler les succès de plus en plus au cours du déroulement de l'algorithme. Pour sa part, la sonde complète ne peut pas compétitionner en observant les profils de performance, puisqu'elle prends un nombre $n$ fois le nombre d'évaluation nécéssité par la stratégie omnisciente. La stratégie négative omnisciente n'est pas appropriée dans la comparaison avec des profils de performance. Ces tendances sont observables aussi pour les ratios de tolérance moins élevés, qui figurent dans le deuxième et le troisième tracé des profils de performance. On en conclu que les solutions trouvées avec toutes les méthodes sont soit exacte à $0.01\%$ ou alors à plus de $10\%$ de différence de celle déterminée avec la stratégie omnisciente.  \\\\
-	Dans le cas des tests avec cette famille d'algorithme, l'utilisation de la stratégie omnisciente requiert le traçage de profils de données pour bien pouvoir comparer les stratégies.  Ce type de métrique est choisi plutôt que les profils de performance car la nature de leur abscisse est relative au nombre d'itérations avant d'atteindre le minimum, permettant ainsi de juger de la performance d'un algorithme indépendemment de ses concurrents. Ainsi, les profils de données permettent de mieux distinguer le meilleur performant sans qu'il soit joint aux axes, tel qu'illustré dans les trois profils de performances de la figure précédente. Nous savons d'ailleurs des profils de performance que la stratégie omnisciente donne toujours le meilleur rendement. Ainsi, on peut se fier directement à l'apparence des courbes.\\\\ 
-	Premièrement, la stratégie omnisciente semble toujours la meilleure, alors qu'on peut toutefois déterminer avec quelle ampleur elle domine les autres. On explique que son ordonnée n'atteint pas $1.0$ par le fait que seulement jusqu'à $70 \times n+1$ évaluations sont illustrées. Pour des problèmes ayant jusqu'à $n=12$ variables tels qu'il en existe dans la collection de Moré-Wild utilisée, on a que $70$ gradients simplex correspondent à $910$ évaluations de la boîte noire, qui peuvent ne pas être suffisantes pour l'obtention de la meilleure solution obtenue. On observe que les comparaisons des stratégies réalistes faitent avec les profils de performance ne sont pas remis en question avec les profils de données outre la stratégie omnisciente.
-	\subsection{GPS}
-	\begin{figure}[!htb] % GPS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_g_SMOOTH_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_g_SMOOTH_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_g_SMOOTH_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_g_SMOOTH_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_g_SMOOTH_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_g_SMOOTH_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS} \label{fig:1}
-	\end{figure}
-	\clearpage
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_g_NONDIFF_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_g_NONDIFF_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_g_NONDIFF_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_g_NONDIFF_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_g_NONDIFF_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_g_NONDIFF_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
-	\end{figure}
-	\clearpage
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_g_NOISY3_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_g_NOISY3_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_g_NOISY3_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_g_NOISY3_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_g_NOISY3_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_g_NOISY3_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
-	\end{figure}
-	\clearpage
+La recherche par coordonnée offre une opportunité sans pareille d'observer l'impact de l'ordonnancement. Puisqu'il s'agit essentiellement d'une étape de sonde rudimentaire, elle sera très sensible à l'opportunisme et à la stratégie d'ordonnancement qui le guidera. On s'attend ici à des profils très distincts. Sur les problèmes lisses, tel qu'observable à l'Annexe~\ref{ann:A}, les algorithmes se comportent en moyenne de façon plus stable.
+
+Outre de rappeler la pertinence des profils de données, les profils de performances montrent que la stratégie aléatoire et la stratégie d'ordonnancement par modèles sont de performances comparables. On peut y comprendre ici que les stratégies sont uniquement comparées à la stratégie omnisciente pour la tolérance la plus haute $\tau = 0.1$. La marge d'erreur est aussi limitée pour les autres valeurs de $\tau = 0.01$ et $\tau = 0.001$, alors que pour près de $95\%$ on utilise la stratégie omnisciente pour comparer le résultat. Dans cette situation, on peut prendre directement l'allure du profil pour hiérarchiser les stratégies sur l'ensemble de problème sans se soucier de l'erreur induite par la nature des profils de performance~\cite{GoSc2016}. Sur les profils de performance avec $\tau = 0.1$, on voit que la stratégie d'ordonnancement en fonction du dernier succès est supérieure à la stratégie aléatoire jusqu'à un ratio de performance avoisinant $2$, après coup elle est reléguée à la quatrième plus performante. Malgré que cette stratégie soit plus raffinée que la stratégie aléatoire, elle ne prendra avantage de la forme du problème que si celui-ci n'est pas composé de plusieurs minimums locaux et de points de selle. On pourrait conclure que l'ensemble de problèmes utilisé ici possède une proportion de problèmes dont la structure n'est pas idéale pour un ordonnancement basé uniquement sur le succès précédent. La stratégie lexicographique n'est pas comparable en terme de performance. La stratégie pousse l'algorithme à épuiser ses sources de directions de déscente une par une. Au fil des évaluations, les directions de déscente déjà épuisées seront évaluées en début de sonde, et celles prometteuses seront toujours à la fin de la liste, ce qui aura pour effet de décaler les succès de plus en plus au cours du déroulement de l'algorithme. Pour sa part, la sonde complète ne peut pas compétitionner en observant les profils de performance, puisqu'elle prends un nombre $n$ fois le nombre d'évaluation nécéssité par la stratégie omnisciente. La stratégie négative omnisciente n'est pas appropriée dans la comparaison avec des profils de performance. Ces tendances sont observables aussi pour les ratios de tolérance moins élevés, qui figurent dans le deuxième et le troisième tracé des profils de performance. On en conclu que les solutions trouvées avec toutes les méthodes sont soit exacte à $0.01\%$ ou alors à plus de $10\%$ de différence de celle déterminée avec la stratégie omnisciente.
+
+Dans le cas des tests avec cette famille d'algorithme, l'utilisation de la stratégie omnisciente requiert le traçage de profils de données pour bien pouvoir comparer les stratégies.  Ce type de métrique est choisi plutôt que les profils de performance car la nature de leur abscisse est relative au nombre d'itérations avant d'atteindre le minimum, permettant ainsi de juger de la performance d'un algorithme indépendemment de ses concurrents. Ainsi, les profils de données permettent de mieux distinguer le meilleur performant sans qu'il soit joint aux axes, tel qu'illustré dans les trois profils de performances de la figure précédente. Nous savons d'ailleurs des profils de performance que la stratégie omnisciente donne toujours le meilleur rendement. Ainsi, on peut se fier directement à l'apparence des courbes.
+
+Premièrement, la stratégie omnisciente semble toujours la meilleure, alors qu'on peut toutefois déterminer avec quelle ampleur elle domine les autres. On explique que son ordonnée n'atteint pas $1.0$ par le fait que seulement jusqu'à $70 \times n+1$ évaluations sont illustrées. Pour des problèmes ayant jusqu'à $n=12$ variables tels qu'il en existe dans la collection de Moré-Wild utilisée, on a que $70$ gradients simplex correspondent à $910$ évaluations de la boîte noire, qui peuvent ne pas être suffisantes pour l'obtention de la meilleure solution obtenue. On observe que les comparaisons des stratégies réalistes faitent avec les profils de performance ne sont pas remis en question avec les profils de données outre la stratégie omnisciente.
+	\subsection{GPS}\label{sec:cgp}
+%	\begin{figure}[!htb] % GPS-SMOOTH
+%		\centering
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_g_SMOOTH_01_log.png}
+%			%\caption{First subfigure} \label{fig:a}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_g_SMOOTH_01_log.png}
+%			%\caption{Second subfigure} \label{fig:b}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_g_SMOOTH_001_log.png}
+%			%\caption{Third subfigure} \label{fig:c}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_g_SMOOTH_001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:d}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_g_SMOOTH_0001_log.png}
+%			%\caption{Third subfigure} \label{fig:e}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_g_SMOOTH_0001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:f}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.95\textwidth}
+%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%		\end{subfigure}
+%		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS} \label{fig:1}
+%	\end{figure}
+%	\clearpage
+%	\begin{figure}[!htb] % CS-SMOOTH
+%		\centering
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_g_NONDIFF_01_log.png}
+%			%\caption{First subfigure} \label{fig:a}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_g_NONDIFF_01_log.png}
+%			%\caption{Second subfigure} \label{fig:b}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_g_NONDIFF_001_log.png}
+%			%\caption{Third subfigure} \label{fig:c}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_g_NONDIFF_001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:d}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_g_NONDIFF_0001_log.png}
+%			%\caption{Third subfigure} \label{fig:e}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_g_NONDIFF_0001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:f}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.95\textwidth}
+%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%		\end{subfigure}
+%		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
+%	\end{figure}
+%	\clearpage
+%	\begin{figure}[!htb] % CS-SMOOTH
+%		\centering
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_g_NOISY3_01_log.png}
+%			%\caption{First subfigure} \label{fig:a}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_g_NOISY3_01_log.png}
+%			%\caption{Second subfigure} \label{fig:b}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_g_NOISY3_001_log.png}
+%			%\caption{Third subfigure} \label{fig:c}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_g_NOISY3_001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:d}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_g_NOISY3_0001_log.png}
+%			%\caption{Third subfigure} \label{fig:e}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_g_NOISY3_0001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:f}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.95\textwidth}
+%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%		\end{subfigure}
+%		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
+%	\end{figure}
+%	\clearpage
 	Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
 	\clearpage
-	\subsection{MADS}
-		\subsubsection{Moré-Wild}
-			\begin{figure}[!htb] % CS-SMOOTH
-				\centering
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_01_log.png}
-					%\caption{First subfigure} \label{fig:a}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/data_m_SMOOTH_01_log.png}
-					%\caption{Second subfigure} \label{fig:b}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_001_log.png}
-					%\caption{Third subfigure} \label{fig:c}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/data_m_SMOOTH_001_log.png}
-					%\caption{Fourth subfigure} \label{fig:d}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_0001_log.png}
-					%\caption{Third subfigure} \label{fig:e}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/data_m_SMOOTH_0001_log.png}
-					%\caption{Fourth subfigure} \label{fig:f}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.95\textwidth}
-					\includegraphics[width=\linewidth]{images/legende_nomad.png}
-				\end{subfigure}
-				\caption{Comparaison sur problèmes lisses de Moré-Wild avec \MADS} \label{fig:1}
-			\end{figure}
-			\clearpage
-			\begin{figure}[!htb] % CS-SMOOTH
-				\centering
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_01_log.png}
-					%\caption{First subfigure} \label{fig:a}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/data_m_NONDIFF_01_log.png}
-					%\caption{Second subfigure} \label{fig:b}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_001_log.png}
-					%\caption{Third subfigure} \label{fig:c}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/data_m_NONDIFF_001_log.png}
-					%\caption{Fourth subfigure} \label{fig:d}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_0001_log.png}
-					%\caption{Third subfigure} \label{fig:e}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/data_m_NONDIFF_0001_log.png}
-					%\caption{Fourth subfigure} \label{fig:f}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.95\textwidth}
-					\includegraphics[width=\linewidth]{images/legende_nomad.png}
-				\end{subfigure}
-				\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
-			\end{figure}
-			\clearpage
-			\begin{figure}[!htb] % CS-SMOOTH
-				\centering
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/perf_m_NOISY3_01_log.png}
-					%\caption{First subfigure} \label{fig:a}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/data_m_NOISY3_01_log.png}
-					%\caption{Second subfigure} \label{fig:b}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/perf_m_NOISY3_001_log.png}
-					%\caption{Third subfigure} \label{fig:c}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/data_m_NOISY3_001_log.png}
-					%\caption{Fourth subfigure} \label{fig:d}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/perf_m_NOISY3_0001_log.png}
-					%\caption{Third subfigure} \label{fig:e}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/data_m_NOISY3_0001_log.png}
-					%\caption{Fourth subfigure} \label{fig:f}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.95\textwidth}
-					\includegraphics[width=\linewidth]{images/legende_nomad.png}
-				\end{subfigure}
-				\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
-			\end{figure}
-			\clearpage
-			Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
-			\clearpage
-		\subsubsection{STYRENE}
-			\begin{figure}[!htb] % CS-SMOOTH
-				\centering
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_n_oo.png}
-					%\caption{First subfigure} \label{fig:a}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_0n_oo.png}
-					%\caption{Second subfigure} \label{fig:b}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_or_om.png}
-					%\caption{Third subfigure} \label{fig:c}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_om_oo.png}
-					%\caption{Fourth subfigure} \label{fig:d}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_om_n.png}
-					%\caption{Third subfigure} \label{fig:e}
-				\end{subfigure}%\hspace*{\fill}
-				\begin{subfigure}{0.43\textwidth}
-					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_om_n.png}
-					%\caption{Fourth subfigure} \label{fig:f}
-				\end{subfigure}
-				\smallskip
-				\begin{subfigure}{0.95\textwidth}
-					\includegraphics[width=\linewidth]{images/legende_nomad.png}
-				\end{subfigure}
-				\caption{Comparaison sur STYRENE avec \MADS} \label{fig:3}
-			\end{figure}
-			\clearpage
+\subsection{MADS}\label{sec:cma}
+%		\subsubsection{Moré-Wild}
+%			\begin{figure}[!htb] % CS-SMOOTH
+%				\centering
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_01_log.png}
+%					%\caption{First subfigure} \label{fig:a}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/data_m_SMOOTH_01_log.png}
+%					%\caption{Second subfigure} \label{fig:b}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_001_log.png}
+%					%\caption{Third subfigure} \label{fig:c}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/data_m_SMOOTH_001_log.png}
+%					%\caption{Fourth subfigure} \label{fig:d}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_0001_log.png}
+%					%\caption{Third subfigure} \label{fig:e}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/data_m_SMOOTH_0001_log.png}
+%					%\caption{Fourth subfigure} \label{fig:f}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.95\textwidth}
+%					\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%				\end{subfigure}
+%				\caption{Comparaison sur problèmes lisses de Moré-Wild avec \MADS} \label{fig:1}
+%			\end{figure}
+%			\clearpage
+%			\begin{figure}[!htb] % CS-SMOOTH
+%				\centering
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_01_log.png}
+%					%\caption{First subfigure} \label{fig:a}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/data_m_NONDIFF_01_log.png}
+%					%\caption{Second subfigure} \label{fig:b}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_001_log.png}
+%					%\caption{Third subfigure} \label{fig:c}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/data_m_NONDIFF_001_log.png}
+%					%\caption{Fourth subfigure} \label{fig:d}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_0001_log.png}
+%					%\caption{Third subfigure} \label{fig:e}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/data_m_NONDIFF_0001_log.png}
+%					%\caption{Fourth subfigure} \label{fig:f}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.95\textwidth}
+%					\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%				\end{subfigure}
+%				\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
+%			\end{figure}
+%			\clearpage
+%			\begin{figure}[!htb] % CS-SMOOTH
+%				\centering
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/perf_m_NOISY3_01_log.png}
+%					%\caption{First subfigure} \label{fig:a}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/data_m_NOISY3_01_log.png}
+%					%\caption{Second subfigure} \label{fig:b}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/perf_m_NOISY3_001_log.png}
+%					%\caption{Third subfigure} \label{fig:c}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/data_m_NOISY3_001_log.png}
+%					%\caption{Fourth subfigure} \label{fig:d}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/perf_m_NOISY3_0001_log.png}
+%					%\caption{Third subfigure} \label{fig:e}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/data_m_NOISY3_0001_log.png}
+%					%\caption{Fourth subfigure} \label{fig:f}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.95\textwidth}
+%					\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%				\end{subfigure}
+%				\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
+%			\end{figure}
+%			\clearpage
+%			Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
+%			\clearpage
+%		\subsubsection{STYRENE}
+%			\begin{figure}[!htb] % CS-SMOOTH
+%				\centering
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_n_oo.png}
+%					%\caption{First subfigure} \label{fig:a}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_0n_oo.png}
+%					%\caption{Second subfigure} \label{fig:b}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_or_om.png}
+%					%\caption{Third subfigure} \label{fig:c}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_om_oo.png}
+%					%\caption{Fourth subfigure} \label{fig:d}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_om_n.png}
+%					%\caption{Third subfigure} \label{fig:e}
+%				\end{subfigure}%\hspace*{\fill}
+%				\begin{subfigure}{0.43\textwidth}
+%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_om_n.png}
+%					%\caption{Fourth subfigure} \label{fig:f}
+%				\end{subfigure}
+%				\smallskip
+%				\begin{subfigure}{0.95\textwidth}
+%					\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%				\end{subfigure}
+%				\caption{Comparaison sur STYRENE avec \MADS} \label{fig:3}
+%			\end{figure}
+%			\clearpage
 			Commentaires CommentairesCommentaire sCommentairesCommentaire sCommentairesCommentairesCommentai resCommentairesCommentairesCommentairesCommentairesCommentairesComm entairesCommentairesCommentairesC ommentairesCommentairesCommentairesCommentairesCommentairesCommentair esCommentairesCommentairesCommen tairesCommentairesCommentairesCommentairesCommentairesCommentairesComme ntairesCommentairesCommentaires CommentairesCommentairesCommentairesCommentairesCommentairesCommentairesC ommentairesCommentairesComment airesCommentairesCommentairesCommentairesCommentairesCommentairesCommentair esCommentaires
 			\clearpage
-	\subsection{MADS de NOMAD}
-		\subsubsection{Moré-Wild}
-		\begin{figure}[!htb] % CS-SMOOTH
-			\centering
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_01_log.png}
-				%\caption{First subfigure} \label{fig:a}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/data_m_SMOOTH_01_log.png}
-				%\caption{Second subfigure} \label{fig:b}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_001_log.png}
-				%\caption{Third subfigure} \label{fig:c}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/data_m_SMOOTH_001_log.png}
-				%\caption{Fourth subfigure} \label{fig:d}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_0001_log.png}
-				%\caption{Third subfigure} \label{fig:e}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/data_m_SMOOTH_0001_log.png}
-				%\caption{Fourth subfigure} \label{fig:f}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.95\textwidth}
-				\includegraphics[width=\linewidth]{images/legende_nomad.png}
-			\end{subfigure}
-			\caption{Comparaison sur problèmes lisses de Moré-Wild avec \MADS par défaut de NOMAD} \label{fig:1}
-		\end{figure}
-		\clearpage
-		\begin{figure}[!htb] % CS-SMOOTH
-			\centering
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_01_log.png}
-				%\caption{First subfigure} \label{fig:a}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/data_m_NONDIFF_01_log.png}
-				%\caption{Second subfigure} \label{fig:b}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_001_log.png}
-				%\caption{Third subfigure} \label{fig:c}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/data_m_NONDIFF_001_log.png}
-				%\caption{Fourth subfigure} \label{fig:d}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_0001_log.png}
-				%\caption{Third subfigure} \label{fig:e}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/data_m_NONDIFF_0001_log.png}
-				%\caption{Fourth subfigure} \label{fig:f}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.95\textwidth}
-				\includegraphics[width=\linewidth]{images/legende_nomad.png}
-			\end{subfigure}
-			\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \MADS par défaut de NOMAD} \label{fig:1}
-		\end{figure}
-		\clearpage
-		\begin{figure}[!htb] % CS-SMOOTH
-			\centering
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/perf_m_NOISY3_01_log.png}
-				%\caption{First subfigure} \label{fig:a}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/data_m_NOISY3_01_log.png}
-				%\caption{Second subfigure} \label{fig:b}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/perf_m_NOISY3_001_log.png}
-				%\caption{Third subfigure} \label{fig:c}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/data_m_NOISY3_001_log.png}
-				%\caption{Fourth subfigure} \label{fig:d}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/perf_m_NOISY3_0001_log.png}
-				%\caption{Third subfigure} \label{fig:e}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/data_m_NOISY3_0001_log.png}
-				%\caption{Fourth subfigure} \label{fig:f}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.95\textwidth}
-				\includegraphics[width=\linewidth]{images/legende_nomad.png}
-			\end{subfigure}
-			\caption{Comparaison sur problèmes bruités de Moré-Wild avec \MADS par défaut de NOMAD} \label{fig:3}
-		\end{figure}
-		\clearpage
-		Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
-		\clearpage
-		\subsubsection{STYRENE}
-		\begin{figure}[!htb] % CS-SMOOTH
-			\centering
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_n_oo.png}
-				%\caption{First subfigure} \label{fig:a}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_0n_oo.png}
-				%\caption{Second subfigure} \label{fig:b}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_or_om.png}
-				%\caption{Third subfigure} \label{fig:c}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_om_oo.png}
-				%\caption{Fourth subfigure} \label{fig:d}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_om_n.png}
-				%\caption{Third subfigure} \label{fig:e}
-			\end{subfigure}%\hspace*{\fill}
-			\begin{subfigure}{0.43\textwidth}
-				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_om_n.png}
-				%\caption{Fourth subfigure} \label{fig:f}
-			\end{subfigure}
-			\smallskip
-			\begin{subfigure}{0.95\textwidth}
-				\includegraphics[width=\linewidth]{images/legende_nomad.png}
-			\end{subfigure}
-			\caption{Comparaison sur STYRENE avec \MADS par défaut de NOMAD} \label{fig:3}
-		\end{figure}
+\subsection{\MADS de NOMAD}\label{sec:ctr}
+%	\subsubsection{Moré-Wild}
+%		\begin{figure}[!htb] % CS-SMOOTH
+%			\centering
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_01_log.png}
+%				%\caption{First subfigure} \label{fig:a}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/data_m_SMOOTH_01_log.png}
+%				%\caption{Second subfigure} \label{fig:b}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_001_log.png}
+%				%\caption{Third subfigure} \label{fig:c}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/data_m_SMOOTH_001_log.png}
+%				%\caption{Fourth subfigure} \label{fig:d}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_0001_log.png}
+%				%\caption{Third subfigure} \label{fig:e}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/data_m_SMOOTH_0001_log.png}
+%				%\caption{Fourth subfigure} \label{fig:f}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.95\textwidth}
+%				\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%			\end{subfigure}
+%			\caption{Comparaison sur problèmes lisses de Moré-Wild avec \MADS par défaut de NOMAD} \label{fig:1}
+%		\end{figure}
+%		\clearpage
+%		\begin{figure}[!htb] % CS-SMOOTH
+%			\centering
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_01_log.png}
+%				%\caption{First subfigure} \label{fig:a}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/data_m_NONDIFF_01_log.png}
+%				%\caption{Second subfigure} \label{fig:b}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_001_log.png}
+%				%\caption{Third subfigure} \label{fig:c}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/data_m_NONDIFF_001_log.png}
+%				%\caption{Fourth subfigure} \label{fig:d}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_0001_log.png}
+%				%\caption{Third subfigure} \label{fig:e}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/data_m_NONDIFF_0001_log.png}
+%				%\caption{Fourth subfigure} \label{fig:f}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.95\textwidth}
+%				\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%			\end{subfigure}
+%			\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \MADS par défaut de NOMAD} \label{fig:1}
+%		\end{figure}
+%		\clearpage
+%		\begin{figure}[!htb] % CS-SMOOTH
+%			\centering
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/perf_m_NOISY3_01_log.png}
+%				%\caption{First subfigure} \label{fig:a}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/data_m_NOISY3_01_log.png}
+%				%\caption{Second subfigure} \label{fig:b}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/perf_m_NOISY3_001_log.png}
+%				%\caption{Third subfigure} \label{fig:c}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/data_m_NOISY3_001_log.png}
+%				%\caption{Fourth subfigure} \label{fig:d}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/perf_m_NOISY3_0001_log.png}
+%				%\caption{Third subfigure} \label{fig:e}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/data_m_NOISY3_0001_log.png}
+%				%\caption{Fourth subfigure} \label{fig:f}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.95\textwidth}
+%				\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%			\end{subfigure}
+%			\caption{Comparaison sur problèmes bruités de Moré-Wild avec \MADS par défaut de NOMAD} \label{fig:3}
+%		\end{figure}
+%		\clearpage
+%		Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
+%		\clearpage
+%	\subsubsection{STYRENE}
+%		\begin{figure}[!htb] % CS-SMOOTH
+%			\centering
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_n_oo.png}
+%				%\caption{First subfigure} \label{fig:a}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_0n_oo.png}
+%				%\caption{Second subfigure} \label{fig:b}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_or_om.png}
+%				%\caption{Third subfigure} \label{fig:c}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_om_oo.png}
+%				%\caption{Fourth subfigure} \label{fig:d}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_om_n.png}
+%				%\caption{Third subfigure} \label{fig:e}
+%			\end{subfigure}%\hspace*{\fill}
+%			\begin{subfigure}{0.43\textwidth}
+%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_om_n.png}
+%				%\caption{Fourth subfigure} \label{fig:f}
+%			\end{subfigure}
+%			\smallskip
+%			\begin{subfigure}{0.95\textwidth}
+%				\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%			\end{subfigure}
+%			\caption{Comparaison sur STYRENE avec \MADS par défaut de NOMAD} \label{fig:3}
+%		\end{figure}
+%	\clearpage
+	\subsection{\GSS}\label{sec:cgs}
+%	\begin{figure}[!htb] % CS-SMOOTH
+%		\centering
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_gss_SMOOTH_01_log.png}
+%			%\caption{First subfigure} \label{fig:a}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_gss_SMOOTH_01_log.png}
+%			%\caption{Second subfigure} \label{fig:b}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_gss_SMOOTH_001_log.png}
+%			%\caption{Third subfigure} \label{fig:c}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_gss_SMOOTH_001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:d}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_gss_SMOOTH_0001_log.png}
+%			%\caption{Third subfigure} \label{fig:e}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_gss_SMOOTH_0001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:f}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.95\textwidth}
+%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%		\end{subfigure}
+%		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \MADS} \label{fig:1}
+%	\end{figure}
+%	\clearpage
+%	\begin{figure}[!htb] % CS-SMOOTH
+%		\centering
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_gss_NONDIFF_01_log.png}
+%			%\caption{First subfigure} \label{fig:a}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_gss_NONDIFF_01_log.png}
+%			%\caption{Second subfigure} \label{fig:b}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_gss_NONDIFF_001_log.png}
+%			%\caption{Third subfigure} \label{fig:c}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_gss_NONDIFF_001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:d}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_gss_NONDIFF_0001_log.png}
+%			%\caption{Third subfigure} \label{fig:e}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_gss_NONDIFF_0001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:f}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.95\textwidth}
+%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%		\end{subfigure}
+%		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \MADS} \label{fig:1}
+%	\end{figure}
+%	\clearpage
+%	\begin{figure}[!htb] % CS-SMOOTH
+%		\centering
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_gss_NOISY3_01_log.png}
+%			%\caption{First subfigure} \label{fig:a}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_gss_NOISY3_01_log.png}
+%			%\caption{Second subfigure} \label{fig:b}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_gss_NOISY3_001_log.png}
+%			%\caption{Third subfigure} \label{fig:c}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_gss_NOISY3_001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:d}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_gss_NOISY3_0001_log.png}
+%			%\caption{Third subfigure} \label{fig:e}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_gss_NOISY3_0001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:f}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.95\textwidth}
+%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%		\end{subfigure}
+%		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \MADS} \label{fig:3}
+%	\end{figure}
 	\clearpage
-	\subsection{GSS}
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_gss_SMOOTH_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_gss_SMOOTH_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_gss_SMOOTH_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_gss_SMOOTH_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_gss_SMOOTH_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_gss_SMOOTH_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \MADS} \label{fig:1}
-	\end{figure}
-	\clearpage
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_gss_NONDIFF_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_gss_NONDIFF_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_gss_NONDIFF_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_gss_NONDIFF_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_gss_NONDIFF_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_gss_NONDIFF_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \MADS} \label{fig:1}
-	\end{figure}
-	\clearpage
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_gss_NOISY3_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_gss_NOISY3_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_gss_NOISY3_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_gss_NOISY3_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_gss_NOISY3_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_gss_NOISY3_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \MADS} \label{fig:3}
-	\end{figure}
-	\clearpage
-	\subsection{imfil}
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_i_SMOOTH_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_i_SMOOTH_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_i_SMOOTH_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_i_SMOOTH_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_i_SMOOTH_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_i_SMOOTH_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS} \label{fig:1}
-	\end{figure}
-	\clearpage
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_i_NONDIFF_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_i_NONDIFF_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_i_NONDIFF_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_i_NONDIFF_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_i_NONDIFF_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_i_NONDIFF_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
-	\end{figure}
-	\clearpage
-	\begin{figure}[!htb] % CS-SMOOTH
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_i_NOISY3_01_log.png}
-			%\caption{First subfigure} \label{fig:a}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_i_NOISY3_01_log.png}
-			%\caption{Second subfigure} \label{fig:b}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_i_NOISY3_001_log.png}
-			%\caption{Third subfigure} \label{fig:c}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_i_NOISY3_001_log.png}
-			%\caption{Fourth subfigure} \label{fig:d}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/perf_i_NOISY3_0001_log.png}
-			%\caption{Third subfigure} \label{fig:e}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_i_NOISY3_0001_log.png}
-			%\caption{Fourth subfigure} \label{fig:f}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
-	\end{figure}
-	\clearpage
+	\subsection{\imfil}\label{sec:cim}
+%	\begin{figure}[!htb] % CS-SMOOTH
+%		\centering
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_i_SMOOTH_01_log.png}
+%			%\caption{First subfigure} \label{fig:a}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_i_SMOOTH_01_log.png}
+%			%\caption{Second subfigure} \label{fig:b}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_i_SMOOTH_001_log.png}
+%			%\caption{Third subfigure} \label{fig:c}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_i_SMOOTH_001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:d}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_i_SMOOTH_0001_log.png}
+%			%\caption{Third subfigure} \label{fig:e}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_i_SMOOTH_0001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:f}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.95\textwidth}
+%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%		\end{subfigure}
+%		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS} \label{fig:1}
+%	\end{figure}
+%	\clearpage
+%	\begin{figure}[!htb] % CS-SMOOTH
+%		\centering
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_i_NONDIFF_01_log.png}
+%			%\caption{First subfigure} \label{fig:a}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_i_NONDIFF_01_log.png}
+%			%\caption{Second subfigure} \label{fig:b}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_i_NONDIFF_001_log.png}
+%			%\caption{Third subfigure} \label{fig:c}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_i_NONDIFF_001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:d}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_i_NONDIFF_0001_log.png}
+%			%\caption{Third subfigure} \label{fig:e}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_i_NONDIFF_0001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:f}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.95\textwidth}
+%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%		\end{subfigure}
+%		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
+%	\end{figure}
+%	\clearpage
+%	\begin{figure}[!htb] % CS-SMOOTH
+%		\centering
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_i_NOISY3_01_log.png}
+%			%\caption{First subfigure} \label{fig:a}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_i_NOISY3_01_log.png}
+%			%\caption{Second subfigure} \label{fig:b}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_i_NOISY3_001_log.png}
+%			%\caption{Third subfigure} \label{fig:c}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_i_NOISY3_001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:d}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/perf_i_NOISY3_0001_log.png}
+%			%\caption{Third subfigure} \label{fig:e}
+%		\end{subfigure}%\hspace*{\fill}
+%		\begin{subfigure}{0.43\textwidth}
+%			\includegraphics[width=\linewidth]{images/data_i_NOISY3_0001_log.png}
+%			%\caption{Fourth subfigure} \label{fig:f}
+%		\end{subfigure}
+%		\smallskip
+%		\begin{subfigure}{0.95\textwidth}
+%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
+%		\end{subfigure}
+%		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
+%	\end{figure}
+%	\clearpage
 	Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
-	\clearpage

@@ -1,10 +1,11 @@
-\Chapter{ALGORITHMES D'OPTIMISATION SANS-DÉRIVÉES}\label{sec:Theme1}
-\section{Coordinate Search}
+\Chapter{OUTILS D'OPTIMISATION SANS-DÉRIVÉES}\label{sec:Theme1}
+Cette section du travaille consiste en un état de l'art sur les outils utilisés en optimisation sans-dérivées par recherche directe. On se concentrera sur la description des outils qui sont nécessaires à la définition et à l'application de la stratégie algorithmique étudiée, soit l'opportunisme, décrite à la section \ref{sec:Theme2}. En premier lieu, une revue des méthodes de recherche directe ciblées pour l'étude est effectuée. Cette étape nécessite une grande attention à l'identification des caractéristiques des méthodes qui garantissent la convergence théorique de la méthode. De cette façon, les modifications apportées aux algorithmes pourront être effectuées sans interférer avec les hypothèses obligatoires pour l'analyse de convergence. Ensuite, on traitera de la gestion des contraintes en fonction de leurs types, de façon à observer subséquemment les interactions entre l'opportunisme et les techniques de gestion de contraintes à notre disposition. Enfin, on définira les modèles quadratiques utilisés par quelques unes des implémentations utilisées lors des essais numériques de la section \ref{sec:Theme3}.
+\section{Coordinate Search}\label{sec:cs}
 Le premier algorithme à être abordé est aussi le plus intuitif pour l'optimisation sans contraintes, qu'on appelera \emph{Coordinate Search} (\CS{}), ou Recherche par coordonnée, parfois appelée \emph{Compass Search}~\cite{KoLeTo03a}. On attribue à Fermi et Metropolis~\cite{FeMe1952} cette première méthode de recherche directe. Pour que leur modèle suive bien leur ensemble de données expérimentales sur la diffusion nucléaire, Fermi et Metropolis ont fait varier les paramètre théoriques de déphasage de leur fonction un à la fois avec un pas constant. Lorsque ni l'augmentation ni la diminution de l'un des paramètres améliorait la concordance avec les données expérimentales, la longueur du pas était diminuée de moitiée et le processus était recommencé. On continuait ainsi jusqu'à ce que le pas soit considéré suffisement petit. C'est ainsi qu'est née la méthode de la recherche par coordonnée. 
 Booker et al.~\cite{BoDeFrSeToTr99a} proposent un cadre rigoureux aux algorithmes de recherche de motifs. On y stipule que les algorithmes doivent être divisés en deux étapes, soient la recherche qu'on notera \SEARCH{} et la sonde qu'on notera \POLL{} afin d'être conforme avec la littérature. La \SEARCH{} consiste à l'implentation d'une méthode visant à explorer le domaine de la fonction sans égard à la détermination d'un optimum. Le \POLL{} cherche à minimiser la fonction pour déterminer un optimum. Dans le cadre qui nous intéresse, le \POLL{} serait l'entièreté du processus, tandis que la \SEARCH{} n'y trouverait pas son correspondant. La description de l'algorithme \CS{} décrite en vertu du cadre proposé par Booker et al. est fortement inspirée de celle de Audet et Hare, issue de~\cite{AuHa2018}.
 \begin{algorithm}[H]
 	\caption{\textsf{Recherche par coordonnée} (\CS)}
-	\label{alg1}
+	\label{alg:cs}
 	\begin{algorithmic}
 		\STATE Avec $f:\R^n \rightarrowtail \R$ la fonction objectif et $x^0$ le point de départ
 		\STATE 0. \textsf{Initialisation des paramètres} : 
@@ -37,7 +38,7 @@ Booker et al.~\cite{BoDeFrSeToTr99a} proposent un cadre rigoureux aux algorithme
 	\end{algorithmic}
 \end{algorithm}
 À l'étape \POLL de l'algorithme, on entend que la fonction $f(x)$ est évaluée à chaque élément de $t \in P^k$ avant de déterminer quel $t$ deviendra le nouveau centre de sonde $x^{k+1}$. Cependant, si les évaluations sont effectuées en série, on aura une séquence de points à évaluer. La séquence proposée est celle de $2n$ mouvements dans les directions elementaires suivie de la détermination d'un nouveau centre de sonde si au moins une évaluation est un succès. C'est dans cette séquence que l'opportunisme pourra être introduit, afin de ne pas évaluer le reste de la liste si le test de décroissance simple est positif.
-\section{Generalized Pattern Search}
+\section{Generalized Pattern Search}\label{sec:gps}
 Le deuxième algorithme présenté est la recherche par motifs généralisée. La premiere recherche par motifs en soit est élaboré par Hooke et Jeeves~\cite{HoJe61a}. Ils nomment la recherche par motifs (\emph{Pattern Search} ou \PS) la routine de recherche directe visant à minimiser une fonction $f(x)$ avec leur algorithme. Cette routine est composée d'une série de mouvements autour d'un point qui peuvent être divisés en deux types, soit les mouvements exploratoires (\emph{Exploratory Moves}) ou les mouvements destinés à la détermination d'un minimum, soit les mouvements de motifs (\emph{Pattern Moves}). Les mouvements exploratoires  servent à la détermination du motifs, c'est à dire au comportement de la fonction $f(x^k)$ aux alentours d'un point $x^k$. Les mouvements de motifs sont ensuite effectués dans la direction que les mouvements exploratoires ont déterminé comme étant celle qui se dirige vers le minimum de la fonction. Hooke et Jeeves introduisent aussi la définition de succès et d'échec. Un succès est mouvement tel que la valeur de $f(x)$ au point est inférieure à la meilleure connue auparavant. Dans le cas contraire, on dira que c'est un échec.\\
 Lors de l'élaboration de cette technique ils mentionnent que :
 \begin{quote}
@@ -55,7 +56,7 @@ Afin de rester dans le cadre de Booker et al.~\cite{BoDeFrSeToTr99a}, on dépein
 Par ailleurs, il est à noter que les algorithmes de recherche directe énoncés dans~\cite{LeTo96b,Torc97a,LeTo99a,LeTo00a}, qui sont des algorithmes déclinant de la famille d'algorithmes \GPS, diffèrent à la formulation donnée dans ce document inspirée de Audet et Hare~\cite{AuHa2018}, notamment sur un aspect principal. La mise à jour de la longueur du pas se fait par deux paramètre différents, soient $\delta^{k+1} =\phi^k \delta^k, \phi^k \geq 1$ pour l'expansion du maillage dans le cas ou l'itération $k$ est un succès et $\delta^{k+1} =\lambda^k \delta^k, \lambda^k \in (0,1)$ dans le cas d'un échec. Dans la formulation présente on utilise un seul paramètre $\tau \in (0,1)$ et son inverse $\tau^{-1}$ pour cette mise à jour. Cependant, cette altération ne contrevient pas aux requis de la démonstration de la convergence de~\cite{Torc97a} qui assurent que la formulation présente possède les même propriétés. La formulation présente aussi une différence notable avec celle fait par Booker et al. dans~\cite{BoDeFrSeToTr99a}, c'est à dire l'admission de la mise à jour de la longueur du pas pour une \SEARCH fructueuse, alors que Booker et al. incorporent la mise à jour seulement dans un échec de \POLL, à l'image de l'utilisation d'un facteur $\phi^k=1$.
 \begin{algorithm}[H]
 	\caption{\textsf{Recherche par motifs généralisée} (\GPS)}
-	\label{alg1}
+	\label{alg:gps}
 	\begin{algorithmic}
 		\STATE Avec $f:\R^n \rightarrowtail \R$ la fonction objectif et $x^0$ le point de départ
 		\STATE 0. \textsf{Initialisation des paramètres} : 
@@ -100,7 +101,7 @@ Par ailleurs, il est à noter que les algorithmes de recherche directe énoncés
 	\end{algorithmic}
 \end{algorithm}
 L'opportunisme pourra être implémenté dans l'étape de \POLL{} selon la même logique que dans \CS, c'est à dire à même la liste des points $x^k + \delta^k d : d \in D^k$. Pour ce qui est de la \SEARCH, l'implémentation de la stratégie est faisable mais sa performance n'en vient qu'à dépendre de la pertinence de la méthode pour générer $S^k$.
-\section{Mesh Adaptive Direct Search}
+\section{Mesh Adaptive Direct Search}\label{sec:mad}
 Le troisième algorithme présenté est dans les même lignée que \CS et \GPS. Il s'agit de la recherche direct sur maillage adaptif (\emph{Mesh Adaptive Direct Search} ou \MADS), formulé par Audet et Dennis~\cite{AuDe2006}. Contrairement aux algorithmes précédents, \MADS est un algorithme basé sur un maillage, c'est à dire que chaque évaluation de la fonction objectif se fera à un point sur une discrétisation de l'espace des variables. On dénotera $M^k:=\{x^k + \delta^kDy : y \in \N^p\} \subset \R^n$ le maillage à l'itération $k$ sur lequel les itérés seront définis, généré par l'ensemble générateur positif $D = GZ$ et $y$ les entiers naturels. Il s'agit ici d'un maillage de cardinalité infini. Dans leur formulation de Audet et Hate reprise ici, les algorithmes \CS et \GPS sont aussi considéré comme étant basé sur un maillage, quoique leurs premières références~\cite{HoJe61a,Torc97a} n'en indique pas autant.\\
 La grande distinction de \MADS ne réside alors pas dans son utilisation d'un maillage comme structure, mais bien l'incorporation d'un cadre à son étape de sonde. On définit le cadre tel que $F^k:=\{x\in M^k : \norminf{x-x^k} \leq \Delta^k b \}$ à l'itération $k$, soit l'ensemble des points sur le maillage $M^k$ pour lesquels la distance de Chebyshev à l'itéré courant est inférieur à une valeur $\Delta ^k b$. Cette valeur est déterminée par $b = \max\{\norminf{d'}:d' \in \D\}$, soit la plus grande composante vectorielle présente dans tous les colonnes de la base positive $\D$ issue de l'ensemble générateur $D$, multipliée par un paramètre introduit dans \MADS, soit le paramètre de longueur du cadre $\Delta^k$.\\
 La figure \ref{fig:MADS} montre une itération hypothétique de \MADS pour laquelle $\Delta^k = \frac{1}{2}, \delta^k = \frac{1}{8}$ avec l'ensemble générateur étant
@@ -126,7 +127,7 @@ $D = \begin{bmatrix*}[C]
 Dans \GPS, quoique l'algorithme décrit n'inclue pas de maillage formellement, les évaluations sont limitées aux directions de $D$ mise à l'échelle avec la longueur du pas. Dans \MADS, on pourra choisir n'importe quelle direction telle que $x^k + \delta^k d$,tant que l'ensemble des directions $d$ forment un ensemble générateur positif $D_\Delta^k$ qui soit compris dans le cadre $F^k$. La mise à jour de la longueur du cadre se fait avec le paramètre d'ajustement du maillage qui, dans \CS et \GPS, servait  pour la mise à jour de $\delta^k$. Dans \MADS, $\delta^k$ est mis à jour par défaut est d'utiliser $\delta^k = \min(\Delta^k, (\Delta^k)^2)$. Ainsi, on s'assure de respecter $\delta^k \leq \Delta^k$ et on augmente exponentiellement le nombre de directions possibles si $\Delta^k \leq 0$. Afin de rester dans le cadre de Booker et al.~\cite{BoDeFrSeToTr99a}, on décrit l'algorithme en se rattachant aux concepts de \POLL et \SEARCH avec un étape \SEARCH limitée à un ensemble $S^k$ de points.  La description de l'algorithme est fortement inspirée de celle de Audet et Hare, issue de~\cite{AuHa2018}. 
 \begin{algorithm}[H]
 	\caption{\textsf{Recherche par treillis adaptifs} (\MADS)}
-	\label{alg1}
+	\label{alg:mad}
 	\begin{algorithmic}
 		\STATE Avec $f:\R^n \rightarrowtail \R$ la fonction objectif et $x_0$ le point de départ
 		\STATE 0. \textsf{Initialisation des paramètres} : 
@@ -177,7 +178,7 @@ Dans \GPS, quoique l'algorithme décrit n'inclue pas de maillage formellement, l
 	\end{algorithmic}
 \end{algorithm}
 L'implémentation de la stratégie opportuniste sera faite à l'étape de \POLL selon la même logique que pour \CS et \GPS. 
-\section{Generating Set Search}
+\section{Generating Set Search}\label{sec:gss}
 Le quatrième algorithme est la recherche par ensemble générateur. Il est introduit par Kolda, Lewis et Torczon dans~\cite{KoLeTo03a} sous le nom de \textit{Generating Set Search} qu'on abrègera \GSS. Il s'agit d'un algorithme très similaire à \GPS mais qui incorpore certains aspects laissés de côté lors de la formulation de \GPS et certains aspects nouveaux propre à \GSS. À l'instar de \GSS, un ensemble de direction à chaque itération est dédié à la \SEARCH, soit $H^k$ et un ensemble dédié à la \POLL, soit $D^k$.
 
 La différence principale entre \GSS et \GPS est le critère d'acceptation d'un itéré comme étant un succès. Pour les algorithmes précédents, chaque itération entrainant une simple diminution $f(x^k+\delta^kd)<f(x^k)$ était considérée comme un succès. Dans \GSS, on permet que le critère d'acceptation soit resserré avec l'addition du terme $\rho(\delta^k)$ au test de diminution, soit que $f(x^k+\delta^kd)<f(x^k)+\rho(\delta^k)$. $\rho(\delta)$ sera appelée la fonction de force et doit satisfaire à une des deux définitions. Soit $\rho(\delta)$ est continue, $\rho(\delta) = o(\delta)$ lorsque $\delta \downarrow 0$ et que $\rho(\delta_1) < \rho(\delta_2)$ si $\delta_1 < \delta_2$, ou soit $\rho(\delta)\equiv0$. Le premier cas impose une diminution suffisante de la fonction, rappelant le critère d'Armijo~\cite{Armi66a,griva2009linear}. Cet outil permet d'assurer la convergence globale théorique de l'algorithme en utilisant les résultats de convergence de Lucidi et Sciandrone~\cite{SLucidi_MSciandrone_2002} avec seulement une fonction objectif $f(x)$ bornée inférieurement. Le deuxième cas corresponds à une condition de diminution simple. Sous cette condition, les résultats de convergence globale sont assurés par les démonstrations faites sur les algorithmes basés sur treillis. Les conditions de convergences sont resserrés, de façon à ce que \GSS convergera dans le cas où les paramètres fournies restreignent les points candidats à un maillage, et qu'aucune expansion de ce maillage n'est admise.~\cite{KoLeTo03a,CoPr01a}. Il est à noter que \CS et \GPS sont des algorithmes de la famille de \GSS, c'est à dire qu'une paramétrisation spécifique de \GSS permets d'obtenir \GPS ou \CS.  
@@ -186,7 +187,7 @@ Les auteurs spécifient deux autres grande différences en comparaison avec \CS.
 Plusieurs paramètres supplémentaires sont nécessaires tels que la mesure du cosinus, le plus petit angle entre deux directions de l'ensemble générateur $\kappa(G^k)$ qui empêche le choix de mauvaises directions, à l'instar de la mesure d'angle~\cite{griva2009linear,OrRh70a} en recherche linéaire. On y fait mention aussi de la longueur des vecteurs de l'ensemble générateur étant bornées tel que $\beta_{\min}<\norm{d}<\beta_{\max}, \beta_{\max} \geq \beta_{\min} >0$.
 \begin{algorithm}[H]
 	\caption{\textsf{Recherche par ensemble générateur} (\GSS)}
-	\label{alg1}
+	\label{alg:gss}
 	\begin{algorithmic}
 		\STATE Avec $f:\R^n \rightarrowtail \R$ la fonction objectif et $x^0$ le point de départ
 		\STATE 0. \textsf{Initialisation des paramètres} : 
@@ -195,7 +196,7 @@ Plusieurs paramètres supplémentaires sont nécessaires tels que la mesure du c
 			\begin{tabular}{l l}
 				$\delta^0 \in (0,\infty)$ & la longueur du pas initial\\
 				$\lambda_{\max} \in (0,1) \cup \R$ & le paramètre de contraction maximale de la longueur du pas\\
-				$\lambda^0{0} \in (0,1) \cup \R, \phi^0$ & les paramètre de contraction et d'expansion du pas\\
+				$\lambda^0 \in (0,1) \cup \R, \phi^0$ & les paramètre de contraction et d'expansion du pas\\
 				\begin{tabular}{@{}l@{}}$\rho:[0,+\infty]\rightarrow\R$\\~
 				\end{tabular} 
 				&\begin{tabular}{@{}l@{}}une fonction continue tel que $\nabla(\rho(\delta)) < 0$ lorsque $\delta\rightarrow 0$\\
@@ -238,69 +239,89 @@ Plusieurs paramètres supplémentaires sont nécessaires tels que la mesure du c
 		\eindent
 	\end{algorithmic}
 \end{algorithm}
-\section{Implicit Filtering}
-Le dernier algorithme est celui du filtrage implicite (\textit{Implicit Filtering} ou \textsf{imfil}), une méthode développée par Kelley~\cite{Kell99b,Kelley2011}. \imfil se veut un algorithme d'optimisation sans-contraintes explicites hybride de recherche linéaire se basant sur le gradient simplex incorporant des particularités de \CS. On définira le gradient simplex de \imfil comme l'approximation du gradient en calculant la valeur de la fonction à chaque point d'un simplexe où il est possible de le faire.
+\section{Implicit Filtering}\label{sec:imf}
+Le dernier algorithme est celui du filtrage implicite (\textit{Implicit Filtering} ou \imfil). Cette méthode, développée par Kelley~\cite{Kell99b,Kelley2011}, se veut un algorithme d'optimisation hybride, sans-contraintes explicites, de recherche linéaire se basant sur le gradient du stencil qui incorpore des particularités de \CS. Un stencil $V$ consiste en un ensemble de points répartis selon un motif autour d'un point central, par exemple $x^k$. Si le motif consiste en l'ensemble des directions coordonnées, le stencil prendra la forme suivante : 
+ \begin{figure}[H] %FIGURE  : STENCIL
+	\begin{center}
+		\begin{tikzpicture}[
+		scale=1,
+		mydot/.style={
+			circle,
+			fill=white,
+			draw,
+			outer sep=0pt,
+			inner sep=1.5pt
+		}
+		]
+		% Flèches
+		\draw [very thin,gray!50] (0,0) grid[step=0.5] (4,4);
+		\draw [-,thick] (2,2) -- (3.5,2) node [mydot, scale=1.5]{};
+		\draw [-,thick] (2,2) -- (0.5,2) node [mydot, scale=1.5]{};
+		\draw [-,thick] (2,2) -- (2,3.5) node [mydot, scale=1.5]{};
+		\draw [-,thick] (2,2) -- (2,0.5) node [mydot, scale=1.5]{};
+		\draw (2,2) node []{$\bullet$};
+		\draw (2,2) node [above right,scale=0.75]{$x^k$};
+		\end{tikzpicture}
+	\end{center}
+	\caption{Stencil $V$ autour du point $x^k$ avec $n=2$}
+	\label{fig:STENCIL}
+\end{figure} On définira le gradient simplex de \imfil comme l'approximation du gradient de la fonction objectif $f$ en calculant la valeur de la fonction à chaque point d'un stencil et en posant :
 \begin{gather*}
 \nabla_{s}f(x^k) = \frac{1}{h^k}\delta(f,x^k,V,h)V^{\dagger}
 \end{gather*}
-avec $h$ le pas $V\in\R^{n \times k}$ une matrice représentant les directions du simplexe, $\delta(F,x,V,h^k)$ la matrice ayant $f(x+hv_j^1) - f(x)$ à sa $j^e$ colonne, $\{v_1^j\} \in V$ et $V^{\dagger}$ son inverse de Moore-Penrose~\cite{GoVL1996} et $h^k$ le pas de l'itération. L'utilisation de la pseudo-inverse est justifiée par la nécessité de calculer des différences finies d'un seul côté si un point du simplexe n'est pas réalisable. L'idée fondamentale de \imfil est de calculer le gradient simplex en un itéré courant $x^k$, avec des différences simples ou centrées, et d'utiliser ce gradient $\nabla_{s}f(x^k) \in \R^n$ comme direction pour effectuer une recherche linéaire à l'image d'une descente du gradient~\cite{NoWr2006}.  
+avec $V\in\R^{n \times 2n}$ une matrice représentant les directions du stencil, $\delta(F,x,V,h^k)$ le vecteur colonne ayant $f(x+hv_j) - f(x)$ à son $j^e$ élément, $\{v_j\} \in V$, $V^{\dagger}$ son inverse de Moore-Penrose~\cite{GoVL1996} et $h^k$ le pas de l'itération. L'utilisation de la pseudo-inverse est justifiée par la nécessité de calculer des différences finies d'un seul côté si un point du stencil n'est pas réalisable. L'idée fondamentale de \imfil est de calculer le gradient stencil en un itéré courant $x^k$, avec des différences simples ou centrées, et d'utiliser le gradient simplex $\nabla_{s}f(x^k) \in \R^n$ comme direction pour effectuer une recherche linéaire à l'image d'une descente du gradient~\cite{NoWr2006}.  
   
-L'algorithme est défini comme sans-dérivées puisqu'il n'utilise pas le calcul de dérivées analytiques de la fonction. Cependant, contrairement aux étapes de \POLL des algorithmes présentés précédemment, l'algorithme approxime la dérivée à l'aide de différences finies. Pour déterminer les valeurs de $f(x+hv_i^1)$ servant au calcul du gradient simplex, l'auteur introduit une nomenclature proche de la notre, soit le \textsf{stencil poll}, qu'on généralisera sonde du simplexe, qui est constituée de $n$ à $2n$ évaluations de la boîte noire, dans les cas opposés où deux contraintes de bornes sont actives et aucune contrainte de borne n'est active, si le motif utilisé est une combinaison des vecteurs unitaires de $\R^n$. C'est cette sonde du simplexe qui sera analogue aux sections \POLL des algorithmes présentés antérieurement.
+L'algorithme appartient à la famille de méthodes sans-dérivées puisqu'il n'utilise pas le calcul de dérivées analytiques de la fonction. Cependant, contrairement aux étapes de \POLL des algorithmes présentés précédemment, l'algorithme approxime la dérivée à l'aide de différences finies. Pour déterminer les valeurs de $f(x+hv_i^1)$ servant au calcul du gradient simplex, l'auteur introduit une nomenclature proche de la notre, soit le \textsf{stencil poll}, qu'on généralisera sonde du stencil, qui est constituée de $n$ à $2n$ évaluations de la boîte noire, dans les cas opposés où deux contraintes de bornes sont actives et aucune contrainte de borne n'est active, si le motif utilisé est une combinaison des vecteurs unitaires de $\R^n$. C'est cette sonde du stencil qui sera analogue aux sections \POLL des algorithmes présentés antérieurement.
 
-Suivant la sonde du simplexe, si la celle-ci est fructueuse et que la norme de l'approximation du gradient simplexe n'est pas plus petite que $\tau h^k$, l'algorithme effectue une recherche linéaire dans la direction inverse du gradient simplexe $ d = -\nabla_{s}f(x^k)$ avec un nombre de de pas maximal spécifié par l'utilisateur. Alternativement, la direction peut-être calculée avec la résolution de $Hd = \nabla_{s}f(x^k)f(x^k)$, où $H \in \R^{n\times n}$ est une matrice Hessienne issue d'un modèle mis à jour selon une méthode de Quasi-Newton (par exemple Broyden-Fletcher-Goldfarb-Shanno (BFGS)~\cite{Broy65a,Flet65a}),$\nabla_{s}f(x^k) \in \R^n$ le gradient simplexe et $f(x^k)$ la fonction objectif évaluée à l'itéré courant. La recherche linéaire peut s'écrire de la façon suivante qu'on abrègera \textsf{BLS} pour \textit{Backtracking Line Search}. 
+Soit $\tau > 0$ un paramètre de tolérance pour la terminaison sur la norme du gradient fournie par l'utilisateur. Suivant une sonde du stencil fructueuse, si la norme de l'approximation du gradient du stencil n'est pas plus petite que $\tau h^k$, l'algorithme effectue une recherche linéaire dans la direction opposée au gradient du stencil $ d = -\nabla_{s}f(x^k)$ avec un nombre de pas maximal spécifié par l'utilisateur. Alternativement, la direction peut-être calculée avec la résolution dy système d'équations linéaires $Hd = \nabla_{s}f(x^k)f(x^k)$, où $H \in \R^{n\times n}$ est une matrice Hessienne issue d'un modèle mis à jour selon une méthode de Quasi-Newton (par exemple Broyden-Fletcher-Goldfarb-Shanno (BFGS)~\cite{Broy65a,Flet65a}),$\nabla_{s}f(x^k) \in \R^n$ le gradient du stencil et $f(x^k)$ la fonction objectif évaluée à l'itéré courant. La recherche linéaire qui suit peut s'écrire de la façon suivante qu'on abrègera \textsf{BLS} pour \textit{Backtracking Line Search}. 
 \begin{gather}
-\underset{m}{\min}\{m~:~f(x^k-\beta^m d) < f(x^k),m \in \{0,\text{maxitarm}\}\cup\N\}.
+\underset{m}{\min}\{m~:~f(x^k+\beta^m d) < f(x^k),m \in \{0,\text{maxitarm}\}\cup\N\}.
 \end{gather}
-où $\beta^m\leq 1$ agit comme un facteur diminuant pour déterminer la longueur du pas nécessaire, $d \in \R^n$ la direction de descente, $m$ un entier servant de puissance à $\beta$ et  $\text{maxitarm}$ est le nombre maximal de pas de recherche linéaire imposé par l'utilisateur. L'idée ici est de trouver un $m$ minimal pour lequel la fonction évaluée en $f(x^k+\beta^m)<f(x^k)$.\\
-Dans le cas ou la sonde échoue, la longueur du pas est diminuée de moitié et aucune autre recherche n'a lieu. L'algorithme est ainsi recommencé jusqu'à ce que la longueur du pas soit diminuée en deçà d'un seuil paramétré. La description de l'algorithme simplifié sort du cadre de travail précédemment imposé~\cite{BoDeFrSeToTr99a}, quoique l'algorithme pourrait être écrit de façon à avoir un \POLL suivi d'une \SEARCH conditionnelle au succès du \POLL.\\
+où $\beta< 1$ agit comme un facteur diminuant pour déterminer la longueur du pas nécessaire, $d \in \R^n$ la direction de descente, $m$ un entier servant de puissance à $\beta$ et  $\text{maxitarm}$ est le nombre maximal de pas de recherche linéaire imposé par l'utilisateur. L'idée ici est de trouver un $m$ minimal pour lequel la fonction évaluée en $f(x^k+\beta^m)<f(x^k)$.\\
+Dans le cas ou la sonde échoue, la longueur du pas est diminuée de moitié et aucune autre recherche n'a lieu. L'algorithme est ainsi recommencé jusqu'à ce que la longueur du pas soit diminuée en deçà d'un seuil prescrit. La description de l'algorithme simplifié sort du cadre de travail précédemment imposé~\cite{BoDeFrSeToTr99a}. Par contre, il est possible de faire un parallèle entre celui-ci et \imfil. La sonde du stencil peut être vue comme l'étape de \POLL des méthodes de recherche directe, sur laquelle repose l'analyse de convergence. La sonde du stencil est suivie d'une recherche linéaire, une heuristique qui a pour but d'accélérer la convergence de l'algorithme. Un parallèle peut être fait entre la recherche linéaire de \imfil et une étape de \SEARCH des méthodes de recherche directe. Cependant, la recherche linéaire est détaillée et fixée, contrairement aux étapes de \SEARCH possibles pour les autres méthodes. Pour conclure l'analogie, on évoque qu'une itération de \imfil peut être interprétée comme une étape de \POLL suivie d'une étape de \SEARCH, qui celle-ci est conditionnelle au succès de la \POLL, à savoir la mise en marche d'une recherche linéaire seulement lorsque la sonde du stencil est fructueuse.
 \begin{algorithm}[H]
 	\caption{\textsf{Filtrage implicite} (\imfil)}
-	\label{alg5}
+	\label{alg:imf}
 	\begin{algorithmic}
-		\STATE Avec $f:\R^n \rightarrowtail \R$ la fonction objectif et $x^0$ le point de départ
+		\STATE Avec $f:\R^n \mapsto \R$ la fonction objectif et $x^0$ le point de départ
 		\STATE 0. \textsf{Initialisation des paramètres} :
 		\bindent 
 		\STATE\begin{flushleft}
 			\begin{tabular}{l l}
 				$h^0 \in (0,\infty)$ & la longueur du pas initial\\
-				$V = \{\pm e_1,\pm e_2,\dots,\pm e_k\}$ & une matrice de motif\\
-				$\text{budget}$ & le nombre d'évaluation maximal\\
-				$\text{maxitarm}$ & nombre maximale d'itération de recherche linéaire\\
+				$V = \{\pm e_1,\pm e_2,\dots,\pm e_k\}$ & un stencil\\
+				$\text{budget}$ & le nombre d'évaluations maximal\\
+				$\text{maxitarm}$ & nombre maximal d'itérations de recherche linéaire\\
 				$\epsilon_{\text{stop}} $ & le critère d'arrêt sur le pas\\
 				$k \leftarrow 0$ & le compteur d'itérations de l'algorithme\\
-				$\tau \leftarrow 0$ & la tolérance admise sur le gradient\\
+				$\tau > 0$ & la tolérance admise sur le gradient\\
 			\end{tabular}
 		\end{flushleft}
 		\eindent
 		\STATE 1. \textsf{Boucle principale} :
 		\bindent 
-		\WHILE {$f_{\text{count}} < \textsf{budget} ~\&~ h^k < \epsilon_{\text{stop}}$} %\subseteq M^k$}
-%		\WHILE{$\norm{x^k-P(x^k-\nabla_{s}(x^k))}\geq \tau h$}
-		\STATE Effectuer la sonde du gradient
-		\FOR {$i=1,\dots,k$}
-		\STATE $F_i = f(x^k + h^k v_i), v \in V$
-		\ENDFOR
-		\STATE Mise à jour de $H$ si nécessaire
-		\STATE évaluer $-\nabla_{s}f(x^k)$    (ou $d = H^{-1}\nabla_{s}f(x^k)f(x^k)$)
-		\STATE $x_{\min}\leftarrow\text{argmin}(F)$
-		\IF {$\norm{\nabla_{s}f(x^k)}\geq \tau h^k$ \& $f(x_{\min})<f(x^k)$}
-		\STATE $d \leftarrow -\nabla_{s}f(x^k)$
-		\IF {\textsf{BLS} est réalisable}
-		\STATE $ x^{k+1} \leftarrow x^k + \beta^m d$ 
-		\ELSE
-		\STATE $x^{k+1} \leftarrow x_{\min}$
-		\ENDIF
-		\ELSE
-		\STATE $h^{k+1} \leftarrow {h^k}/{2}$
-		\ENDIF
+		\WHILE {$f_{\text{count}} < \textsf{budget} ~\&~ h^k > \epsilon_{\text{stop}}$}
+			\STATE Effectuer la sonde du gradient
+			\STATE Poser $P^k := \{x^k+h^kv_i: v_i \in V\}$ et choisir $x^{n+1}\in \arg\min\{f(x):x\in P^k \cup \{x^k\}\}$
+			\STATE \textsf{Descente linéaire}
+			\STATE Mise à jour de $H$ si nécessaire
+			\STATE évaluer $-\nabla_{s}f(x^k)$
+			\IF {$\norm{\nabla_{s}f(x^k)}\geq \tau h^k$ \& $x^{k+1}\neq x^k$}
+				\STATE $d \leftarrow -\nabla_{s}f(x^k)$ ou $d \leftarrow H^{-1}\nabla_{s}f(x^k)f(x^k)$
+				\IF {\textsf{BLS} est réalisable} 
+					\STATE $x^{k+1} \leftarrow x^k + \beta^m d$
+				\ENDIF
+			\ELSE
+			\STATE $h^{k+1} \leftarrow {h^k}/{2}$
+			\ENDIF
 		\ENDWHILE
 		\eindent
 	\end{algorithmic}
 \end{algorithm}
-\section{Gestion des contraintes en DFO}
-Le problème (1) demande que $x$ soit compris dans l'ensemble $\Omega$. On peut représenter $\Omega$ de la façon suivante afin de représenter le cas ou les seules contraintes existantes sont des bornes notées $X$.
+\section{Gestion des contraintes en DFO}\label{sec:gcd}
+Le problème (1) demande que $x$ soit compris dans l'ensemble $\Omega$. On peut représenter $\Omega$ de la façon suivante afin de représenter le cas ou les seules contraintes existantes sont des bornes : 
 \begin{gather*}
-\Omega = X = \{x\ \in\ \R^n\ :\ l_i \leq (x)_i \leq u_i\}\\
+\Omega = \{x\ \in\ \R^n\ :\ l_i \leq (x)_i \leq u_i\}\\
 \end{gather*}
 Où $l \in \R^*\cup\{-\infty\}$ représente le vecteur des bornes inférieures et $u \in \R^*\cup\{+\infty\}$ le vecteur des bornes supérieures. Sous cette même forme, on peut définir un problème comme étant non borné, si toutes les valeurs de $l$ et de $u$ prennent la valeur infinie, ce qui équivaut à $ X = \R ^n$ \\
 Si la variable $x$, en plus d'être limitée par des bornes, est contrainte par un ensemble d'inégalité, tel que : 
@@ -321,7 +342,7 @@ f(x)~ &\text{si $x \in \Omega$}\\
 \infty~ &\text{sinon}
 \end{cases}
 \end{align*}
-On peut alors redéfinir la fonction à optimiser comme étant $f_\Omega$ en ne se souciant plus des contraintes. Cependant, dépendemment de la forme de la boîte noire, il est possible qu'une solution $f(x)$ existe, et ce même si l'évaluation de $c(x)<0$. On peut alors quantifier la violation de contrainte ainsi~\cite{AuHa2018} : 
+On peut alors redéfinir la fonction à optimiser comme étant $f_\Omega$ en ne se souciant plus des contraintes. Cette approche ne prends cependant pas en compte la nature des contraintes. Dans cet ordre d'esprit, Le Digabel et Wild~\cite{LedWild2015} proposent une taxonomie des contraintes rencontrées en optimisation de boîtes noires. Dépendemment de la forme de la boîte noire, il est possible qu'une solution $f(x)$ existe, et ce même si l'évaluation de la contrainte est violée $c(x)<0$. Dans la terminologie de Le Digabel et Wild, on parles de contraintes de type \textsf{QR*K}, soit l'ensemble des contraintes connues, quantifiables et relaxables. On peut alors quantifier la violation de ces contraintes ainsi~\cite{AuHa2018} : 
 \begin{align*}
 h(x) = \begin{cases}
 \sum_{j\in J}^{}(\max(c_j(x),0))^2~ &\text{si}~x\in X\\
@@ -336,10 +357,11 @@ Cependant, si $x$ est non-réalisable, il domine le point $y$ non-réalisable si
 \begin{align*}
 f(x) \leq f(y), h(x)\leq h(y) \implies x\prec_{h} y ~ &\text{si}~x,y\in\Omega/X
 \end{align*}
-avec au moins une inégalité stricte.\\
-L'algorithme de la barrière progressive admet deux solutions courantes, soient $x^{feas}$ la solution réalisable dont la valeur de la fonction objectif est minimale, et $x^{inf}$, la solution irréalisable non-dominée dont la valeur de la fonction objectif est minimale et où $h(x^{feas})$ est inférieur à $h^k_{max}$, un paramètre limite pour $h$ spécifique à l'itération $k$.\\
-\\
-Dans la Figure ~\ref{fig:barrier}, on observe peut voir quelques points candidats. Les points pleins sont les points non-dominés et les points vides sont dominés ou exclus par la barrière $h_{max}$. Ceux présent dans la zone grise sont dominés par des points irréalisables pour lesquels $f(x)$ ou $h(x)$ sont inférieurs,  ou encore leur valeur de leur fonction de violation $h(x)$ est supérieur à $h_{max}$. L'interaction entre l'utilisation des concepts de barrière et les différents algorithmes d'optimisation sans dérivées sera vue lors de la description des algorithmes.
+avec au moins une inégalité stricte.
+
+L'algorithme de la barrière progressive admet deux solutions courantes, soient $x^{feas}$ la solution réalisable dont la valeur de la fonction objectif est minimale, et $x^{inf}$, la solution irréalisable non-dominée dont la valeur de la fonction objectif est minimale et où $h(x^\text{feas})$ est inférieur à $h^k_{\max}$, un paramètre limite pour $h$ spécifique à l'itération $k$.
+
+Dans la Figure ~\ref{fig:barrier}, on peut observer quelques points candidats. Les points pleins sont les points non-dominés et les points vides sont dominés ou exclus par la barrière $h_{\max}$. Ceux présent dans la zone grise sont dominés par des points irréalisables pour lesquels $f(x)$ ou $h(x)$ sont inférieurs,  ou encore leur valeur de leur fonction de violation $h(x)$ est supérieur à $h_{\max}$. L'interaction entre l'utilisation des concepts de barrière et les différents algorithmes d'optimisation sans dérivées sera vue lors de la description des algorithmes.
 \begin{figure}[h]
 	\begin{center}
 		\begin{tikzpicture}
@@ -379,5 +401,53 @@ Dans la Figure ~\ref{fig:barrier}, on observe peut voir quelques points candidat
 		\fill[pattern = north east lines,opacity = 0.5] (2,5) -- (2,3.9) -- (4,3.9) -- (4,1.7) -- (6,1.7) -- (6,0.7) -- (7,0.7) -- (7,0) -- (8,0) --(8,5) -- cycle;
 		\end{tikzpicture}
 	\end{center}
-	\caption{Barrière progressive, dominance et solutions courantes multiples} \label{fig:barrier}
-\end{figure}
+\caption{Barrière progressive, dominance et solutions courantes multiples} \label{fig:barrier}
+	\end{figure}
+La portion de l'algorithme de la barrière progressive analogue à la sonde se déroule de la façon suivante. On utilise la nomenclature propre à \CS à des fins de simplification  :
+\begin{itemize}
+	\item Si il y a un point $t \in P^k$ qui domine la solution réalisable ou la solution irréalisable, alors on met à jour la solution nouvellement dominée. On mets à jour $\delta^k$ selon un cas de succès et on met à jour la barrière $h^{k+1}_{\max} \leftarrow h(t)$ si $t$ domine $x^{inf}$. Il s'agit d'une itération \emph{dominante}.
+	\item Si aucun nouveau point dominant est trouvé, mais qu'on est en présence d'un point $t \in P^k$ pour lequel $0 < h(t) < h(x^{inf})$, alors on met à jour la barrière $h^{k+1}_{\max} \leftarrow h(t)$. Il s'agit d'une itération \emph{améliorante}.
+	\item Sinon, on mets à jour $\delta^k$ selon un cas d'échec. Il s'agit d'un échec.
+\end{itemize}
+\section{Modèles quadratriques}\label{sec:mod}
+	Conn et Le Digabel~\cite{CoLed2011} font mention de l'utilisation de modèles quadratiques en optimisation sans dérivées. Ces modèles peuvent servir de fonction substitut qui donne une approximation de la fonction et pour laquelle le coût de computation est réduit. Pour obtenir un modèle quadratique, on considère la base naturelle de l'espace des polynômes de degré deux et moins. 
+	\begin{equation*}
+	\xi (x)=(\xi_0(x),\xi_1(x),...,\xi_q(x))^T = \left(1,x_1,x_2,...,x_n,\frac{x_1^2}{2},\frac{x_2^2}{2},...,\frac{x_n^2}{2},x_1 x_2, x_1 x_3,...,x_{n-1},x_{n}\right)^T
+	\end{equation*}
+	Cette base possède $q+1 = (n+1)(n+2)/2$ éléments. Le modèle $\tilde{f}$ de la fonction $f$ est tel que $\tilde{f}(x)=\alpha^T\xi(x)$, $\alpha \in \R^{q+1}$. Pour obtenir ce modèle, un ensemble de point $Y=\{y^0,y^1,...,y^p\}$ ayant $p+1$ éléments est nécessaire. On cherche alors a minimiser la différence entre les valeurs de la boîte noire évaluées aux points de $Y$ et celles du modèle. Au long de l'exécution présente les algorithmes procéderont à l'évaluation de la boîte noire à différents points. Ces point la valeur de la fonction objectif évaluée à ceux-ci sont enregistré dans une cache, parmi laquelle pourront être choisis les $p = q$ points nécessaires à l'élaboration du modèle. Les points devront satisfaire la propriété qui valide le modèle : 
+	\begin{gather*}
+	B(\xi,Y)\alpha = f(Y)\\
+	f(y)=(f(y^0,f(y^1),...,f(y^p))^T\\
+	B(\xi,Y) = 
+	\begin{bmatrix}
+	\xi_0(y^0) & \xi_1(y^0) & \dots & \xi_q(y^0)\\
+	\xi_0(y^1) & \xi_1(y^1) & \dots & \xi_q(y^1)\\
+	\vdots & \vdots & \vdots & \vdots\\
+	\xi_0(y^p) & \xi_1(y^p) & \dots & \xi_q(y^p)\\
+	\end{bmatrix}_.
+	\end{gather*}
+	Ce système peut être résolu seulement si $p=q$ et si la matrice est de rang pleine. Dans le cas où $p\geq q$, on tentera de résoudre le problème de minimisation suivant : 
+	\begin{equation*}
+	\begin{aligned}
+	& \underset{\alpha \in \R}{\text{min}}
+	& & \norm{B(\xi,Y)\alpha -f(Y)}^2
+	\end{aligned}.
+	\end{equation*}
+	Dans le cas où $p<q$, on minimisera le même problême mais en régularisant le problème à l'aide d'une interpolation dans le sense de la norme de Frobenius minimale~\cite{MoWi2009,CuRoVi10}. La norme de Frobenius pour une matrice $A$ est définie par : 
+	\begin{equation*}
+	\norm{A}_F = \sqrt{\overset{m}{\underset{i=1}{\sum}} \overset{n}{\underset{j=1}{\sum}}|a_{i,j}|}.
+	\end{equation*}
+	Il est possible de réarranger $\tilde{f}(x)$ de façon à l'illustrer comme une fonction quadratique en utilisant la notation précédente mais en divisant le modèle en ses expressions linéaires et quadratiques : 
+	\begin{equation*}
+	\tilde{f}(x) = \alpha_{L}^{T}\xi_L(x) + \alpha_{Q}^{T}\xi_Q(x).
+	\end{equation*}
+	L'indice $L$ dénote les termes linéaires et d'ordre 0 de $\xi(x)$, au compte de $n+1$, soient les $n$ variables et le terme de degré 0, $\xi_0(x)=1$. L'indice $Q$ dénote les termes quadratiques au compte de $(n+1)(n+2)/2 - (n+1) = \frac{n(n+1)}{2}$. Ainsi, on peut réecrire la quadratique en trois termes, soient le terme constant, le terme des composantes linéaires et le terme des composantes quadratiques : 
+	\begin{equation*}
+	\tilde{f}(x) = c + g^T x + \frac{1}{2} x^T H x.
+	\end{equation*}
+	Avec $g \in \R^n$ et la matrice $H\in \R^{n\times n}$ la matrice Hessienne symétrique du modèle. Avec un problème sous déterminé où $p<q$, on choisira le modèle tel que :
+	\begin{align*}
+	&\underset{H \in \R^{n,n}}{\min}& &\norm{H}^2_H & &\\
+	&\text{sujet à} & &c + g^T y^i + \frac{1}{2} (y^i)^T H (y^i) = f(y^i) & &i = 1,\dots, p.
+	\end{align*}
+	On entend ici minimiser l'influence des termes quadratiques pour diminuer l'amplitude du modèle entre les points de $Y$ utilisés. Par exemple, pour un problème de dimension $n$ avec $p\leq(n+1)$, on résoudera seulement la portion linéaire de $\alpha ^T \xi(y^i) = f(y^i)$ pour ainsi laisser $h_{i,j}=0, i,j=1\dots n$ et donc $\alpha_{Q}=0$.

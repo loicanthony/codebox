@@ -42,9 +42,18 @@
 \usepackage{subcaption}
 \usepackage{soul}
 \usepackage{amsthm}
+\usepackage{enumitem}
 \usepackage{tabularx}
+\usepackage{hhline}
 \usepackage[frenchb,english]{babel}
 \captionsetup{compatibility=false}
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{colorbrewer,patchplots}
+\pgfplotsset{compat=newest}
+\usetikzlibrary{decorations.markings}
+\pgfplotsset{compat=1.14}
+
 %%
 %% Support des acronymes.
 \usepackage[nolist]{acronym}
@@ -213,7 +222,7 @@ a été dûment accepté\ifthenelse{\equal{\monDiplome}{M}}{}{e} par le jury d'e
 \renewcommand\bibname{RÉFÉRENCES}
 \bibliography{bibliography}
 %\bibliographystyle{polymtl}  % Format de la bibliographie.
-\bibliographystyle{IEEEtranSN-francais}  % Format de la bibliographie.
+%\bibliographystyle{IEEEtranSN-francais}  % Format de la bibliographie.
 %
 \ifthenelse{\equal{\AnnexesPresentes}{O}}{
 \appendix%

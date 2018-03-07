@@ -7,18 +7,20 @@
 %%
 %%  Toutes les annexes doivent être inclues dans ce document
 %%  les unes à la suite des autres.
-\Annexe{DÉMO}
-Texte de l'annexe A\@. Remarquez que la phrase précédente se termine
-par une lettre majuscule suivie d'un point. On indique explicitement
-cette situation à \LaTeX{} afin que ce dernier ajuste correctement
-l'espacement entre le point final de la phrase et le début de la
-phrase suivante.
-
-
-\begin{landscape}
-\Annexe{ENCORE UNE ANNEXE}
-Texte de l'annexe B\@ en mode «landscape».
-\end{landscape}
-
-\Annexe{UNE DERNIÈRE ANNEXE}
-Texte de l'annexe C\@.
+\Annexe{PROFILS SUPPLÉMENTAIRES POUR LA COMPARAISON DES STRATÉGIES D'ORDONNANCEMENT}
+	\begin{figure}[!htb]\label{fig:cs_mw_SMOOTH}
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-3_log.png}
+		\label{fig:data_c_TOUS_1E-3_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-7_log.png}
+		\label{fig:data_c_TOUS_1E-7_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_nomad.png}
+	\end{subfigure}
+	\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS}
+\end{figure}

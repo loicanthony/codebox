@@ -384,12 +384,22 @@ def assim_nomad(read,plot):
     # Vecteurs necessaires pour traiter les données
     seeds = [str(x + 1) for x in range(10)]
     instances = [str(x + 1) for x in range(53)]
-    types = ['SMOOTH', 'NONDIFF', 'WILD3', 'NOISY3']
-    algos = {'g': 'GPS'}
-    #algos = {'m':'MADS','t':'NOMAD_MADS'}
-    strategies = ['n', 'ol', 'os', 'om','or','oo','0n']
-    path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_c_et_g'
-    path2file = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_c_et_g\\plot_data\\'
+    types = ['SMOOTH', 'NOISY3', 'WILD3','NONDIFF']
+    #types = ['NONDIFF']
+    #algos = {'c':'CS'}
+    #algos = {'g':'GPS'}
+    #algos = {'m':'MADS'}
+    #algos = {'t':'DEFAULT'}
+    #algos = {'c': 'CS'}
+    #algos = {'t': 'DEFAULT'}
+    #algos = {'c':'CS','g':'GPS','m':'MADS','t':'DEFAULT'}
+
+    # Strategies decommenter celui avec le n si
+    # strategies = ['n', 'ol', 'os', 'om','or','oo','0n']
+    strategies =  ['oo']
+
+    path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\MW_OG'
+    path2file = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\plot_data\\'
     #path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_m_et_t'
 
     if read:
@@ -416,31 +426,164 @@ def assim_nomad(read,plot):
                 current_set.setProblemClass(type)
 
                 # Pickling
-                with open('nomad_c_et_g\\plot_data\\'+algo+type+'.pkl', 'wb') as output:
+                path2plot_data = path2file + algo + type+'.pkl'
+                with open(path2plot_data, 'wb') as output:
                     pickle.dump(current_set, output, pickle.HIGHEST_PROTOCOL)
-                    print('Pickling data for set : ' + ' '.join([algo, type]))
+                    print('Pickling data for set : ' + ' '.join([algo, type,current_set.opportunism]))
                     output.close()
                 del current_set
 
     if plot:
         # On veut plotter les rations mais avec le bon shnit
         # On rajoute les logarithmes
-        ratios = [0.1, 0.01, 0.001]
-        logs = [True,False]
-        # path2file = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_m_et_t\\plot_data\\'
+        ratios = [0.001,10**(-7)]
+        #ratios = [0.1, 0.01, 0.001, 10**(-4), 10**(-5), 10**(-6), 10**(-7)]
+
+        # logs = [True,False] # Pour tracer les deux styles
+        logs = [True]
+
+        # # Decommenter si on veut tracer par style
+        # for algo in algos:
+        #     for type in types:
+        #         fileName = path2file + algo + type
+        #         with open(fileName + '.pkl', "rb") as f:
+        #             testSet = pickle.load(f)
+        #             f.close()
+        #         for ratio in ratios:
+        #             for log in logs :
+        #                 testSet.plotData(ratio, log)
+        #                 testSet.plotPerformance(ratio, log)
+        #                 print('Ploting performance and data for set : ' + ' '.join([algo, type]))
+        #         del testSet
 
         for algo in algos:
+            amalgame = HistorySet.HistorySet()
+            amalgame.setProblemClass('TOUS')
+            amalgame.setAlgo(algo)
             for type in types:
                 fileName = path2file + algo + type
                 with open(fileName + '.pkl', "rb") as f:
                     testSet = pickle.load(f)
                     f.close()
-                for ratio in ratios:
-                    for log in logs :
-                        testSet.plotData(ratio, log)
-                        testSet.plotPerformance(ratio, log)
-                        print('Ploting performance and data for set : ' + ' '.join([algo, type]))
+                for hist in testSet.historyList:
+                    amalgame.addHistory(hist)
                 del testSet
+            for ratio in ratios:
+                for log in logs:
+                    amalgame.plotData(ratio, log)
+                    amalgame.plotPerformance(ratio, log)
+                    print('Ploting performance and data for set : ' + ' '.join([algo, 'all']))
+            del amalgame
+
+
+def assim_nomad_special(read, plot,algos):
+    # Vecteurs necessaires pour traiter les données
+    seeds = [str(x + 1) for x in range(10)]
+    instances = [str(x + 1) for x in range(53)]
+    types = ['SMOOTH', 'NOISY3', 'NONDIFF']
+    # types = ['NONDIFF']
+    # algos = {'c': 'CS'}
+    # algos = {'t': 'DEFAULT'}
+    # algos = {'m':'MADS','t':'NOMAD_MADS'}
+
+    # Strategies
+    strategies = ['ol', 'os', 'om', 'or', 'oo', '0n']
+
+    # # Opportunisme , si aucun = og
+    # opportunism = 'secsuc'
+    opportunism = 'mineval'
+
+
+    path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\MW_' + opportunism.upper()
+    path2n_results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\MW_OG'
+    path2file = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\plot_data\\'
+
+    if read:
+        # On itere sur tous les boucles
+        for algo in algos:
+            for type in types:
+                current_set = HistorySet.HistorySet()
+                list_for_all_hist = []
+                for strategy in strategies:
+                    for instance in instances:
+                        for seed in seeds:
+                            historyfile = instance + '_' + type + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
+                            foldername = path2results + '\\' + instance + '_' + type + '\\' + algo + strategy
+                            filename = foldername + '\\' + historyfile
+                            currentHist = NOMAD.readLog_MW(filename)
+                            currentHist.clean()
+                            current_set.addHistory(currentHist)
+                    print(' '.join([algo, type, strategy]))
+
+                # Ajouter le sans opportunisme
+                strategy = 'n'
+                for instance in instances:
+                    for seed in seeds:
+                        historyfile = instance + '_' + type + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
+                        foldername = path2n_results + '\\' + instance + '_' + type + '\\' + algo + strategy
+                        filename = foldername + '\\' + historyfile
+                        currentHist = NOMAD.readLog_MW(filename)
+                        currentHist.clean()
+                        current_set.addHistory(currentHist)
+
+                current_set.setNumberProblem(len(instances))
+                current_set.setNumberSeed(len(seeds))
+                current_set.setNumberStrat(1)
+                current_set.setAlgo(algo)
+                current_set.setProblemClass(type)
+                current_set.setOpportunism(opportunism)
+
+                # Pickling
+                path2plot_data = path2file + algo + type + current_set.opportunism + '.pkl'
+                with open(path2plot_data, 'wb') as output:
+                    pickle.dump(current_set, output, pickle.HIGHEST_PROTOCOL)
+                    print('Pickling data for set : ' + ' '.join([algo, type, current_set.opportunism]))
+                    output.close()
+                del current_set
+
+    if plot:
+        # On veut plotter les rations mais avec le bon shnit
+        # On rajoute les logarithmes
+        ratios = [0.001, 10 ** (-7)]
+        # ratios = [0.1, 0.01, 0.001, 10**(-4), 10**(-5), 10**(-6), 10**(-7)]
+
+        # logs = [True,False] # Pour tracer les deux styles
+        logs = [True]
+
+        # # Decommenter si on veut tracer par style
+        # for algo in algos:
+        #     for type in types:
+        #         fileName = path2file + algo + type
+        #         with open(fileName + '.pkl', "rb") as f:
+        #             testSet = pickle.load(f)
+        #             f.close()
+        #         for ratio in ratios:
+        #             for log in logs :
+        #                 testSet.plotData(ratio, log)
+        #                 testSet.plotPerformance(ratio, log)
+        #                 print('Ploting performance and data for set : ' + ' '.join([algo, type]))
+        #         del testSet
+
+        for algo in algos:
+            amalgame = HistorySet.HistorySet()
+            amalgame.setProblemClass('TOUS')
+            amalgame.setAlgo(algo)
+            for type in types:
+                fileName = path2file + algo + type
+                with open(fileName + '.pkl', "rb") as f:
+                    testSet = pickle.load(f)
+                    f.close()
+                for hist in testSet.historyList:
+                    amalgame.addHistory(hist)
+                del testSet
+
+            for ratio in ratios:
+                for log in logs:
+                    amalgame.plotData(ratio, log)
+                    amalgame.plotPerformance(ratio, log)
+                    print('Ploting performance and data for set : ' + ' '.join([algo, 'all',opportunism]))
+            del amalgame
+
 def assim_hopspack(read,plot):
     # Vecteurs necessaires pour traiter les données
     seeds = [str(x + 1) for x in range(10)]
@@ -595,8 +738,7 @@ def assim_styrene(algos,strats):
                     current_history.clean()
                     current_set.addHistory(current_history)
             current_set.setProblemClass(probname)
-            current_set.plot_convergence_all_curves()
-
+            current_set.plot_convergence_all_curves
 def test_graphe(read, plot):
     # Vecteurs necessaires pour traiter les données
     seeds = [str(x + 1) for x in range(10)]
@@ -604,10 +746,11 @@ def test_graphe(read, plot):
     types = ['SMOOTH']
     algos = {'m': 'MADS'}
     # algos = {'m':'MADS','t':'NOMAD_MADS'}
-    strategies = ['n', 'om', 'ol','or','oo','0n','os']
-    path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_m_neg'
+    # strategies = ['n', 'om', 'ol','or','oo','0n','os']
+    strategies = ['n', 'om', 'ol']
+    #path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_m_neg'
     path2file = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_c_et_g\\plot_data\\'
-    #path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_m_et_t'
+    path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_m_et_t'
 
     if read:
         # On itere sur tous les boucles
@@ -619,11 +762,13 @@ def test_graphe(read, plot):
                     for instance in instances:
                         for seed in seeds:
                             historyfile = instance + '_' + type + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
-                        foldername = path2results + '\\' + instance + '_' + type + '\\' + algo + strategy
-                        filename = foldername + '\\' + historyfile
-                        currentHist = NOMAD.readLog_MW(filename)
-                        currentHist.clean()
-                        current_set.addHistory(currentHist)
+                            foldername = path2results + '\\' + instance + '_' + type + '\\' + algo + strategy
+                            filename = foldername + '\\' + historyfile
+                            currentHist = NOMAD.readLog_MW(filename)
+                            currentHist.clean()
+                            current_set.addHistory(currentHist)
+
+
                 print(' '.join([algo, type, strategy]))
 
             current_set.setNumberProblem(len(instances))
@@ -642,7 +787,7 @@ def test_graphe(read, plot):
     if plot:
         # On veut plotter les rations mais avec le bon shnit
         # On rajoute les logarithmes
-        ratios = [0.001]
+        ratios = [10**(-3),10**(-7)]
         logs = [False]
         # path2file = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\nomad_m_et_t\\plot_data\\'
 
@@ -664,4 +809,9 @@ def test_graphe(read, plot):
 # assim_styrene(['m','t'],['om','n'])
 # assim_styrene(['m','t'],['om','oo'])
 # assim_nomad(False,True)
-test_graphe(True, True)
+# test_graphe(True, True)
+# assim_nomad_special(True,False)
+# assim_nomad_special(True,False, {'m': 'MADS'})
+# assim_nomad_special(True,False, {'g': 'GPS'})
+# assim_nomad_special(True,False, {'c': 'CS'})
+assim_nomad_special(False,True, {'m': 'MADS'})

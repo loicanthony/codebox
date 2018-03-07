@@ -16,6 +16,7 @@ class HistorySet:
         self.numberSeed = '1'
         self.prolemClass = 'undefined'
         self.algo = 'undefined'
+        self.opportunism = 'og'
 
 #   Getters and setters
     def getNumberProblem(self):
@@ -51,6 +52,13 @@ class HistorySet:
 
     def setProblemClass(self, entry):
         self.problemClass = entry
+        return
+
+    def getOpportunism(self):
+        return self.opportunism
+
+    def setOpportunism(self, entry):
+        self.opportunism = entry
         return
 
     def getHistoryList(self):
@@ -137,7 +145,8 @@ class HistorySet:
         nomenclature = {'n': 'Sans opport.', 'ol': 'Lexico', 'os': 'Succes', 'om': 'Modeles', 'g': 'GPS',
                         'm': 'MADS', 'gss': 'GSS', 'or': 'Aleatoire', 'c': 'CS', 'oo': 'Omniscient',
                         '0n': 'Negative-Omni.','i' : 'imfil', 'on' : 'Negative-Omni',
-                        0.1: '01', 0.01: '001', 0.001: '0001'}
+                        0.1: '01', 0.01: '001', 0.001: '0001', 0.0001: '1E-4', 0.00001: '1E-5', 0.000001: '1E-6',
+                        0.0000001: '1E-7'}
         colors = ('b', 'g', 'r', 'c', 'm', 'y', 'k')
         markers = ('o','v','^','s','+','x','*')
         linestyles = ['-', '--', '-.', ':','-','--','-.',':']
@@ -174,11 +183,12 @@ class HistorySet:
         titre = 'Profil de performance,' + r'$\tau$' + '=' + str(
             ratio)
         plt.title(titre)
-        nameoffig = 'perf_' + self.algo + '_' + self.problemClass + '_' + nomenclature[ratio]
+        nameoffig = 'perf_' + self.algo + '_' + self.problemClass + '_' + nomenclature[ratio] + self.opportunism
         if log == True:
             nameoffig = nameoffig + '_log'
-        plt.savefig(nameoffig + '.png')
+        plt.savefig('plot\\'+nameoffig + '.png')
         plt.clf()
+        plt.close()
         return
 
     def plotData(self, ratio, log):
@@ -241,7 +251,8 @@ class HistorySet:
         nomenclature = {'n': 'Sans opport.', 'ol': 'Lexico', 'os': 'Succes', 'om': 'Modeles', 'g': 'GPS',
                         'm': 'MADS', 'gss': 'GSS', 'or': 'Aleatoire', 'c': 'CS', 'oo': 'Omniscient',
                         '0n': 'Negative-Omni.','i' : 'imfil', 'on' : 'Negative-Omni',
-                        0.1: '01', 0.01: '001', 0.001: '0001'}
+                        0.1: '01', 0.01: '001', 0.001: '0001', 0.0001: '1E-4', 0.00001: '1E-5', 0.000001: '1E-6',
+                        0.0000001: '1E-7'}
         colors = ('g', 'b', 'r', 'c', 'm', 'y', 'k')
         markers = ('o','v','^','s','+','x','*')
         linestyles = ['-', '--', '-.', ':','-','--','-.',':']
@@ -265,23 +276,24 @@ class HistorySet:
                 color_index = color_index + 1
                 marker_index = marker_index +1
                 linestyle_index = linestyle_index + 1
-        plt.legend()
+        # plt.legend()
         # Mettre graphe beau
         plt.ylim((0, 1.01))
         if log == True:
-            plt.xlim((0, 2))
+            plt.xlim((0, 3))
             plt.xlabel('Nombre de gradient simplex (log)')
         else :
-            plt.xlim((1,800))
+            plt.xlim((1,1000))
             plt.xlabel('Nombre de gradient simplex')
         plt.ylabel('Proportion de problème résolus')
         titre = 'Profil de donnees,' + r'$\tau$' + '=' + str(
             ratio)
         plt.title(titre)
-        nameoffig = 'data_' + self.algo + '_' + self.problemClass + '_' + nomenclature[ratio]
+        nameoffig = 'data_' + self.algo + '_' + self.problemClass + '_' + nomenclature[ratio] + self.opportunism
         if log == True:
             nameoffig = nameoffig + '_log'
-        plt.savefig(nameoffig + '.png')
+        plt.savefig('plot\\' + nameoffig + '.png')
+        plt.close()
 
 
         # for strat in sortedDataDict:
