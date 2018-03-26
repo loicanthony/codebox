@@ -121,6 +121,66 @@ def readLog_MW(path):
 
     return history
 
+def readLog_CON(path):
+    # Reader de log de NOMAD et creer un objet history consequent
+
+    # Regarde par le nom les specs de la run
+    path_list = path.split('\\')
+    file=path_list[-1]
+    path_to_param = '\\'.join(path_list[:-1])
+    problem = path_list[-3]
+    name = file.split('_')
+    ext = name[-1].split('.')[2]
+    name[-1]=name[-1].split('.')[0]
+    name.append(ext)
+
+    #Erreur si on a pas un file history
+    if name[-4]!='history':
+        print('file provided is not of the right format')
+        return
+
+    #On cree un objet history
+    history=History.History()
+
+    #Nom, Classe, solveur et parametre de resolution du probleme
+    history.setProblem(problem)
+    history.setSeed(str(name[-3]))
+    history.setAlgo(str(name[-2][0]))
+    history.setStrat(str(name[-2][1:]))
+    history.setSolver('NOMAD')
+
+    # Ouvrir le history.txt
+    with open(path, 'r') as file:
+        iniFile = file.readlines()
+        file.close()
+
+    # Ouvrir le param.txt
+    param_file_path = path_to_param+'\\'+history.getSeed() +'_param.txt'
+    with open(param_file_path, 'r') as file:
+        parFile = file.readlines()
+        file.close()
+
+    # Mettre la history dans l'objet
+    nbIteration = len(iniFile) #nombre de lignes dans le fichier
+    table = []  # initialisation de ma liste
+    for x in range(0, nbIteration):
+        # Pour chaque ligne de mon history je dois
+        # creer une liste
+        # appender la liste a l indice x du array
+        ligne = list(map(float, (iniFile[x]).split()))  # creer la ligne de float
+        table.append(ligne)  # ajoute a la table
+    history.setTable(table)
+
+    # Determiner la dimension du probleme et le BB_OUTPUT_TYPE
+    for el in parFile:
+        if el.split() and el.split()[0]=='DIMENSION':
+            dim = el.split()[1]
+        if el.split() and el.split()[0]=='BB_OUTPUT_TYPE':
+            history.setBbOutputType(el.split()[1:])
+    history.setNbVar(dim)
+
+    return history
+
 
 #Génère des fichiers paramètres avec plusieurs points de départs différents
 # À partir d'un fichier paramètre

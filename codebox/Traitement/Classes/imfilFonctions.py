@@ -25,8 +25,8 @@ def readLog(path):
     history.setProblemClass(str(name[1]))
     history.setSeed(str(name[3]))
     history.setAlgo(str(name[4][0]))
-    history.setStrat(str(name[4][1:]))
-    history.setSolver('NOMAD')
+    history.setStrat(str(name[4][1:3]).replace('.', ''))
+    history.setSolver('imfil')
 
     # Ouvrir le history.txt
     with open(path, 'r') as file:

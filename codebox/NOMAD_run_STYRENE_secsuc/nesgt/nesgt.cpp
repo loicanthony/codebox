@@ -327,9 +327,19 @@ int main ( int argc , char ** argv ) {
   //        << "  f = " << f   << endl;
 
 
-  cout << -f   << endl;           // WITHOUT SCALING 
+  cout << -g0  << " "
+       << -g1  << " "
+       << -g2  << " "
+       << -g3  << " "
+       << -g4  << " "
+       << -g5  << " "
+       << -g6  << " "
+       << -g7  << " "
+       << -g8  << " "
+       << -g9  << " "
+       << -g10 << " "
+       << -f   << endl;           // WITHOUT SCALING 
        // << f / 1e7   << endl;  // WITH SCALING 
-
   if (units)
     delete units;
   if (safe)
