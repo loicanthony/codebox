@@ -132,7 +132,7 @@ description + pre analyse des stratégies
 \section{Méthodologie}\label{sec:met}
 Cette section décrit la méthodologie employée pour obtenir les algorithmes et leurs implémentations opportunistes.
 \subsection{NOMAD}\label{sec:nom}
-L'implémentation des l'algorithme \CS, \GPS et \MADS utilisée est NOMAD 3.8.1~\cite{Le09b} (Non-linear Optimization with the Mesh Adaptive Direct search), disponible sur son site officiel~\cite{AuCo04a}. Initialement une implémentation de \MADS pour la recherche non-linéaire, NOMAD est aujourd'hui un des solveurs principaux dans la littérature pour l'optimisation de boîtes noires~\cite{CoScVibook}, ~\cite{RiSa2010} à l'aide de recherche directe. L'architecture de NOMAD est telle que chaque point $t \in P^k$ ou $t \in S^k$ doit figurer sur le maillage $M^k:=\{x^k+\delta^kDy:y\in \N^p\}$ et ce même pour les algorithmes dont l'analyse de convergence n'est pas basée sur les contractions successives d'un maillage, soient \CS et \GPS. Chaque point déterminé avec sa direction correspondante $t = x^k + \delta^k d : d \in D^k$ qui ne corresponds pas à un point sur le maillage sera remplacé par un point sur le maillage $\tilde{t} \in M^k$ correspondant au point existant sur le maillage le plus près. Un paramétrage spécifique est nécessaire à NOMAD afin que le logiciel soit en mesure d'appliquer \CS, \GPS et \MADS selon leurs définitions des sections \ref{sec:cs}, \ref{sec:gps} et \ref{sec:mad}. L'ensemble des descriptions des différents paramètres sont issues de~\cite{Le09a}.   
+L'implémentation des l'algorithme \CS, \GPS et \MADS utilisée est NOMAD 3.8.1~\cite{Le09b} (Non-linear Optimization with the Mesh Adaptive Direct search), disponible sur son site officiel~\cite{AuCo04a}. Initialement une implémentation de \MADS pour la recherche non-linéaire, NOMAD est aujourd'hui un des solveurs principaux dans la littérature pour l'optimisation de boîtes noires~\cite{CoScVibook}, ~\cite{RiSa2010} à l'aide de recherche directe. L'architecture de NOMAD est telle que chaque point $t \in P^k$ ou $t \in S^k$ doit figurer sur le maillage $M^k:=\{x^k+\delta^kDy:y\in \N^p\}$. Chaque point déterminé avec sa direction correspondante $t = x^k + \delta^k d : d \in D^k$ qui ne corresponds pas à un point sur le maillage sera remplacé par un point sur le maillage $\tilde{t} \in M^k$ correspondant au point existant sur le maillage le plus près. Un paramétrage spécifique est nécessaire à NOMAD afin que le logiciel soit en mesure d'appliquer \CS, \GPS et \MADS selon leurs définitions des sections \ref{sec:cs}, \ref{sec:gps} et \ref{sec:mad}. L'ensemble des descriptions des différents paramètres sont issues de~\cite{Le09a}.   
   
 Afin de ne pas obtenir le comportement d'un maillage granulaire, la valeur \texttt{XMESH}, qui corresponds au maillage anisotrope décrit dans~\cite{AuLedTr2014} est affectée au paramètre \texttt{MESH\_TYPE}.
 \subsubsection{\CS}\label{sec:ncs}
@@ -167,14 +167,14 @@ L'implémetation de \MADS est \textsf{OrthoMADS}~\cite{AbAuDeLe09} avec $n+1$ di
 \item Le vecteur $u_{t}$ est ensuite arrondie et accolée au maillage, pour être transformé en une direction de Halton ajustée $q_{t,l}$, avec $t$ l'indice de Halton du terme et $l$ l'indice du maillage.
 \item La direction $q_{t,l}$ subit une transformation de Householder~\cite{Ho58}. Cette transformation génère une base orthogonale positive de $\R^n$ composée de vecteurs d'entiers, qu'on dénote $[H_{t,l}]$.
 \end{enumerate}
-On choisit le nombre $n+1$ de directions afin d'avoir le minimum de directions dans l'ensemble générateur positif, ce qui accélère la convergence. On choisit \texttt{NEG} pour indiquer au logiciel de fabriquer la $(n+1)$-ième direction en prenant la direction opposée à la somme des directions issues de la transformation de Householder $d_{n+1}=-\sum_{d\in H_{t,l}}$. L'ensemble $D^k_\Delta = [H_{t,l}~d_{n+1}]$ est ainsi une base positive et donc un ensemble générateur positif, condition nécessaire pour \MADS tel qu'évoqué à la section \ref{sec:mad}. On choisit cette méthode à celle de la complétion par modèle quadratique proposée par Audet et al.~\cite{AuIaLeDTr2014} par soucis d'interférence avec les paramètres nécessaires à l'obtention des stratégies d'ordonnancement. 
+On choisit le nombre $n+1$ de directions afin d'avoir le minimum de directions dans l'ensemble générateur positif, ce qui accélère la convergence. On choisit \texttt{NEG} pour indiquer au logiciel de fabriquer la $(n+1)$-ième direction en prenant la direction opposée à la somme des directions issues de la transformation de Householder $d_{n+1}=-\sum_{d\in H_{t,l}}d$. L'ensemble $D^k_\Delta = [H_{t,l}~d_{n+1}]$ est ainsi une base positive et donc un ensemble générateur positif, condition nécessaire pour \MADS tel qu'évoqué à la section \ref{sec:mad}. On choisit cette méthode à celle de la complétion par modèle quadratique proposée par Audet et al.~\cite{AuIaLeDTr2014} par soucis d'interférence avec les paramètres nécessaires à l'obtention des stratégies d'ordonnancement. 
 
 Les valeurs des paramètres du maillages et celles des paramètres figurant dans le tableau \ref{tab:pdc} sont identiques à celles de \GPS.
 \subsubsection{MADS par défaut de NOMAD}\label{sec:ntr}
-Afin d'observer l'impact de l'ordonnancement sur la résolution complète des problèmes d'optimisation identifiés, on résout l'ensemble des problèmes décrits à la section \ref{sec:pro} avec une instance de \MADS en communicant à NOMAD seulement les valeurs de paramètre indispensables. Ceci implique l'activation des étapes de \SEARCH désactivées pour les autres algorithmes, soient ceux du Tableau \ref{tab:pdc}, l'utilisation du maillage granulaire \texttt{GMESH}~\cite{Le09a} et la génération de direction \texttt{DIRECTION\_TYPE ORTHO N+1 QUAD}. Cette méthode de génération de directions indique la complétion de la base positive issue de Householder avec une direction $d_{n+1}$ qui permet l'obtention d'un ensemble générateur positif tout en minimisant l'approximation de $f$ au point candidat $x^k+\delta^k d_{n+1}$.   
+Afin d'observer l'impact de l'ordonnancement sur la résolution complète des problèmes d'optimisation identifiés, on résout l'ensemble des problèmes décrits à la section \ref{sec:pro} avec une instance de \MADS en communicant à NOMAD seulement les valeurs de paramètres indispensables. Ceci implique l'activation des étapes de \SEARCH désactivées pour les autres algorithmes, soient ceux du Tableau \ref{tab:pdc}, l'utilisation du maillage granulaire \texttt{GMESH}~\cite{Le09a} et la génération de direction \texttt{DIRECTION\_TYPE ORTHO N+1 QUAD}. Cette méthode de génération de directions indique la complétion de la base positive issue de Householder avec une direction $d_{n+1}$ qui permet l'obtention d'un ensemble générateur positif tout en minimisant l'approximation de $f$ au point candidat $x^k+\delta^k d_{n+1}$.   
 Les résultats obtenus pour cet algorithme ne sont pas à l'abris d'interférences entre les paramètres nécessaires pour l'obtention des différentes stratégies d'ordonnancement et les paramètres de génération de directions. Ils sont aussi grandement influencés par les heuristiques présentes dans les étapes de \SEARCH. Dans ces mesures, on utilisera ces résultats avec de visualiser l'apport possible de l'opportunisme et de l'ordonnancement sur une résolution réaliste, plutôt que sur l'étape de sonde seulement.
 \subsubsection{Opportunisme et stratégies d'ordonnancement}\label{sec:mop}
-NOMAD permet à l'utilisateur de déterminer si la \POLL ou la \SEARCH se doit d'être opportuniste. Le paramètre nécessaire à la sonde opportuniste est \texttt{OPPORTUNISTIC\_EVAL}, pour lequel la valeur \texttt{YES} implique l'opportunisme simple tel que décrit dans la Définition~\ref{def:ops} et la valeur \texttt{NO} implique la sonde complète de la Définition~\ref{def:completepoll}. L'obtention des autres déclinaisons de la stratégie opportuniste se fait à l'aide des paramètres \texttt{OPPORTUNISTIC\_MIN\_NB\_SUCCES} suivi de son argument pour la stratégie opportuniste au $p^{\text{ème}}$ succès de la Définition~\ref{def:oppemesucces} et du paramètre \texttt{OPPORTUNISTIC\_MIN\_EVAL} suivi de son paramètre pour l'obtention de la stratégie opportuniste avec un minimum de $q$ évaluations de la Définition \ref{def:opmineval}.
+NOMAD permet à l'utilisateur de déterminer si la \POLL ou la \SEARCH se doit d'être opportuniste. Le paramètre nécessaire à la sonde opportuniste est \texttt{OPPORTUNISTIC\_EVAL}, pour lequel la valeur \texttt{YES} implique l'opportunisme simple tel que décrit dans la définition~\ref{def:ops} et la valeur \texttt{NO} implique la sonde complète de la définition~\ref{def:completepoll}. L'obtention des autres déclinaisons de la stratégie opportuniste se fait à l'aide des paramètres \texttt{OPPORTUNISTIC\_MIN\_NB\_SUCCES} suivi de son argument pour la stratégie opportuniste au $p^{\text{ème}}$ succès de la définition~\ref{def:oppemesucces} et du paramètre \texttt{OPPORTUNISTIC\_MIN\_EVAL} suivi de son paramètre pour l'obtention de la stratégie opportuniste avec un minimum de $q$ évaluations de la définition \ref{def:opmineval}.
 
 Les stratégies d'ordonnancement lexicographique, en fonction de la direction du dernier succès et en fonction d'un modèle sont implémentées dans NOMAD et accessibles à l'utilisateur avec la bonne combinaison de paramètres. Le Tableau~\ref{tab:ppo} décrit les combinaisons nécessaires à l'obtention des stratégies.
 \begin{table}[h]
@@ -191,655 +191,463 @@ Les stratégies d'ordonnancement lexicographique, en fonction de la direction du
 	\end{tabular}
 	\caption{Paramètres pour l'obtention de certaines stratégies d'ordonnancement}\label{tab:ppo}
 \end{table}
-Les stratégies restantes sont obtenues à l'aide de l'activation du paramètre \texttt{SGTE\_EVAL\_SORT}. La stratégie omnisciente est obtenue en attribuant au paramètre \texttt{SGTE\_EXE} l'exécutable destiné à servir même de la boîte noire. Dans le même ordre d'esprit, la stratégie négative-omnisciente est obtenue en fournissant à ce même paramètre le nom d'un exécutable retournant $\tilde{f}:=-f(x)$ en argument. Enfin, on lui donne un exécutable retournant un nombre aléatoire en argument pour obtenir la stratégie d'ordonnancement aléatoire.
+Les stratégies restantes sont obtenues à l'aide de l'activation du paramètre \texttt{SGTE\_EVAL\_SORT}. La stratégie omnisciente est obtenue en attribuant au paramètre \texttt{SGTE\_EXE} l'exécutable destiné à servir même de la boîte noire. Dans le même ordre d'esprit, la stratégie inverse-omnisciente est obtenue en fournissant à ce même paramètre le nom d'un exécutable retournant $\tilde{f}:=-f(x)$ en argument. Enfin, on lui donne un exécutable retournant un nombre aléatoire en argument pour obtenir la stratégie d'ordonnancement aléatoire.
 \subsection{GSS}\label{sec:hop}
 La comparaison de certaines stratégies dans \GSS est possible grace à son implémentation présente dans le logiciel d'optimisation HOPSPACK 2.0~\cite{Plan09,GrKoLe2008}, héritier de APPSPACK~\cite{GrKo06}. Le logiciel est avant tout destiné à l'interfaçage de différents algorithmes d'optimisation de tout genre en parallèle, mais contient une implémentation de \GSS présente par défaut. La gestion des contraintes est possible seulement si les contraintes sont formulables dans leurs formes analytiques, ce qui ne convient pas à la définition du domaine d'optimisation sans-dérivées étudié dans cet ouvrage.
 
 L'implémention de \GSS de HOPSPACK est opportuniste simple, sans option pour désactiver la stratégie. Cependant, l'implémentation offre de changer la changer la stratégie d'ordonnancement à l'aide du paramètre \texttt{Use Random Order}, pour lequel l'argument \texttt{False} entraine un ordonnancement déterministe non précisée, tandis que \texttt{True} entraine la stratégie d'ordonnancement aléatoire.
 \subsection{Implicit Filtering}\label{sec:mim}
-L'algorithme \imfil est indissociable de son implémentation en MATLAB, dénommée imfil 1.0~\cite{Kelley2011,Kelley2011b}. Il s'agit d'une implémentation de l'algorithme définit à la section \ref{sec:imf} munie d'un méchanisme de gestion d'échec de la fonction objectif à retourner une valeur, ce qui en fait un solveur applicable aux boîtes noires. Ces contraintes cachées sont traitées avec un procédé similaire à la barrière extrême. L'implémentation nécessite que des bornes soit fournies pour chaque problème.
+L'algorithme \imfil est indissociable de son implémentation en MATLAB, dénommée imfil 1.0~\cite{Kelley2011,Kelley2011b}. Il s'agit d'une implémentation de l'algorithme défini à la section \ref{sec:imf} munie d'un méchanisme de gestion d'échec de la fonction objectif à retourner une valeur, ce qui en fait un solveur applicable aux boîtes noires. Ces contraintes cachées sont traitées avec un procédé similaire à la barrière extrême. L'implémentation nécessite que des bornes soit fournies pour chaque problème.
 
-Tel que mentionné à la Section~\ref{sec:mis}, l'auteur et architecte de l'implémentation C.T. Kelley reconnaît la pertinence de l'opportunisme mais ne l'incorpore pas dans son implémentation. L'implémentation de la stratégie est effectuée en modifiant les portions \texttt{imfil\_poll\_stencil} pour y implémenter les stratégies opportunistes et d'ordonnancement voulues. L'idée principale de l'implémentation de l'opportunisme dans \imfil est qu'on y simule que les points non-évalué suivant l'arrêt prématuré de la sonde ont échoués à retourner une valeur. L'implémentation procède ensuite au \textsf{BLS} avec seulement une portion des valeurs aux points évalués. Les points artificiellement communiqués comme des échecs sont réinitialisés avant la prochaine itération.
-\section{Comparaison des stratégies algorithmiques}\label{sec:com}
-Le banc d'essai comporte une banque de problèmes analytique non-contraints, une banque de problèmes contraints et des exemples de boîtes noires à haut coût d'évaluation. 
+Tel que mentionné à la Section~\ref{sec:mis}, l'auteur et architecte de l'implémentation C.T. Kelley reconnaît la pertinence de l'opportunisme mais ne la recommande pas et ne l'incorpore pas dans son implémentation. L'implémentation de la stratégie est effectuée en modifiant les portions \texttt{imfil\_poll\_stencil} pour y implémenter les stratégies opportunistes et d'ordonnancement voulues. L'idée principale de l'implémentation de l'opportunisme dans \imfil est qu'on y simule que les points non-évalué suivant l'arrêt prématuré de la sonde ont échoués à retourner une valeur. L'implémentation procède ensuite au \textsf{BLS} avec seulement une portion des valeurs aux points évalués. Les points artificiellement communiqués comme des échecs sont réinitialisés avant la prochaine itération.
+\section{Comparaison des stratégies d'ordonnancement sur les problèmes Moré-Wild}\label{sec:com}
+Les résolutions sont effectuées avec un budget d'évaluations de $1000(n+1)$. Les profils de données présents dans le corps du travail sont tracés avec les seuils de tolérance $\tau = 10^{-3}$ et $\tau = 10^{-7}$ pour avoir un aperçu des résolutions à basse et haute précision. Chaque combinaison de problème, de stratégie opportuniste et de stratégie d'ordonnancement sont résolues avec 10 germes aléatoires différents. Les algorithmes issus de NOMAD qui peuvent bénéficier de la gestion des contraintes par barrière progressive sont testés sur chaque banque de problème. Pour la stratégie opportuniste de la définition~\ref{def:oppemesucces}, utilise $p=2$, afin d'observer l'arrêt de la sonde après deux succès. Pour la stratégie opportuniste de la définition~\ref{def:opmineval}, on déterminera que $q = \lceil\frac{n}{2}\rceil$, afin de permettre à un algorithme d'explorer au moins un orthant.
 
-Les résolutions sont effectuées avec un budget d'évaluations de $1000(n+1)$. Les profils de donnés présents dans le corps du travail sont tracés avec les seuils de tolérance $\tau = 10^{-3}$ et $\tau = 10^{-7}$ pour avoir un aperçu des résolutions à basse et haute précision. Chaque combinaison de problème, de stratégie opportuniste et de stratégie d'ordonnancement sont résolues avec 10 germes aléatoires différentes. Les algorithmes issus de NOMAD qui peuvent bénéficier de la gestion des contraintes par barrière progressive sont testés sur chaque banque de problème. Pour la stratégie opportuniste de la Définition \ref{def:oppemesucces}, on statue que $p=2$, afin d'observer l'arrêt de la sonde après deux succès. Pour la stratégie opportuniste de la Définition \ref{def:opmineval}, on déterminera que $q = \text{ceil}(n/2)$, afin de permettre à un algorithme d'explorer au moins un orthant.
-
-En raison de l'incapacité de leurs implémentations à gérer les contraintes de type boîte noire, \GSS et \imfil sont testées seulement avec l'ensemble de problèmes Moré-Wild. Les profils de données incluent les 212 instances possibles des problèmes Moré-Wild. Les détails des résolutions par type de problème et à différentes précisions sont fournis en annexe.
+En raison de l'incapacité de leurs implémentations à gérer les contraintes de type boîte noire, \GSS et \imfil sont testées seulement avec l'ensemble de problèmes non contraints de Moré-Wild. Les profils de données incluent les 212 instances possibles des problèmes Moré-Wild. 
 \subsection{CS}\label{sec:ccs}
-	\begin{figure}[!htb]\label{fig:cs_mw}
-		\centering
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-3_log.png}
-			\label{fig:data_c_TOUS_1E-3_log}
-		\end{subfigure}%\hspace*{\fill}
-		\begin{subfigure}{0.43\textwidth}
-			\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-7_log.png}
-			\label{fig:data_c_TOUS_1E-7_log}
-		\end{subfigure}
-		\smallskip
-		\begin{subfigure}{0.95\textwidth}
-			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-		\end{subfigure}
-		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS}
-	\end{figure}
-La recherche par coordonnée offre une opportunité sans pareille d'observer l'impact de l'ordonnancement. Puisqu'il s'agit essentiellement d'une étape de sonde rudimentaire, elle sera très sensible à l'opportunisme et à la stratégie d'ordonnancement qui le guidera. On s'attend ici à des profils très distincts. Sur les problèmes lisses, tel qu'observable à l'Annexe~\ref{ann:A}, les algorithmes se comportent en moyenne de façon plus stable.
+Dans le cas des tests avec cette famille d'algorithme, l'utilisation de la stratégie omnisciente requiert le traçage de profils de données pour bien pouvoir comparer les stratégies. Ce type de métrique est choisi plutôt que les profils de performance car la nature de leur abscisse est relative au nombre d'itérations avant d'atteindre le minimum, permettant ainsi de juger de la performance d'une stratégie d'ordonnancement indépendamment de ses concurrents. Ainsi, les profils de données permettent de mieux distinguer le meilleur performant sans qu'il soit joint aux axes, comme il serait le cas pour un profil de performance d'un algorithme dominant.
 
-Outre de rappeler la pertinence des profils de données, les profils de performances montrent que la stratégie aléatoire et la stratégie d'ordonnancement par modèles sont de performances comparables. On peut y comprendre ici que les stratégies sont uniquement comparées à la stratégie omnisciente pour la tolérance la plus haute $\tau = 0.1$. La marge d'erreur est aussi limitée pour les autres valeurs de $\tau = 0.01$ et $\tau = 0.001$, alors que pour près de $95\%$ on utilise la stratégie omnisciente pour comparer le résultat. Dans cette situation, on peut prendre directement l'allure du profil pour hiérarchiser les stratégies sur l'ensemble de problème sans se soucier de l'erreur induite par la nature des profils de performance~\cite{GoSc2016}. Sur les profils de performance avec $\tau = 0.1$, on voit que la stratégie d'ordonnancement en fonction du dernier succès est supérieure à la stratégie aléatoire jusqu'à un ratio de performance avoisinant $2$, après coup elle est reléguée à la quatrième plus performante. Malgré que cette stratégie soit plus raffinée que la stratégie aléatoire, elle ne prendra avantage de la forme du problème que si celui-ci n'est pas composé de plusieurs minimums locaux et de points de selle. On pourrait conclure que l'ensemble de problèmes utilisé ici possède une proportion de problèmes dont la structure n'est pas idéale pour un ordonnancement basé uniquement sur le succès précédent. La stratégie lexicographique n'est pas comparable en terme de performance. La stratégie pousse l'algorithme à épuiser ses sources de directions de déscente une par une. Au fil des évaluations, les directions de déscente déjà épuisées seront évaluées en début de sonde, et celles prometteuses seront toujours à la fin de la liste, ce qui aura pour effet de décaler les succès de plus en plus au cours du déroulement de l'algorithme. Pour sa part, la sonde complète ne peut pas compétitionner en observant les profils de performance, puisqu'elle prends un nombre $n$ fois le nombre d'évaluation nécéssité par la stratégie omnisciente. La stratégie négative omnisciente n'est pas appropriée dans la comparaison avec des profils de performance. Ces tendances sont observables aussi pour les ratios de tolérance moins élevés, qui figurent dans le deuxième et le troisième tracé des profils de performance. On en conclu que les solutions trouvées avec toutes les méthodes sont soit exacte à $0.01\%$ ou alors à plus de $10\%$ de différence de celle déterminée avec la stratégie omnisciente.
+La recherche par coordonnée offre une opportunité sans pareil d'observer l'impact de l'ordonnancement. Puisqu'il s'agit essentiellement d'une étape de sonde rudimentaire, elle sera très sensible à l'opportunisme et à la stratégie d'ordonnancement qui le guidera. On s'attend ici à des courbes très distinctes puisque l'influence de l'opportunisme n'est pas noyé par d'autres spécificités algorithmiques.
 
-Dans le cas des tests avec cette famille d'algorithme, l'utilisation de la stratégie omnisciente requiert le traçage de profils de données pour bien pouvoir comparer les stratégies.  Ce type de métrique est choisi plutôt que les profils de performance car la nature de leur abscisse est relative au nombre d'itérations avant d'atteindre le minimum, permettant ainsi de juger de la performance d'un algorithme indépendemment de ses concurrents. Ainsi, les profils de données permettent de mieux distinguer le meilleur performant sans qu'il soit joint aux axes, tel qu'illustré dans les trois profils de performances de la figure précédente. Nous savons d'ailleurs des profils de performance que la stratégie omnisciente donne toujours le meilleur rendement. Ainsi, on peut se fier directement à l'apparence des courbes.
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-3_log.png}
+		\label{fig:data_c_TOUS_1E-3_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-7_log.png}
+		\label{fig:data_c_TOUS_1E-7_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \CS, avec opportunisme simple.}
+	\label{fig:csmw}
+\end{figure}
 
-Premièrement, la stratégie omnisciente semble toujours la meilleure, alors qu'on peut toutefois déterminer avec quelle ampleur elle domine les autres. On explique que son ordonnée n'atteint pas $1.0$ par le fait que seulement jusqu'à $70 \times n+1$ évaluations sont illustrées. Pour des problèmes ayant jusqu'à $n=12$ variables tels qu'il en existe dans la collection de Moré-Wild utilisée, on a que $70$ gradients simplex correspondent à $910$ évaluations de la boîte noire, qui peuvent ne pas être suffisantes pour l'obtention de la meilleure solution obtenue. On observe que les comparaisons des stratégies réalistes faitent avec les profils de performance ne sont pas remis en question avec les profils de données outre la stratégie omnisciente.
-	\subsection{GPS}\label{sec:cgp}
-%	\begin{figure}[!htb] % GPS-SMOOTH
-%		\centering
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_g_SMOOTH_01_log.png}
-%			%\caption{First subfigure} \label{fig:a}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_g_SMOOTH_01_log.png}
-%			%\caption{Second subfigure} \label{fig:b}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_g_SMOOTH_001_log.png}
-%			%\caption{Third subfigure} \label{fig:c}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_g_SMOOTH_001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:d}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_g_SMOOTH_0001_log.png}
-%			%\caption{Third subfigure} \label{fig:e}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_g_SMOOTH_0001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:f}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.95\textwidth}
-%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%		\end{subfigure}
-%		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS} \label{fig:1}
-%	\end{figure}
-%	\clearpage
-%	\begin{figure}[!htb] % CS-SMOOTH
-%		\centering
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_g_NONDIFF_01_log.png}
-%			%\caption{First subfigure} \label{fig:a}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_g_NONDIFF_01_log.png}
-%			%\caption{Second subfigure} \label{fig:b}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_g_NONDIFF_001_log.png}
-%			%\caption{Third subfigure} \label{fig:c}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_g_NONDIFF_001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:d}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_g_NONDIFF_0001_log.png}
-%			%\caption{Third subfigure} \label{fig:e}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_g_NONDIFF_0001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:f}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.95\textwidth}
-%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%		\end{subfigure}
-%		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
-%	\end{figure}
-%	\clearpage
-%	\begin{figure}[!htb] % CS-SMOOTH
-%		\centering
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_g_NOISY3_01_log.png}
-%			%\caption{First subfigure} \label{fig:a}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_g_NOISY3_01_log.png}
-%			%\caption{Second subfigure} \label{fig:b}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_g_NOISY3_001_log.png}
-%			%\caption{Third subfigure} \label{fig:c}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_g_NOISY3_001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:d}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_g_NOISY3_0001_log.png}
-%			%\caption{Third subfigure} \label{fig:e}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_g_NOISY3_0001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:f}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.95\textwidth}
-%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%		\end{subfigure}
-%		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
-%	\end{figure}
-%	\clearpage
-	Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
-	\clearpage
+Premièrement, dans la figure \ref{fig:csmw} on observe que la stratégie d'ordonnancement omnisciente semble bien remplir son objectif d'agir en tant que borne supérieure lorsque jumelée à l'opportunisme simple. Sa performance supérieure est indéniable, pouvant aller jusqu'à 50\% de plus de problèmes résolus à précision $\tau = 10^{-3}$ que son plus proche adversaire, pour un abscisse donné.
+
+Il en va de même pour la stratégie inverse-omnisciente. Sa performance tel qu'observée indique  que l'utilisation de la stratégie opportuniste peut être nuisible à la résolution de l'algorithme.
+  
+Les stratégies d'ordonnancement lexicographique, aléatoire, en direction du dernier succès et utilisant les modèles quadratiques sont des stratégies dites réalisables, contrairement aux stratégies de comparaison. Les stratégies réalisables les plus performantes sont les stratégies aléatoires et guidés par les modèles. Les profils de données montrent qu'elles sont de performances comparables. On remarque que, pour cet algorithme, seul la stratégie d'ordonnancement aléatoire contient des résolutions qui diffèrent selon la germe aléatoire, ce qui confère au profil un aspect beaucoup plus lisse. La courbe représentant l'ordonnancement guidé par modèle, contrairement à la courbe aléatoire, pourrait être améliorée avec des modèles plus représentatifs de la fonction qu'un modèle quadratique, tel qu'élaboré pour NOMAD dans~\cite{TaAuLedKo2018}.
+  
+Malgré que la stratégie en fonction du dernier succès soit plus raffinée que la stratégie aléatoire, elle ne prendra avantage de la forme du problème que si celui-ci n'est pas composé de plusieurs minimums locaux et de points de selle. On pourrait conclure que l'ensemble de problèmes utilisé ici possède une proportion de problèmes dont la structure n'est pas idéale pour un ordonnancement basé uniquement sur le succès précédent. La stratégie fonctionne relativement bien si comparée à la méthode non-opportuniste et présente une option déterministe peu raffinée.
+ 
+La stratégie lexicographique n'est pas comparable en terme de performance. Elle pousse l'algorithme à épuiser ses sources de directions de descente une par une. Au fil des évaluations, si le point initial est un maximum, les directions de descente déjà épuisées seront évaluées en début de sonde, et celles prometteuses seront toujours à la fin de la liste, ce qui aura pour effet de décaler les succès de plus en plus au cours du déroulement de l'algorithme. On voit dans la stratégie lexicographique un exemple de mauvaise utilisation de la stratégie opportuniste.   
+
+La stratégie non-opportuniste nécessite $n$ fois plus d'évaluation que la stratégie omnisciente pour chaque étape fructueuse de sonde et converge assurément vers le même points si la fonction n'incorpore pas d'aspects aléatoires. On peut observer quantitativement l'effet des évaluations supplémentaires nécessités par la méthode sans opportunisme. Celle-ci n'est certainement pas gage de résolution optimale, puisque les stratégies d'ordonnancement aléatoires et guidé par modèles y sont en tout point supérieur. Cependant, on remarque que sa courbe est d'avantage linéaire, ce qui indique que pour un grand budget d'évaluations, elle consiste en un choix sure. 
+
+\begin{figure}[!htb]\label{fig:cs_mw_q}
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-3secsuc_log.png}
+		\label{fig:data_c_TOUS_1E-3secsuc_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-7secsuc_log.png}
+		\label{fig:data_c_TOUS_1E-7secsuc_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \CS, avec opportunisme au $p=2^{text{ème}}$ succès.}
+\end{figure}
+
+La figure~\ref{fig:cs_mw_q} montre que tous les profils semblent avoir le même comportement. Par ailleurs, le profil de la stratégie omnisciente est indiscernable. Ceci est du au fait que la mécanique derrière le paramètre \texttt{OPPORTUNISTIC\_MIN\_NB\_SUCCES} impose que le deuxième succès trouvé soit par rapport au premier. Ainsi, la sonde est arrêtée seulement si $f(\tau_2) < f(\tau_1) < f(x^*)$, avec $\tau_1 \in P^k$ le premier succès obtenu dans la séquence d'évaluations de la sonde et $\tau_2$ le deuxième succès. C'est pourquoi chaque courbe est très similaire à la courbe de la sonde complete. Ceci explique aussi pourquoi il est impossible d'observer la courbe de l'ordonnancement omniscient, compte tenu que celle-ci est jointe à la courbe de l'algorithme sans opportunisme. En effet, si la première évaluation est le meilleur succès possible, alors il sera impossible d'en trouver un deuxième satisfaisant le critère d'opportunisme du paramètre.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-3mineval_log.png}
+		\label{fig:data_c_TOUS_1E-3mineval_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-7mineval_log.png}
+		\label{fig:data_c_TOUS_1E-7mineval_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \CS, avec minimum $q~=~\lceil\frac{n}{2}\rceil$ évaluations.} 
+	\label{fig:cs_mw_p}
+\end{figure} 
+ 
+ 
+Dans la figure \ref{fig:cs_mw_p}, on observe le même ordre apparent entre les stratégies d'ordonnancement, ainsi que les mêmes tendances propre à chaque stratégie. Toutefois, on remarque aussi que les courbes sont rapprochées les unes avec les autres. La dominance de la stratégie omnisciente n'est pas aussi évidente que dans celle observable dans la figure~\ref{fig:csmw}. L'opportunisme avec un minimum de $p=\lceil\frac{n}{2}\rceil$ ne semble pas avoir le potentiel d'accélérer autant la résolution que l'opportunisme simple. La stratégie d'ordonnancement avec modèles semblent bénéficier des évaluations supplémentaires dans la mesure où elle semble être un peu supérieure à la stratégie aléatoire, contrairement à ce qui était observé à la figure \ref{fig:csmw}. 
+
+En conclusion, on observe que la stratégie d'ordonnancement impacte fortement la performance d'une étape de sonde opportuniste. Les ordonnancement aléatoires et guidés par modèles sont ceux qui entraînent le plus grand gain possible. L'ordonnancement par la direction du dernier succès est aussi bénéfique mais dans une moindre mesure. La stratégie lexicographique nuit à la résolution de problèmes. On en conclu aussi qu'en utilisant le profil de données de l'algorithme sans opportunisme, on observe que l'opportunisme simple tel qu'existant dans NOMAD offre une meilleure possibilité d'accélérer la résolution de problèmes. La stratégie opportniste au $2^{\text{ème}}$ succès, tel qu'implémentée dans NOMAD, ne propose pas une alternative intéressante à l'opportunisme simple. La stratégie opportuniste avec un minimum de $\lceil\frac{n}{2}\rceil$ évaluations non plus, compte tenu que les tests démontrent qu'elle limite les gains en performances issus de l'utilisation de l'opportunisme.
+\subsection{GPS}\label{sec:cgp}
+La recherche par motifs généralisée est une version améliorée de la recherche par coordonnées. On s'attend à voir les mêmes impacts des stratégies opportunistes et la même hiérarchie entre les stratégies mais dans une mesure moins prononcée.
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_TOUS_1E-3og_log.png}
+		\label{fig:data_g_TOUS_1E-3og_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_TOUS_1E-7og_log.png}
+		\label{fig:data_g_TOUS_1E-7og_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \GPS, avec opportunisme simple.}
+	\label{fig:gpsmw}
+\end{figure}
+À la figure~\ref{fig:gpsmw}, on remarque en effet que les courbes sont rapprochées les unes des autres. L'expansion du maillage permet d'éviter plusieurs étapes de sondes fructueuses, ce qui a pour effet de limiter l'impact possible de l'opportunisme. On remarque la même hiérarchie des stratégies observée avec l'opportunisme simple est présente, mais de façon moins prononcée. 
+
+On observe toujours que la stratégie opportuniste surplombe les autres, mais avec \GPS elle est talonnée par la stratégie d'ordonnancement guidé par modèles. Il est moins évident avec \GPS qu'avec \CS de définir un classement des stratégies par performance, mais on peut affirmer que la stratégie lexicographique semble toujours nuire aux résolutions mais dans une moindre mesure. Les stratégies de la sonde complete, l'opportunisme avec ordonnancement aléatoire et avec ordonnancement selon la direction du dernier succès semblent avoir des performances très comparables. On observe principalement que l'écart entre la courbe de l'opportunisme omniscient et l'opportunisme inverse-omniscient n'est pas aussi importante qu'avec \CS. On reconnaît ainsi que l'opportunisme a un moins grand potentiel d'influence sur \GPS que sur \CS.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_TOUS_1E-3secsuc_log.png}
+		\label{fig:data_g_TOUS_1E-3secsuc_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_TOUS_1E-7secsuc_log.png}
+		\label{fig:data_g_TOUS_1E-7secsuc_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \GPS, avec opportunisme au $p=2^{\text{ème}}$ succès.}
+	\label{fig:gpsmwsecsuc}
+\end{figure}
+
+La figure~\ref{fig:gpsmwsecsuc} révèle que la tendance observée pour \GPS avec l'opportunisme simple se transfère dans celle observée pour l'opportunisme au deuxième succès. On voit que les profils sont difficilement dissociables les uns des autres, ce qui concrétise l'idée que l'opportunisme au deuxième succès tel qu'implémenté dans NOMAD porte l'algorithme à se comporter de façon non-opportuniste.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_TOUS_1E-3mineval_log.png}
+		\label{fig:data_g_TOUS_1E-3mineval_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_TOUS_1E-7mineval_log.png}
+		\label{fig:data_g_TOUS_1E-7mineval_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \GPS, avec minimum $q~=~\lceil\frac{n}{2}\rceil$ évaluations.} 
+	\label{fig:gps_mw_mineval}
+\end{figure} 
+
+La figure~\ref{fig:gps_mw_mineval} présente des résultats similaires à la figure~\ref{fig:gpsmw} mais en plus condensé. Il s'agit d'observations similaires que celles qui avaient été faites pour \CS. Il semble y avoir toutefois une bonne performance de la stratégie d'ordonnancement avec modèles, qui semble bénéficier des évaluations supplémentaires lui permettant de raffiner les modèles nécessaires à l'ordonnancement.
+
+En conclusion, l'opportunisme a un effet moins important sur \GPS que sur \CS. Les stratégies d'ordonnancement préférables est la stratégie d'ordonnancement par modèle, quoique la stratégie aléatoire semble très performante pour son niveau de complexité. L'ordonnancement au $p=2^{\text{ème}}$ succès et l'ordonnancement avec $q=\lceil\frac{n}{2}\rceil$ semble rapprocher l'algorithme à sa version non-opportuniste, et ce peu importe la stratégie d'ordonnancement employée.
 \subsection{MADS}\label{sec:cma}
-%		\subsubsection{Moré-Wild}
-%			\begin{figure}[!htb] % CS-SMOOTH
-%				\centering
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_01_log.png}
-%					%\caption{First subfigure} \label{fig:a}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/data_m_SMOOTH_01_log.png}
-%					%\caption{Second subfigure} \label{fig:b}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_001_log.png}
-%					%\caption{Third subfigure} \label{fig:c}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/data_m_SMOOTH_001_log.png}
-%					%\caption{Fourth subfigure} \label{fig:d}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_0001_log.png}
-%					%\caption{Third subfigure} \label{fig:e}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/data_m_SMOOTH_0001_log.png}
-%					%\caption{Fourth subfigure} \label{fig:f}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.95\textwidth}
-%					\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%				\end{subfigure}
-%				\caption{Comparaison sur problèmes lisses de Moré-Wild avec \MADS} \label{fig:1}
-%			\end{figure}
-%			\clearpage
-%			\begin{figure}[!htb] % CS-SMOOTH
-%				\centering
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_01_log.png}
-%					%\caption{First subfigure} \label{fig:a}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/data_m_NONDIFF_01_log.png}
-%					%\caption{Second subfigure} \label{fig:b}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_001_log.png}
-%					%\caption{Third subfigure} \label{fig:c}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/data_m_NONDIFF_001_log.png}
-%					%\caption{Fourth subfigure} \label{fig:d}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_0001_log.png}
-%					%\caption{Third subfigure} \label{fig:e}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/data_m_NONDIFF_0001_log.png}
-%					%\caption{Fourth subfigure} \label{fig:f}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.95\textwidth}
-%					\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%				\end{subfigure}
-%				\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
-%			\end{figure}
-%			\clearpage
-%			\begin{figure}[!htb] % CS-SMOOTH
-%				\centering
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/perf_m_NOISY3_01_log.png}
-%					%\caption{First subfigure} \label{fig:a}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/data_m_NOISY3_01_log.png}
-%					%\caption{Second subfigure} \label{fig:b}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/perf_m_NOISY3_001_log.png}
-%					%\caption{Third subfigure} \label{fig:c}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/data_m_NOISY3_001_log.png}
-%					%\caption{Fourth subfigure} \label{fig:d}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/perf_m_NOISY3_0001_log.png}
-%					%\caption{Third subfigure} \label{fig:e}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/data_m_NOISY3_0001_log.png}
-%					%\caption{Fourth subfigure} \label{fig:f}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.95\textwidth}
-%					\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%				\end{subfigure}
-%				\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
-%			\end{figure}
-%			\clearpage
-%			Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
-%			\clearpage
-%		\subsubsection{STYRENE}
-%			\begin{figure}[!htb] % CS-SMOOTH
-%				\centering
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_n_oo.png}
-%					%\caption{First subfigure} \label{fig:a}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_0n_oo.png}
-%					%\caption{Second subfigure} \label{fig:b}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_or_om.png}
-%					%\caption{Third subfigure} \label{fig:c}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_om_oo.png}
-%					%\caption{Fourth subfigure} \label{fig:d}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_om_n.png}
-%					%\caption{Third subfigure} \label{fig:e}
-%				\end{subfigure}%\hspace*{\fill}
-%				\begin{subfigure}{0.43\textwidth}
-%					\includegraphics[width=\linewidth]{images/conv_m_STYRENE_om_n.png}
-%					%\caption{Fourth subfigure} \label{fig:f}
-%				\end{subfigure}
-%				\smallskip
-%				\begin{subfigure}{0.95\textwidth}
-%					\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%				\end{subfigure}
-%				\caption{Comparaison sur STYRENE avec \MADS} \label{fig:3}
-%			\end{figure}
-%			\clearpage
-			Commentaires CommentairesCommentaire sCommentairesCommentaire sCommentairesCommentairesCommentai resCommentairesCommentairesCommentairesCommentairesCommentairesComm entairesCommentairesCommentairesC ommentairesCommentairesCommentairesCommentairesCommentairesCommentair esCommentairesCommentairesCommen tairesCommentairesCommentairesCommentairesCommentairesCommentairesComme ntairesCommentairesCommentaires CommentairesCommentairesCommentairesCommentairesCommentairesCommentairesC ommentairesCommentairesComment airesCommentairesCommentairesCommentairesCommentairesCommentairesCommentair esCommentaires
-			\clearpage
-\subsection{\MADS de NOMAD}\label{sec:ctr}
-%	\subsubsection{Moré-Wild}
-%		\begin{figure}[!htb] % CS-SMOOTH
-%			\centering
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_01_log.png}
-%				%\caption{First subfigure} \label{fig:a}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/data_m_SMOOTH_01_log.png}
-%				%\caption{Second subfigure} \label{fig:b}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_001_log.png}
-%				%\caption{Third subfigure} \label{fig:c}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/data_m_SMOOTH_001_log.png}
-%				%\caption{Fourth subfigure} \label{fig:d}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/perf_m_SMOOTH_0001_log.png}
-%				%\caption{Third subfigure} \label{fig:e}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/data_m_SMOOTH_0001_log.png}
-%				%\caption{Fourth subfigure} \label{fig:f}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.95\textwidth}
-%				\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%			\end{subfigure}
-%			\caption{Comparaison sur problèmes lisses de Moré-Wild avec \MADS par défaut de NOMAD} \label{fig:1}
-%		\end{figure}
-%		\clearpage
-%		\begin{figure}[!htb] % CS-SMOOTH
-%			\centering
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_01_log.png}
-%				%\caption{First subfigure} \label{fig:a}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/data_m_NONDIFF_01_log.png}
-%				%\caption{Second subfigure} \label{fig:b}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_001_log.png}
-%				%\caption{Third subfigure} \label{fig:c}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/data_m_NONDIFF_001_log.png}
-%				%\caption{Fourth subfigure} \label{fig:d}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/perf_m_NONDIFF_0001_log.png}
-%				%\caption{Third subfigure} \label{fig:e}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/data_m_NONDIFF_0001_log.png}
-%				%\caption{Fourth subfigure} \label{fig:f}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.95\textwidth}
-%				\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%			\end{subfigure}
-%			\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \MADS par défaut de NOMAD} \label{fig:1}
-%		\end{figure}
-%		\clearpage
-%		\begin{figure}[!htb] % CS-SMOOTH
-%			\centering
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/perf_m_NOISY3_01_log.png}
-%				%\caption{First subfigure} \label{fig:a}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/data_m_NOISY3_01_log.png}
-%				%\caption{Second subfigure} \label{fig:b}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/perf_m_NOISY3_001_log.png}
-%				%\caption{Third subfigure} \label{fig:c}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/data_m_NOISY3_001_log.png}
-%				%\caption{Fourth subfigure} \label{fig:d}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/perf_m_NOISY3_0001_log.png}
-%				%\caption{Third subfigure} \label{fig:e}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/data_m_NOISY3_0001_log.png}
-%				%\caption{Fourth subfigure} \label{fig:f}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.95\textwidth}
-%				\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%			\end{subfigure}
-%			\caption{Comparaison sur problèmes bruités de Moré-Wild avec \MADS par défaut de NOMAD} \label{fig:3}
-%		\end{figure}
-%		\clearpage
-%		Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
-%		\clearpage
-%	\subsubsection{STYRENE}
-%		\begin{figure}[!htb] % CS-SMOOTH
-%			\centering
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_n_oo.png}
-%				%\caption{First subfigure} \label{fig:a}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_0n_oo.png}
-%				%\caption{Second subfigure} \label{fig:b}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_or_om.png}
-%				%\caption{Third subfigure} \label{fig:c}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_om_oo.png}
-%				%\caption{Fourth subfigure} \label{fig:d}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_om_n.png}
-%				%\caption{Third subfigure} \label{fig:e}
-%			\end{subfigure}%\hspace*{\fill}
-%			\begin{subfigure}{0.43\textwidth}
-%				\includegraphics[width=\linewidth]{images/conv_t_STYRENE_om_n.png}
-%				%\caption{Fourth subfigure} \label{fig:f}
-%			\end{subfigure}
-%			\smallskip
-%			\begin{subfigure}{0.95\textwidth}
-%				\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%			\end{subfigure}
-%			\caption{Comparaison sur STYRENE avec \MADS par défaut de NOMAD} \label{fig:3}
-%		\end{figure}
-%	\clearpage
-	\subsection{\GSS}\label{sec:cgs}
-%	\begin{figure}[!htb] % CS-SMOOTH
-%		\centering
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_gss_SMOOTH_01_log.png}
-%			%\caption{First subfigure} \label{fig:a}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_gss_SMOOTH_01_log.png}
-%			%\caption{Second subfigure} \label{fig:b}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_gss_SMOOTH_001_log.png}
-%			%\caption{Third subfigure} \label{fig:c}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_gss_SMOOTH_001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:d}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_gss_SMOOTH_0001_log.png}
-%			%\caption{Third subfigure} \label{fig:e}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_gss_SMOOTH_0001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:f}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.95\textwidth}
-%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%		\end{subfigure}
-%		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \MADS} \label{fig:1}
-%	\end{figure}
-%	\clearpage
-%	\begin{figure}[!htb] % CS-SMOOTH
-%		\centering
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_gss_NONDIFF_01_log.png}
-%			%\caption{First subfigure} \label{fig:a}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_gss_NONDIFF_01_log.png}
-%			%\caption{Second subfigure} \label{fig:b}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_gss_NONDIFF_001_log.png}
-%			%\caption{Third subfigure} \label{fig:c}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_gss_NONDIFF_001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:d}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_gss_NONDIFF_0001_log.png}
-%			%\caption{Third subfigure} \label{fig:e}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_gss_NONDIFF_0001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:f}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.95\textwidth}
-%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%		\end{subfigure}
-%		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \MADS} \label{fig:1}
-%	\end{figure}
-%	\clearpage
-%	\begin{figure}[!htb] % CS-SMOOTH
-%		\centering
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_gss_NOISY3_01_log.png}
-%			%\caption{First subfigure} \label{fig:a}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_gss_NOISY3_01_log.png}
-%			%\caption{Second subfigure} \label{fig:b}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_gss_NOISY3_001_log.png}
-%			%\caption{Third subfigure} \label{fig:c}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_gss_NOISY3_001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:d}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_gss_NOISY3_0001_log.png}
-%			%\caption{Third subfigure} \label{fig:e}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_gss_NOISY3_0001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:f}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.95\textwidth}
-%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%		\end{subfigure}
-%		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \MADS} \label{fig:3}
-%	\end{figure}
-	\clearpage
-	\subsection{\imfil}\label{sec:cim}
-%	\begin{figure}[!htb] % CS-SMOOTH
-%		\centering
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_i_SMOOTH_01_log.png}
-%			%\caption{First subfigure} \label{fig:a}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_i_SMOOTH_01_log.png}
-%			%\caption{Second subfigure} \label{fig:b}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_i_SMOOTH_001_log.png}
-%			%\caption{Third subfigure} \label{fig:c}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_i_SMOOTH_001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:d}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_i_SMOOTH_0001_log.png}
-%			%\caption{Third subfigure} \label{fig:e}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_i_SMOOTH_0001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:f}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.95\textwidth}
-%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%		\end{subfigure}
-%		\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS} \label{fig:1}
-%	\end{figure}
-%	\clearpage
-%	\begin{figure}[!htb] % CS-SMOOTH
-%		\centering
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_i_NONDIFF_01_log.png}
-%			%\caption{First subfigure} \label{fig:a}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_i_NONDIFF_01_log.png}
-%			%\caption{Second subfigure} \label{fig:b}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_i_NONDIFF_001_log.png}
-%			%\caption{Third subfigure} \label{fig:c}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_i_NONDIFF_001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:d}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_i_NONDIFF_0001_log.png}
-%			%\caption{Third subfigure} \label{fig:e}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_i_NONDIFF_0001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:f}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.95\textwidth}
-%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%		\end{subfigure}
-%		\caption{Comparaison sur problèmes non-differentiables de Moré-Wild avec \CS} \label{fig:1}
-%	\end{figure}
-%	\clearpage
-%	\begin{figure}[!htb] % CS-SMOOTH
-%		\centering
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_i_NOISY3_01_log.png}
-%			%\caption{First subfigure} \label{fig:a}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_i_NOISY3_01_log.png}
-%			%\caption{Second subfigure} \label{fig:b}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_i_NOISY3_001_log.png}
-%			%\caption{Third subfigure} \label{fig:c}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_i_NOISY3_001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:d}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/perf_i_NOISY3_0001_log.png}
-%			%\caption{Third subfigure} \label{fig:e}
-%		\end{subfigure}%\hspace*{\fill}
-%		\begin{subfigure}{0.43\textwidth}
-%			\includegraphics[width=\linewidth]{images/data_i_NOISY3_0001_log.png}
-%			%\caption{Fourth subfigure} \label{fig:f}
-%		\end{subfigure}
-%		\smallskip
-%		\begin{subfigure}{0.95\textwidth}
-%			\includegraphics[width=\linewidth]{images/legende_nomad.png}
-%		\end{subfigure}
-%		\caption{Comparaison sur problèmes bruités de Moré-Wild avec \CS} \label{fig:3}
-%	\end{figure}
-%	\clearpage
-	Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires Commentaires 
+\MADS est un algorithme qui génère un plus grand nombre de directions que \GPS, en plus de pouvoir nécessité moins d'évaluations pour ses étapes infructueuses. Puisque la convergence est plus rapide, les étapes de sondes qui sont des succès seront plus importante dans la vitesse de résolution.
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_TOUS_1E-3og_log.png}
+		\label{fig:data_m_TOUS_1E-3og_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_TOUS_1E-7og_log.png}
+		\label{fig:data_m_TOUS_1E-7og_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \MADS, avec opportunisme simple.}
+	\label{fig:mads_mw}
+\end{figure}
+On constate à la figure~\ref{fig:mads_mw} que l'impact de la stratégie opportuniste est plus important sur \MADS que sur \GPS. La stratégie omnisciente indique qu'un gain en performance est possible avec \MADS beaucoup plus qu'avec \GPS, et ce même à haute précision. 
+
+Outre le gain possible, la figure montre que la stratégie d'ordonnancement avec modèles est la stratégie réalisable la plus fiable pour cet ensemble de problème. L'ordonnancement aléatoire et en fonction de la direction du dernier succès offrent une meilleure performance que la méthode sans-opportunisme. Celle-ci est comparable à la stratégie lexicographique. Toutes les stratégies réalisables offrent une performance similaire pour un budget de $10(n+1)$ à $100(n+1)$ évaluations, ce qui nous indique que, pour des budgets d'évaluations limités, l'importance de la stratégie d'ordonnancement, ou même de l'utilisation de l'opportunisme, peut être mise en doute. 
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_TOUS_1E-3secsuc_log.png}
+		\label{fig:data_m_TOUS_1E-3secsuc_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_TOUS_1E-7secsuc_log.png}
+		\label{fig:data_m_TOUS_1E-7secsuc_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \MADS, avec opportunisme au $p=2^{\text{ème}}$ succès.}
+	\label{fig:mads_mw_secsuc}
+\end{figure}
+
+[je ne suis pas sur de comprendre ce qui se passe ici. la stratégie devrait se comporter comme précédemment. ]
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_TOUS_1E-3mineval_log.png}
+		\label{fig:data_m_TOUS_1E-3mineval_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_TOUS_1E-7mineval_log.png}
+		\label{fig:data_m_TOUS_1E-7mineval_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \MADS, avec minimum $q~=~\lceil\frac{n}{2}\rceil$ évaluations.} 
+	\label{fig:mads_mw_mineval}
+\end{figure} 
+
+La figure~\ref{fig:mads_mw_mineval} montre que l'oppotunisme avec au minimum $q~=~\lceil\frac{n}{2}\rceil$ évaluations n'est pas très différent de l'opportunisme simple, outre la performance diminuée de la stratégie omnisciente. L'apport de cette stratégie opportuniste est limitée mais encore une fois, on peut y percevoir que la stratégie utilisant les modèles pour l'ordonnancement bénéficie des évaluations supplémentaires. On peut aussi en comprendre que, pour \MADS avec opportunisme simple et une stratégie d'ordonnancement réalisable, les étapes de sondes comportent un nombre d'évaluations comparable à $\lceil\frac{n}{2}\rceil$, sans quoi l'allure des courbes ne seraient pas aussi similaires.
+
+En conclusion, \MADS a d'avantage à gagner que \GPS à utiliser une stratégie opportuniste simple et une stratégie d'ordonnancement telle que l'ordonnancement à l'aide de modèles quadratique. Cette stratégie domine les stratégies aléatoires et en fonction de la direction du dernier succès, qui sont elles aussi des stratégies bénéfiques. La stratégie d'ordonnancement lexicographique n'est pas recommandée, compte tenu que la méthode sans opporutnisme semble avoir la même performance pour un comportement plus stable.
+
+\subsection{\MADS par défaut}\label{sec:ctr}
+Afin d'observer l'impact de l'opportunisme et le gain possible en performance possible, les problèmes de l'ensemble Moré-Wild sont résolus à l'aide de NOMAD avec ses paramètres par défaut. La stratégie lexicographique n'est pas représentée, compte tenu d'un conflit existant au sein de l'implémentation avec l'utilisation de modèles quadratiques en tant que \SEARCH.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_t_TOUS_1E-3og_log.png}
+		\label{fig:data_t_TOUS_1E-3og_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_t_TOUS_1E-7og_log.png}
+		\label{fig:data_t_TOUS_1E-7og_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legend_mw_wo_lexico.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \MADS par défaut de NOMAD, avec opportunisme simple.}
+	\label{fig:true_mw}
+\end{figure}
+
+Dans la figure \ref{fig:true_mw}, on observe que le gain possible avec un ordonnancement parfait est réduit lorsque NOMAD est utilisé au meilleur de ses capacités. Seules les courbes des stratégies d'ordonnancement irréalisables de distinguent des autres. En observant la courbe omnisciente, on comprends que le gain possible est limité à un maximum de 15\% de problèmes pour un budget donné. Cependant, il est important rappeler que l'ensemble de problèmes Moré-Wild est un ensemble de problèmes analytiques non contraints peu représentatifs des problèmes encourus en optimisation de boîtes noires. Les figures pour NOMAD par défaut avec les deux autres types d'opportunisme sont omises, compte tenu de leur similarités avec la figure \ref{fig:true_mw}.
+
+\subsection{\GSS}\label{sec:cgs} 
+Les problèmes Moré-Wild sont résolus avec HOPSPACK, qui est par défaut opportuniste, avec les deux stratégies d'ordonnancement déjà implémentées à même le logiciel. Une mise à niveau a du être fournie à HOPSPACK, inspirée de~\cite{AuLedTr2014}, consistant en l'obtention de
+	\[\Delta^0_j =  \begin{cases} 
+	\frac{|x^0_j|}{10} & |x^0_j| \neq 0 \\
+	1 & |x^0_j| = 0
+	\end{cases}
+	\]
+où $\Delta_j^0$ est la $j^{\text{ème}}$ composante du pas initial, et $x^0_j$ la $j^{\text{ème}}$ composante du point de départ $x^0$. Seul l'opportunisme simple est implémenté dans HOPSPACK.
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_gss_TOUS_1E-3og_log.png}
+		\label{fig:data_gss_TOUS_1E-3og_log}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_gss_TOUS_1E-7og_log.png}
+		\label{fig:data_gss_TOUS_1E-7og_log}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_gss.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \GSS avec opportunisme simple.}
+	\label{fig:legende_gss}
+\end{figure}
+La figure~\ref{fig:legende_gss} nous permet d'observer la comparaison de deux stratégies d'ordonnancement présente dans une autre implémentation que NOMAD. On observe que la stratégie aléatoire est nettement supérieure à la stratégie déterministe de HOPSPACK. On observe ici directement l'impact qu'un choix d'ordonnancement déterministe peut avoir sur la résolution. La mise en valeur arbitraire de certaines directions tend à nuire à l'algorithme. Il est à noté que le paramètre par défaut de HOPSPACK quant à l'ordonnancement est l'ordonnancement déterministe. On en conclue que la supériorité de l'ordonnancement aléatoire quant à l'ordonnancement déterministe se transmet dans diverses implémentations, et que l'ordonnancement aléatoire se distingue comme un choix judicieux nécéssitant peu d'efforts.
+\subsection{\imfil}\label{sec:cim}
+L'implémentation utilisée de \imfil nécessite que l'utilisateur fournisse des bornes, duquel en découle une mise à l'échelle pour la résolution. Les problèmes Moré-Wild étant non bornés, des bornes arbitraires ont du être déterminées. Pour ce faire, on utilise
+\begin{gather*}
+	u_i = 10^{1+\lfloor\log(\max(|x_i^0|,|x_i^*|))\rfloor}\\
+	l_i=-u_i
+\end{gather*}
+avec $u$ le vecteur des bornes supérieures, $l$ le vecteur des bornes inférieures, $x^0$ le point initial fourni avec le problème et $x^*$ la solution trouvée par l'algorithme \MADS par défaut de NOMAD sur le problème donné. Ainsi, on fournit à \imfil un domaine dont les limites sont une puissance de 10, centré en 0, symétrique et qui contient assurément le point de départ et la solution.
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_i_TOUS_1E-3OP_log.png}
+	\end{subfigure}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_i_TOUS_1E-7OP_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \imfil avec opportunisme \textsf{op}}
+	\label{fig:i_mw_op}
+\end{figure}
+À la figure \ref{fig:i_mw_op}, on observe que \imfil n'est pas en mesure de bénéficier pleinement de la stratégie opportuniste textsf{op}. On observe en premier lieu que le profil correspondant à la stratégie d'ordonnancement omnisciente offre un meilleur rendement que la méthode sans opporutnisme pour un certain budget, et ce à précision $\tau = 1E-3$ seulement. Le profil de l'ordonnancement négatif-omniscient se comporte de façon très similaire à la méthode sans opporutnisme. On explique ceci avec la nature de \imfil. Puisque la sonde opportuniste inverse-omnisciente permet l'évaluation d'un grand nombre de points, le \textsf{BLS} est effectué dans une direction comprenant plusieurs composantes non-nulles.  
+
+Malgré que la stratégie d'ordonnancement omnisciente semble procurer un gain en performance à basse précision, on observe que les stratégies réalisables nuisent aux résolutions. Aucune stratégie n'est en mesure de se démarquer comme étant un choix intéressant pour l'algorithme. À haute précision $\tau = 1E-7$, on remarque que la version opportuniste de \imfil avec une stratégie d'ordonnancement réalisable n'est pas en mesure d'obtenir les solutions précises pour $50\%$ des problèmes seulement, comparativement à près de $80\%$ avec la méthode sans opporutnisme, ce qui témoigne que les meilleurs résultats $f^*$ proviennent en majorité de celles-ci.
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_i_TOUS_1E-3OD_log.png}
+	\end{subfigure}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_i_TOUS_1E-7OD_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes Moré-Wild avec \imfil avec opportunisme \textsf{od}}
+	\label{fig:i_mw_od}
+\end{figure}
+La figure~\ref{fig:i_mw_od} témoigne de l'incompatibilité entre la stratégie opportuniste \textsf{op} et \imfil. La méthode sans opportunisme résout la meilleure proportion de problème, peu importe le budget alloué. Les stratégies omniscientes et inverse-omnisciente ne sont pas discernables des autres stratégies. À haute précision, on remarque qu'aucune stratégie d'ordonnancement ne permet de d'obtenir un rendement comparable à la méthode sans opporutnisme.
+
+L'arrêt de la sonde du stencil directement après la détection d'un candidat amenant un succès semble avoir un effet plus prononcé que l'opportunisme après minimum$\lceil \frac{n}{2}\rceil$, qui semble se comporter comme une version moins performante de \imfil avec méthode sans opporutnisme. En conclusion, l'opportunisme implanté dans \imfil n'est pas bénéfique à la méthode, tel que prédit par son auteur, puisqu'aucune combinaison de stratégie opportuniste et de stratégie d'ordonnancement réaliste n'est en mesure d'accélérer les résolutions.
+\section{Comparaison des stratégies d'ordonnancement sur les problèmes contraints}\label{sec:com2}
+Pour l'ensemble de problèmes contraints, les profils de données sont tracés avec les seuils de tolérance $\tau = 10^{-1}$ et $\tau = 10^{-3}$, puisque les solutions trouvées par les algorithmes n'ont pas la même reproductibilité que les problèmes Moré-Wild. Les paramètres $p$ et $q$ des stratégies opportunistes des définitions~\ref{def:oppemesucces} et~\ref{def:opmineval} sont respectivement $p=2$ et $q = \lceil\frac{n}{2}\rceil$, à l'instar des comparaisons de la section~\ref{sec:com}. Les profils de données pour ces stratégies opportunistes sont fournis à l'annexe~\ref{ann:A}. Seuls les algorithmes implémentés dans NOMAD, soit \CS, \GPS et \MADS, pouvant gérer les contraintes à l'aide de la barrière progressive, sont testés sur ces problèmes. Chaque point initial utilisé est un point irréalisable.
+\subsection{\CS et \GPS}\label{sec:cs_gps_const}
+Les algorithmes \CS et \GPS sont jumelés dans cette section en vertu des résultats similaires que les profils de données permettent d'observer.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_CONSTRAINED_1E-1OG_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_CONSTRAINED_1E-3OG_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \CS avec opportunisme simple.}
+	\label{fig:cs_const_og}
+\end{figure}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_CONSTRAINED_1E-1OG_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_CONSTRAINED_1E-3OG_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \GPS avec opportunisme simple.}
+	\label{fig:gps_const_og}
+\end{figure}
+
+Premièrement, les figure~\ref{fig:cs_const_og} et~\ref{fig:gps_const_og} montrent que l'ensemble de problèmes utilisés est trop petit pour obtenir des courbes lisses. La tendance générale est qu'aucune stratégie d'ordonnancement jumelée à l'opportunisme simple pour \CS et \GPS n'est en mesure de se démarquer comme celle pouvant potentiellement apporter la meilleure amélioration. Cependant, en distinguant le profil correspondant à la méthode sans opportunisme à précision $\tau = 1E-1$, on remarque que celui-ci se trouve sous les courbes opportunistes, et ce pour tout budget d'évaluation. Ces observations sont valables pour les courbes des autres stratégies opportunistes, figurant sur les  figures~\ref{fig:cs_const_secsuc},~\ref{fig:cs_const_mineval},\ref{fig:gps_const_secsuc} et~\ref{fig:gps_const_mineval}  de l'annexe \ref{ann:A}.
+
+On en conclu que l'opportunisme simple est une pratique qui impacte positivement la résolution de problèmes contraints, sans qu'aucune stratégie d'ordonnancement ne soit favorisé.
+\subsection{\MADS}
+ \smallskip\hfill
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_CONSTRAINED_1E-1OG_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_CONSTRAINED_1E-3OG_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \MADS avec opportunisme simple.}
+	\label{fig:mads_const_og}
+\end{figure}
+La figure~\ref{fig:mads_const_og} permet d'observer une plus grande hiérarchie des stratégie d'ordonnancement qu'à la section~\ref{sec:cs_gps_const}. Les courbes sont plus lisses en vertu de la génération pseudo-aléatoire de directions possible avec \MADS, contrairement à \CS et \GPS, pour lesquels les résolutions sont parfaitement reproductibles indépendamment du germe aléatoire.
+
+L'ordonnancement omniscient jumelé à l'opportunisme simple semble offrir une nette amélioration de l'algorithme \MADS en situation de barrière progressive. La performance de l'ordonnancement inverse-omniscient, quant à lui, démontre que l'intuition sur une mauvaise stratégie d'ordonnancement est toujours valide pour les problèmes contraints.
+
+Les stratégies d'ordonnancement réalisables sont cependant de performance comparables avec la méthode sans opportunisme. La stratégie aléatoire et la stratégie lexicographique semblent nuire à l'algorithme. Les autres stratégies opportunistes ne semblent pas avoir le même effet sur la sonde, tel que les figures~\ref{fig:mads_const_secsuc} et~\ref{fig:mads_const_mineval} en témoignent. On en conclu qu'un gain en performance serait envisageable avec l'implémentation d'un ordonnancement guidé par un outil plus élaboré que les modèles quadratiques, mais que dans l'état actuel, ceux-ci permettent à l'opportunisme de ne pas nuire à la sonde de \MADS.
+\subsection{\MADS par défaut}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_t_CONSTRAINED_1E-1OG_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_t_CONSTRAINED_1E-3OG_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legend_mw_wo_lexico.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \MADS par défaut de NOMAD avec opportunisme simple.}
+	\label{fig:t_const_og}
+\end{figure}
+La figure~\ref{fig:t_const_og} montre que l'opportunisme a peu d'effet si on utilise \MADS par défaut de NOMAD. Les spécificités de \textsf{OrthoMADS} ainsi que l'influence d'une étape de \SEARCH noient l'impact de l'opportunisme sur cet ensemble de problème. Cependant, on remarque que le profil correspondant à l'ordonnancement inverse-omniscient nuit quelque peu les résolutions de problèmes, notamment au niveau de la proportion de problèmes résolus avec une précision de $\tau = 1E-3$. C'est avec cette précision qu'on observe que l'ordonnancement guidé par modèles semblent bénéficier à l'algorithme. 
+\section{Comparaison des stratégies d'ordonnancement sur STYRENE}\label{sec:com3}
+Les algorithmes étudiés sont limités à \MADS et à \MADS par défaut de NOMAD, en raison de la reproductibilité présente dans \CS et \GPS. Les stratégies d'ordonnancement sont comparées à l'aide de graphes de convergence, dans lesquels les courbes correspondantes aux stratégies omniscientes et inverse-omnisciente sont présente. Avec celles-ci figure la courbe correspondante à une stratégie comparée, de façon à observer la performance de cette stratégie relativement à la performance des stratégies de comparaison. Le point de départ des résolutions est irréalisable et déterminé suite à un échantillonnage du domaine de la boîte noire.
+\subsection{\MADS}
+\label{sec:sty_mads}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/conv_mog_STYRENEX0_Omniscient_Inverse-Omni_no.png}
+	\end{subfigure}
+	\hspace*{\fill}
+	\smallskip
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/conv_mog_STYRENEX0_Omniscient_Inverse-Omni_Lexicographique.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/conv_mog_STYRENEX0_Omniscient_Inverse-Omni_Aleatoire.png}
+	\end{subfigure}
+	\caption{Comparaison sur STYRENE avec \MADS et opportunisme simple, sonde complète, stratégie lexicographique et stratégie aléatoire.}
+	\label{fig:m_styrene_1}
+\end{figure}
+Premièrement, le premier graphe de convergence de figure~\ref{fig:m_styrene_1} présente les courbes des stratégies de comparaison ainsi que la sonde complète. On observe que la convergence est significativement plus rapide avec la stratégie omnisciente qu'avec la stratégie inverse-omnisciente. De plus, on observe que la solution vers laquelle la stratégie omnisciente converge est un optimum beaucoup plus satisfaisant que celui obtenu par la stratégie inverse-omnisciente. La sonde complète a un comportement qui se rapproche d'avantage à celui de la stratégie inverse-omnisciente. Il s'agit d'une indication de la performance de la barrière progressive jumelée à la stratégie omnisciente, pour laquelle la mise a jour de $x^{\inf}$ est effectuée en admettant le point ayant la plus petite violation de contrainte. Inversement, l'algorithme de la barrière progressive de la sonde complète mets à jour $x^{\inf} \leftarrow t$, avec $t\in \arg \min{(T)}$ et $h(t)<h_{\max}$, où $T$ est l'ensemble des points non-dominés. Il en résulte que le premier point réalisable n'est pas le même.
+
+La vitesse de résolution de la stratégie lexicographique s'apparente à celle de la stratégie inverse-omnisciente. Cependant, on remarque une certaines proportion de courbes convergeant vers une solution intermédiaires entre la solution de la sonde complète et celle de la stratégie omnisciente.
+
+La stratégie aléatoire semble apporter une amélioration de performance en comparaison avec la sonde complète. La vitesse de résolution est similaire, mais la qualité de la solution obtenue est plus souvent semblable à celle obtenue avec la stratégie omnisciente.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/conv_mog_STYRENEX0_Omniscient_Inverse-Omni_Succes.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/conv_mog_STYRENEX0_Omniscient_Inverse-Omni_Modeles.png}
+	\end{subfigure}
+	\caption{Comparaison sur STYRENE avec \MADS et opportunisme simple, stratégie avec direction du dernier succès et stratégie guidée par modèles.}
+	\label{fig:m_styrene_2}
+\end{figure}
+
+La stratégie d'ordonnancement avec la direction du dernier succès ne permet pas à l'algorithme de converger vers la solution optimale déterminée avec la stratégie omnisciente, tel qu'observer sur la figure~\ref{fig:m_styrene_2}. Il en est de même pour la stratégie avec modèles. La fonction objectif et les contraintes de la boîte noire STYRENE sont difficilement modélisables à l'aide de fonctions quadratiques. Une fonction substitut plus représentative pourrait permettre à la solution de se rapprocher de la courbe omnisciente. Cependant, la vitesse de résolution pour la stratégie avec modèles plus grande qu'avec la stratégie de la direction du dernier succès.
+
+Avec l'étape de sonde seule de \MADS, l'influence de la stratégie d'ordonnancement est importante pour la qualité de la solution obtenue et la vitesse de résolution. La stratégie lexicographique ralenti la résolution, mais son aspect quasi-aléatoire peut entraîner l'algorithme vers une meilleure solution. La stratégie aléatoire présente une vitesse de résolution significativement plus rapide que la stratégie lexicographique mais semblable à la sonde complète. Cependant, son aspect aléatoire peut permettre à l'algorithme de converger vers une meilleure solution. La stratégie de la direction de succès mène à la même solution que la sonde complète avec un léger gain en vitesse de résolution. La stratégie utilisant les modèles semble celle qui amène le meilleur gain en vitesse de résolution. Par contre, la solution vers laquelle $80\%$ résolutions converge n'est pas une amélioration quant à la sonde complète. Puisque le point de départ $x^0$ est irréalisable, on en conclu que la détermination du $x^{\inf}$ à chaque itération à un effet important sur la qualité de la solution obtenue, et qu'aucune stratégie réaliste utilisée ici ne permet d'ordonnancer les points de l'ensemble $P^k$ de façon à mettre de l'avant le meilleur candidat pour $x^{\inf}$.
+
+\subsection{\MADS par défaut}
+Il est à noter que la stratégie lexicographique n'est pas utilisée pour les comparaisons avec étape de \SEARCH. 
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/conv_tog_STYRENEX0_Omniscient_Inverse-Omni_no.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/conv_tog_STYRENEX0_Omniscient_Inverse-Omni_Aleatoire.png}
+	\end{subfigure}
+	\caption{Comparaison sur STYRENE avec \MADS par défaut et opportunisme simple, sonde complète et stratégie aléatoire.}
+	\label{fig:t_styrene_1}
+\end{figure}
+Dans la figure~\ref{tab:t_styrene_1}, on remarque que la sonde complète converge vers la même solution que les stratégies de comparaison. La vitesse de résolution de la sonde complète est moins satisfaisante que celle de l'ordonnancement omniscient. La différence est beaucoup moins grande que celle observée avec \MADS. Les courbes de la stratégie aléatoire montrent que parfois la vitesse est supérieure à la sonde complète, parfois inférieure. Elles convergent en majorité vers la même solution.
+
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/conv_tog_STYRENEX0_Omniscient_Inverse-Omni_Succes.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/conv_tog_STYRENEX0_Omniscient_Inverse-Omni_Modeles.png}
+	\end{subfigure}
+	\caption{Comparaison sur STYRENE avec \MADS par défaut et opportunisme simple, stratégie avec direction du dernier succès et stratégie guidée par modèles.}
+	\label{fig:t_styrene_2}
+\end{figure}
+
+La stratégie avec de la direction du dernier succès présente une performance intéressante. Jumelée avec l'étape de \SEARCH de \MADS par défaut, on observe que la stratégie a une performance similaire à celle de l'ordonnancement par modèles. L'ordonnancement guidé par modèles n'est pas aussi performant en présence de \SEARCH. Une mauvaise géométrie de points pour l'interpolation issue de la détermination de points seulement par les modèles peut être à l'origine de cette baisse d'impact.
+
+Les impacts des stratégies d'ordonnancement sur STYRENE sont moins prononcés qu'avec \MADS sans \SEARCH de la section~\ref{sec:sty_mads}. Les solutions trouvées sont plus robustes avec la \SEARCH et l'ordonnancement influence en général seulement la vitesse de résolution. La stratégie d'ordonnancement utilisant la direction du dernier succès offre le meilleur rendement, mais l'impacte de l'opportunisme jumelé à la \SEARCH reste minime.

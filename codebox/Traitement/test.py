@@ -496,11 +496,11 @@ def assim_nomad(read, plot):
         #             print('Ploting performance and data for set : ' + ' '.join([algo, 'all']))
         #     del amalgame
 
-def assim_nomad_special(read, plot, algos, opportunism):
+def assim_nomad_special(read, plot, algos, opportunisms):
     # Vecteurs necessaires pour traiter les données
     seeds = [str(x + 1) for x in range(10)]
     instances = [str(x + 1) for x in range(53)]
-    types = ['SMOOTH', 'NOISY3', 'NONDIFF']#,'WILD3']
+    types = ['SMOOTH', 'NOISY3', 'NONDIFF']
     # types = ['SMOOTH', 'NOISY3', 'NONDIFF','WILD3']
     # types = ['NONDIFF']
     # types = ['SMOOTH']
@@ -516,57 +516,58 @@ def assim_nomad_special(read, plot, algos, opportunism):
     # opportunism = 'mineval'
 
 
-    path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\MW_' + opportunism.upper()
     path2n_results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\MW_OG'
     path2file = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\plot_data\\'
 
     if read:
         # On itere sur tous les boucles
-        for algo in algos:
-            for type in types:
-                current_set = HistorySet.HistorySet()
-                for strategy in strategies:
+        for opportunism in opportunisms:
+            path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\MW_' + opportunism.upper()
+            for algo in algos:
+                for type in types:
+                    current_set = HistorySet.HistorySet()
+                    for strategy in strategies:
+                        for instance in instances:
+                            for seed in seeds:
+                                historyfile = instance + '_' + type + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
+                                foldername = path2results + '\\' + instance + '_' + type + '\\' + algo + strategy
+                                filename = foldername + '\\' + historyfile
+                                currentHist = NOMAD.readLog_MW(filename)
+                                currentHist.clean()
+                                current_set.addHistory(currentHist)
+                        print(' '.join([algo, type, strategy]))
+
+                    # Ajouter le sans opportunisme
+                    strategy = 'n'
                     for instance in instances:
                         for seed in seeds:
                             historyfile = instance + '_' + type + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
-                            foldername = path2results + '\\' + instance + '_' + type + '\\' + algo + strategy
+                            foldername = path2n_results + '\\' + instance + '_' + type + '\\' + algo + strategy
                             filename = foldername + '\\' + historyfile
                             currentHist = NOMAD.readLog_MW(filename)
                             currentHist.clean()
                             current_set.addHistory(currentHist)
-                    print(' '.join([algo, type, strategy]))
-
-                # Ajouter le sans opportunisme
-                strategy = 'n'
-                for instance in instances:
-                    for seed in seeds:
-                        historyfile = instance + '_' + type + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
-                        foldername = path2n_results + '\\' + instance + '_' + type + '\\' + algo + strategy
-                        filename = foldername + '\\' + historyfile
-                        currentHist = NOMAD.readLog_MW(filename)
-                        currentHist.clean()
-                        current_set.addHistory(currentHist)
 
 
-                current_set.setNumberProblem(len(instances))
-                current_set.setNumberSeed(len(seeds))
-                current_set.setNumberStrat(1)
-                current_set.setAlgo(algo)
-                current_set.setProblemClass(type)
-                current_set.setOpportunism(opportunism)
+                    current_set.setNumberProblem(len(instances))
+                    current_set.setNumberSeed(len(seeds))
+                    current_set.setNumberStrat(1)
+                    current_set.setAlgo(algo)
+                    current_set.setProblemClass(type)
+                    current_set.setOpportunism(opportunism)
 
-                # Pickling
-                path2plot_data = path2file + algo + type + current_set.opportunism + '.pkl'
-                with open(path2plot_data, 'wb') as output:
-                    pickle.dump(current_set, output, pickle.HIGHEST_PROTOCOL)
-                    print('Pickling data for set : ' + ' '.join([algo, type, current_set.opportunism]))
-                    output.close()
-                del current_set
+                    # Pickling
+                    path2plot_data = path2file + algo + type + current_set.opportunism + '.pkl'
+                    with open(path2plot_data, 'wb') as output:
+                        pickle.dump(current_set, output, pickle.HIGHEST_PROTOCOL)
+                        print('Pickling data for set : ' + ' '.join([algo, type, current_set.opportunism]))
+                        output.close()
+                    del current_set
 
     if plot:
         # On veut plotter les rations mais avec le bon shnit
         # On rajoute les logarithmes
-        ratios = [10**(-1),10**(-3),10**(-5), 10 ** (-7)]
+        ratios = [10**(-3), 10 ** (-1)]
         # ratios = [0.1, 0.01, 0.001, 10**(-4), 10**(-5), 10**(-6), 10**(-7)]
 
         # logs = [True,False] # Pour tracer les deux styles
@@ -587,29 +588,62 @@ def assim_nomad_special(read, plot, algos, opportunism):
         #         del testSet
 
         for algo in algos:
-            amalgame = HistorySet.HistorySet()
-            # amalgame.setProblemClass('SMOOTH')
-            amalgame.setProblemClass('TOUS')
-            amalgame.setAlgo(algo)
-            amalgame.setOpportunism(opportunism)
-            for type in types:
-                if opportunism is not 'og':
-                    fileName = path2file + algo + type + opportunism.upper()
-                else:
-                    fileName = path2file + algo + type
-                with open(fileName + '.pkl', "rb") as f:
-                    testSet = pickle.load(f)
-                    f.close()
-                for hist in testSet.historyList:
-                    amalgame.addHistory(hist)
-                del testSet
-
-            for ratio in ratios:
-                for log in logs:
-                    amalgame.plotData(ratio, log)
-                    # amalgame.plotPerformance(ratio, log) # Desactive pour pas tracer pur rien
-                    print('Ploting performance and data for set : ' + ' '.join([algo, 'all', opportunism]))
-            del amalgame
+                amalgame = HistorySet.HistorySet()
+                amalgame.setProblemClass('TOUS')
+                amalgame.setAlgo(algo)
+                for opportunism in opportunisms:
+                    for type in types:
+                        if opportunism is not 'OG':
+                            fileName = path2file + algo + type + opportunism.upper()
+                        else:
+                            fileName = path2file + algo + type
+                        with open(fileName + '.pkl', "rb") as f:
+                            testSet = pickle.load(f)
+                            f.close()
+                        for hist in (x for x in testSet.historyList if x.strat == 'om'):
+                            hist.opportunism = opportunism
+                            amalgame.addHistory(hist)
+                        del testSet
+                for type in types:
+                    if opportunism is not 'OG':
+                        fileName = path2file + algo + type + opportunism.upper()
+                    else:
+                        fileName = path2file + algo + type
+                    with open(fileName + '.pkl', "rb") as f:
+                        testSet = pickle.load(f)
+                        f.close()
+                    for hist in (x for x in testSet.historyList if x.strat == 'n'):
+                        hist.opportunism = 'n'
+                        amalgame.addHistory(hist)
+                    del testSet
+                for ratio in ratios:
+                    for log in logs:
+                        amalgame.plotDataopp(ratio, log)
+                        # amalgame.plotPerformance(ratio, log) # Desactive pour pas tracer pur rien
+                        print('Ploting performance and data for set : ' + ' '.join([algo, 'all', opportunism]))
+                del amalgame
+                # amalgame = HistorySet.HistorySet()
+                # amalgame.setProblemClass('TOUS')
+                # amalgame.setAlgo(algo)
+                # amalgame.setOpportunism(opportunism)
+                # for type in types:
+                #     if opportunism is not 'OG':
+                #         fileName = path2file + algo + type + opportunism.upper()
+                #     else:
+                #         fileName = path2file + algo + type
+                #     with open(fileName + '.pkl', "rb") as f:
+                #         testSet = pickle.load(f)
+                #         f.close()
+                #     for hist in testSet.historyList:
+                #         amalgame.addHistory(hist)
+                #     del testSet
+                #
+                # for ratio in ratios:
+                #     for log in logs:
+                #         amalgame.plotData(ratio, log)
+                #         # amalgame.plotPerformance(ratio, log) # Desactive pour pas tracer pur rien
+                #         print('Ploting performance and data for set : ' + ' '.join([algo, 'all', opportunism]))
+                # del amalgame
 
 def assim_nomad_const(read, plot, algos, opportunism):
     # Vecteurs necessaires pour traiter les données
@@ -623,7 +657,7 @@ def assim_nomad_const(read, plot, algos, opportunism):
     # algos = {'m':'MADS','t':'NOMAD_MADS'}
 
     # Strategies
-    strategies = ['ol', 'os', 'om', 'or', 'oo', '0n']
+    strategies = ['ol','os', 'om', 'or', 'o', '0n']
 
     # # Opportunisme , si aucun = og
     # opportunism = 'secsuc'
@@ -682,10 +716,10 @@ def assim_nomad_const(read, plot, algos, opportunism):
     if plot:
         # On veut plotter les rations mais avec le bon shnit
         # On rajoute les logarithmes
-        ratios = [10**(-1),10**(-3),10**(-5),10**(-7)]
+        ratios = [10**(-1)]
         # ratios = [0.1, 0.01, 0.001, 10**(-4), 10**(-5), 10**(-6), 10**(-7)]
         # logs = [True,False] # Pour tracer les deux styles
-        logs = [True,False]
+        logs = [True]
 
         for algo in algos:
             amalgame = HistorySet.HistorySet()
@@ -751,7 +785,7 @@ def assim_hopspack(read, plot):
     if plot:
         # On veut plotter les rations mais avec le bon shnit
         # On rajoute les logarithmes
-        ratios = [10**(-1),10**(-3),10**(-5),10**(-7)]
+        ratios = [10**(-3)]
         logs = [True]
         path2file = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\HOPSPACK\\current\\plot_data\\'
 
@@ -897,7 +931,7 @@ def assim_imfil(read, plot):
                     print('Ploting performance and data for set : ' + ' '.join([algo, 'all']))
             del amalgame
 
-def assim_styrene(algos, strats):
+def assim_styrene(algos, strats,opportunism,option):
     # Assimile tous les runs de styrene et les sauvegarde comme des history unique
     # Vraies params
     # probname = 'STYRENE'
@@ -909,27 +943,75 @@ def assim_styrene(algos, strats):
     # Params pour tester
     probname = 'STYRENE'
     seeds = [str(x + 1) for x in range(10)]
-    startpoints = ['X1']
-    # algos = {'t': 'TRUE'}
-    # strategies = ['or', 'ol']
+    startpoints = ['X0']
+    # startpoints = ['X2', 'X3']
+    ## Option 1 : o
+    if option == 1:
+        # algos = {'t': 'TRUE'}
+        # strategies = ['or', 'ol']
+        strategies4data = ['n', 'ol', 'os', 'om', 'or', 'oo', '0n']
 
-    # Pas le  bon path pour les vrais resultats
-    path2results = "C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\STYRENE"
-    for startpoint in startpoints:
-        current_set = HistorySet.HistorySet()
+        # Pas le  bon path pour les vrais resultats
+        path2results = "C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\STYRENE_"+opportunism.upper()
         for algo in algos:
-            current_set.setAlgo(algo)
-            for strategy in strats:
-                for seed in seeds:
-                    historyfile = probname + '_' + startpoint + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
-                    foldername = path2results + '\\' + probname + '_' + startpoint + '\\' + algo + strategy
-                    filename = foldername + '\\' + historyfile
-                    current_history = NOMAD.readLog_singleprob(filename)
-                    current_history.clean()
-                    current_set.addHistory(current_history)
-            current_set.setProblemClass(probname)
-            current_set.plot_convergence_all_curves
+            for startpoint in startpoints:
+                current_set = HistorySet.HistorySet()
+                current_set.setAlgo(algo)
+                for strategy in strats:
+                    for seed in seeds:
+                        historyfile = probname + '_' + startpoint + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
+                        foldername = path2results + '\\' + probname + '_' + startpoint + '\\' + algo + strategy
+                        filename = foldername + '\\' + historyfile
+                        current_history = NOMAD.readLog_CON(filename)
+                        current_history.cleanConstrained()
+                        current_set.addHistory(current_history)
+                current_set.setAlgo(algo)
+                current_set.setstartpoint(startpoint)
+                current_set.setProblemClass(probname)
+                current_set.plot_convergence_all_curves()
 
+    if option == 2 :  # plotter data
+        # On itere sur tous les boucles
+
+        strategies = ['os', 'om', 'or', 'oo', '0n']
+        path2results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\STYRENE_' + opportunism.upper()
+        path2n_results = 'C:\\Users\\Loic\\Documents\\RDOSC\\Executions\\NOMAD\\STYRENE_OG'
+
+
+        for algo in algos:
+            current_set = HistorySet.HistorySet()
+            for startpoint in startpoints:
+                for strategy in strategies:
+                    for seed in seeds:
+                        foldername = path2results + '\\' + probname + '_' + startpoint + '\\' + algo + strategy
+                        historyfile = probname + '_' + startpoint + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
+                        filename = foldername + '\\' + historyfile
+                        currentHist = NOMAD.readLog_CON(filename)
+                        currentHist.cleanConstrained()
+                        current_set.addHistory(currentHist)
+                    print(' '.join([probname, algo, strategy]))
+
+                # Ajouter le sans opportunisme
+                strategy = 'n'
+                for seed in seeds:
+                    foldername = path2n_results + '\\' + probname + '_' + startpoint + '\\' + algo + strategy
+                    historyfile = probname + '_' + startpoint + '_history_' + seed + '_' + algo + strategy + '.' + seed + '.txt'
+                    filename = foldername + '\\' + historyfile
+                    if not os.path.isfile(filename):  # Au cas ou les seed ont pas marcher
+                        historyfile = probname + '_history_' + seed + '_' + algo + strategy + '.0.txt'
+                        filename = foldername + '\\' + historyfile
+                    currentHist = NOMAD.readLog_CON(filename)
+                    currentHist.cleanConstrained()
+                    current_set.addHistory(currentHist)
+                print(' '.join([probname, algo, strategy]))
+
+                current_set.setNumberSeed(len(seeds))
+                current_set.setNumberStrat(len(strategies))
+                current_set.setAlgo(algo)
+                current_set.setOpportunism(opportunism)
+                current_set.setProblemClass('STYRENE')
+
+            current_set.plotData(0.1,True)
 def test_graphe(read, plot):
     # Vecteurs necessaires pour traiter les données
     seeds = [str(x + 1) for x in range(10)]
@@ -995,7 +1077,7 @@ def test_graphe(read, plot):
                 del testSet
 
 
-# assim_styrene(['m','t'],['or','om'])
+#
 # assim_styrene(['m','t'],['n','oo'])
 # assim_styrene(['m','t'],['0n','oo'])
 # assim_styrene(['m','t'],['om','n'])
@@ -1008,7 +1090,7 @@ def test_graphe(read, plot):
 # assim_nomad_special(False, True, {'t': 'TRUE '}, 'og')
 # assim_nomad_special(True,False, {'t': 'DEFAULT'},'secsuc')
 # assim_nomad_special(False,True, {'c':'CS','g':'GPS','m':'MADS','t':'DEFAULT'},'')
-assim_nomad_special(False,True, {'m': 'MADS'},'og')
+# assim_nomad_special(False,True, {'m': 'MADS'},'og')
 # assim_nomad_const(False,True, {'c': 'CS','g':'GPS','m':'MADS','t':'TRUE'},'OG')
 # assim_nomad_const(False,True, {'m': 'MADS'},'OG')
 # assim_nomad_const(False,True, {'t': 'TRUE'},'OG')
@@ -1016,6 +1098,24 @@ assim_nomad_special(False,True, {'m': 'MADS'},'og')
 # assim_nomad_const(False,True, {'c': 'CS','g':'GPS','m': 'MADS','t': 'TRUE'},'MINEVAL')
 # assim_hopspack(False,True)
 # assim_nomad_const(False,True, {'c': 'CS','g':'GPS','m':'MADS','t':'TRUE'},'OG')
-# assim_nomad_const(False,True, {'c': 'CS','g':'GPS','m':'MADS'},'SECSUC')
-# assim_nomad_const(False,True, {'c': 'CS','g':'GPS','m':'MADS'},'MINEVAL')
+# assim_nomad_const(False,True, {'c': 'CS','g':'GPS','m': 'MADS'},'OG')
+# assim_nomad_const(False,True, {'c': 'CS','g':'GPS','m': 'MADS'},'SECSUC')
+# assim_nomad_const(False,True, {'c': 'CS','g':'GPS','m': 'MADS'},'MINEVAL')
+# assim_nomad_special(False,True, {'c': 'CS','g':'GPS','m': 'MADS'},'OG')
+# assim_nomad_special(False,True, {'c': 'CS','g':'GPS','m': 'MADS'},'SECSUC')
+# assim_nomad_special(False,True, {'c': 'CS','g':'GPS','m': 'MADS'},'MINEVAL')
 # assim_imfil(False,True)
+assim_styrene(['m'], ['oo', '0n','n'], 'OG', 1)
+assim_styrene(['m'], ['oo', '0n','om'], 'OG', 1)
+assim_styrene(['m'], ['oo', '0n','or'], 'OG', 1)
+assim_styrene(['m'], ['oo', '0n','os'], 'OG', 1)
+assim_styrene(['m'], ['oo', '0n','ol'], 'OG', 1)
+assim_styrene(['t'], ['oo', '0n','n'], 'OG', 1)
+assim_styrene(['t'], ['oo', '0n','om'], 'OG', 1)
+assim_styrene(['t'], ['oo', '0n','or'], 'OG', 1)
+assim_styrene(['t'], ['oo', '0n','os'], 'OG', 1)
+assim_styrene(['t'], ['or', 'os','om','n'], 'OG', 1)
+# assim_styrene(['m'], ['oo', 'n'], 'OG', 1)
+#assim_styrene(['t'], ['oo', '0n'], 'SECSUC', 2)
+#assim_styrene(['t'], ['oo', '0n'], 'MINEVAL', 2)
+# assim_nomad_special(False,True, {'c': 'CS'}, ['OG','SECSUC','MINEVAL'])

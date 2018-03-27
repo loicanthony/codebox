@@ -7,20 +7,221 @@
 %%
 %%  Toutes les annexes doivent être inclues dans ce document
 %%  les unes à la suite des autres.
-\Annexe{PROFILS SUPPLÉMENTAIRES POUR LA COMPARAISON DES STRATÉGIES D'ORDONNANCEMENT}
-	\begin{figure}[!htb]\label{fig:cs_mw_SMOOTH}
+\Annexe{PROFILS SUPPLÉMENTAIRES POUR LA COMPARAISON DES STRATÉGIES D'ORDONNANCEMENT}\label{ann:A}
+\begin{figure}[!htb]
 	\centering
 	\begin{subfigure}{0.43\textwidth}
-		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-3_log.png}
-		\label{fig:data_c_TOUS_1E-3_log}
+		\includegraphics[width=\linewidth]{images/data_c_CONSTRAINED_1E-1SECSUC_log.png}
 	\end{subfigure}%\hspace*{\fill}
 	\begin{subfigure}{0.43\textwidth}
-		\includegraphics[width=\linewidth]{images/data_c_TOUS_1E-7_log.png}
-		\label{fig:data_c_TOUS_1E-7_log}
+		\includegraphics[width=\linewidth]{images/data_c_CONSTRAINED_1E-3SECSUC_log.png}
 	\end{subfigure}
 	\smallskip
 	\begin{subfigure}{0.95\textwidth}
-		\includegraphics[width=\linewidth]{images/legende_nomad.png}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
 	\end{subfigure}
-	\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS}
+	\caption{Comparaison sur tous les problèmes contraints avec \CS, avec opportunisme au $p=2^{\text{ème}}$ succès.}
+	\label{fig:cs_const_secsuc}
 \end{figure}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_CONSTRAINED_1E-1MINEVAL_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_CONSTRAINED_1E-3MINEVAL_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \CS, avec minimum $q~=~\lceil\frac{n}{2}\rceil$ évaluations}
+	\label{fig:cs_const_mineval}
+\end{figure}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_CONSTRAINED_1E-1SECSUC_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_CONSTRAINED_1E-3SECSUC_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \GPS, avec opportunisme au $p=2^{\text{ème}}$ succès.}
+	\label{fig:gps_const_secsuc}
+\end{figure}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_CONSTRAINED_1E-1MINEVAL_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_g_CONSTRAINED_1E-3MINEVAL_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \GPS, avec minimum $q~=~\lceil\frac{n}{2}\rceil$ évaluations}
+	\label{fig:gps_const_mineval}
+\end{figure}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_CONSTRAINED_1E-1SECSUC_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_c_CONSTRAINED_1E-3SECSUC_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \MADS, avec opportunisme au $p=2^{\text{ème}}$ succès.}
+	\label{fig:mads_const_secsuc}
+\end{figure}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_CONSTRAINED_1E-1MINEVAL_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_m_CONSTRAINED_1E-3MINEVAL_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legende_mw.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \MADS, avec minimum $q~=~\lceil\frac{n}{2}\rceil$ évaluations}
+	\label{fig:mads_const_mineval}
+\end{figure}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_t_CONSTRAINED_1E-1SECSUC_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_t_CONSTRAINED_1E-3SECSUC_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legend_mw_wo_lexico.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \MADS par défaut de NOMAD avec opportunisme au $p=2^{\text{ème}}$ succès.}
+	\label{fig:t_const_secsuc}
+\end{figure}
+\begin{figure}[!htb]
+	\centering
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_t_CONSTRAINED_1E-1MINEVAL_log.png}
+	\end{subfigure}%\hspace*{\fill}
+	\begin{subfigure}{0.43\textwidth}
+		\includegraphics[width=\linewidth]{images/data_t_CONSTRAINED_1E-3MINEVAL_log.png}
+	\end{subfigure}
+	\smallskip
+	\begin{subfigure}{0.95\textwidth}
+		\includegraphics[width=\linewidth]{images/legend_mw_wo_lexico.png}
+	\end{subfigure}
+	\caption{Comparaison sur tous les problèmes contraints avec \MADS par défaut de NOMAD avec minimum $q~=~\lceil\frac{n}{2}\rceil$ évaluations}
+	\label{fig:t_const_mineval}
+\end{figure}
+%	\begin{figure}[!htb]\label{fig:cs_mw_SMOOTH}
+%	\centering
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_SMOOTH_1E-1OG_log.png}
+%		\label{fig:data_c_SMOOTH_1E-1OG_log}
+%	\end{subfigure}%\hspace*{\fill}
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_SMOOTH_1E-3OG_log.png}
+%		\label{fig:data_c_SMOOTH_1E-3OG_log}
+%	\end{subfigure}
+%	\smallskip
+%		\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_SMOOTH_1E-5OG_log.png}
+%		\label{fig:data_c_SMOOTH_1E-5OG_log}
+%	\end{subfigure}%\hspace*{\fill}
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_SMOOTH_1E-7OG_log.png}
+%		\label{fig:data_c_SMOOTH_1E-7OG_log}
+%	\end{subfigure}
+%	\begin{subfigure}{0.95\textwidth}
+%		\includegraphics[width=\linewidth]{images/legende_mw.png}
+%	\end{subfigure}
+%	\caption{Comparaison sur problèmes lisses de Moré-Wild avec \CS}
+%\end{figure}
+%\clearpage
+%\begin{figure}[!htb]\label{fig:cs_mw_NONDIFF}
+%	\centering
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_NONDIFF_1E-1OG_log.png}
+%		\label{fig:data_c_NONDIFF_1E-1OG_log}
+%	\end{subfigure}%\hspace*{\fill}
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_NONDIFF_1E-3OG_log.png}
+%		\label{fig:data_c_NONDIFF_1E-3OG_log}
+%	\end{subfigure}
+%	\smallskip
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_NONDIFF_1E-5OG_log.png}
+%		\label{fig:data_c_NONDIFF_1E-5OG_log}
+%	\end{subfigure}%\hspace*{\fill}
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_NONDIFF_1E-7OG_log.png}
+%		\label{fig:data_c_NONDIFF_1E-7OG_log}
+%	\end{subfigure}
+%	\begin{subfigure}{0.95\textwidth}
+%		\includegraphics[width=\linewidth]{images/legende_mw.png}
+%	\end{subfigure}
+%	\caption{Comparaison sur problèmes non-différentiables de Moré-Wild avec \CS}
+%\end{figure}
+%\begin{figure}[!htb]\label{fig:cs_mw_NOISY3}
+%	\centering
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_NOISY3_1E-1OG_log.png}
+%		\label{fig:data_c_NOISY3_1E-1OG_log}
+%	\end{subfigure}%\hspace*{\fill}
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_NOISY3_1E-3OG_log.png}
+%		\label{fig:data_c_NOISY3_1E-3OG_log}
+%	\end{subfigure}
+%	\smallskip
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_NOISY3_1E-5OG_log.png}
+%		\label{fig:data_c_NOISY3_1E-5OG_log}
+%	\end{subfigure}%\hspace*{\fill}
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_NOISY3_1E-7OG_log.png}
+%		\label{fig:data_c_NOISY3_1E-7OG_log}
+%	\end{subfigure}
+%	\begin{subfigure}{0.95\textwidth}
+%		\includegraphics[width=\linewidth]{images/legende_mw.png}
+%	\end{subfigure}
+%	\caption{Comparaison sur problèmes à bruit stochastique de Moré-Wild avec \CS}
+%\end{figure}
+%\begin{figure}[!htb]\label{fig:cs_mw_WILD3}
+%	\centering
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_WILD3_1E-1OG_log.png}
+%		\label{fig:data_c_WILD3_1E-1OG_log}
+%	\end{subfigure}%\hspace*{\fill}
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_WILD3_1E-3OG_log.png}
+%		\label{fig:data_c_WILD3_1E-3OG_log}
+%	\end{subfigure}
+%	\smallskip
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_WILD3_1E-5OG_log.png}
+%		\label{fig:data_c_WILD3_1E-5OG_log}
+%	\end{subfigure}%\hspace*{\fill}
+%	\begin{subfigure}{0.43\textwidth}
+%		\includegraphics[width=\linewidth]{images/data_c_WILD3_1E-7OG_log.png}
+%		\label{fig:data_c_WILD3_1E-7OG_log}
+%	\end{subfigure}
+%	\begin{subfigure}{0.95\textwidth}
+%		\includegraphics[width=\linewidth]{images/legende_mw.png}
+%	\end{subfigure}
+%	\caption{Comparaison sur problèmes à bruit déterministe de Moré-Wild avec \CS}
+%\end{figure}

@@ -1,23 +1,24 @@
 \Chapter{CONCLUSION}\label{sec:Conclusion}
-Texte.
-
 %%
 %%  SYNTHESE DES TRAVAUX
 %%
 \section{Synthèse des travaux}
-\begin{itemize}
-	\item Distance à la chache ( voir avec charles si on le mentionne ou si il s'agit d'un vol d'idée)
-	\item simplex gradient, un peu comme les modèles (citer custodio)
-	\item ordering following the original order but without reset (comme lexicographique mais sans reset, alors plus comme random) mentionné dans conn scheinberg vincente
-	\item ordonner les points en fonction de la distance au meilleur point obtenu sur un modèle quadratique
-	\item ordonnancement et barriere progressive
-\end{itemize}
-\section{Limitations de la solution proposée}\label{sec:Limitations}
-plusieurs stratégies ne sont pas applicable a toutes les implémentations
-%%
-%%  AMELIORATIONS FUTURES
-%%
-\section{Améliorations futures}
-+ de stratégies. (distance cache, derivé simplexe, lexico-without reset, interaction progressive barrier-opportunisme-)
-parallelisme
+Ce travail comporte une comparaison de stratégies algorithmiques implémentables dans certains algorithmes d'optimisation sans-dérivées. Des algorithmes d'optimisation sans-dérivées identifiés pour la comparaison de ces stratégies, quatre sont des algorithmes de recherche directe directionnels, soient la recherche par coordonnée, la recherche par motifs généralisée, la recherche par ensemble générateur et la recherche directe par maillage adaptatifs. Un algorithme de recherche directe basée sur les dérivé du stencil, soit l'algorithme de filtrage implicite. 
 
+La principale stratégie algorithmique étudiée, la stratégie opportuniste, consiste en l'arrêt prématuré d'une étape de l'algorithme dans laquelle il y a une succession d'évaluations de la fonction objectif à effectuer. La stratégie est implémentée dans les étapes de sonde des algorithmes identifiés préalablement. L'arrêt de la sonde est effectuée après l'évaluation d'un point dont la valeur de la fonction objectif à ce point est inférieure à la valeur minimale obtenue précédemment dans la résolution. La rritère d'arrêt peut être complexifié en y incorporant un nombre minimal de succès ou un nombre minimal d'évaluation.
+
+L'arrêt prématuré implique que l'ordre d'évaluations séquentielle des points importe sur la performance. Plusieurs stratégies d'ordonnancement sont identifiées afin d'être comparées. Les stratégies sont l'ordonnancement lexicographique, l'ordonnancement aléatoire, l'ordonnancement en fonction de la direction du dernier succès et l'ordonnancement en fonction d'un modèle. À ces stratégies s'ajoutes les stratégies de comparaison, soient les stratégies omniscientes et inverse-omnisciente.
+
+L'ensemble de ces stratégies algorithmiques est testé sur un ensemble de problèmes analytiques, un ensemble de problèmes contraints et la boîte noire STYRENE. Les tests numériques révèlent que, des différentes stratégies opportunistes, l'opportunisme après un seul succès est celle qui améliore le plus les méthodes. On y observe que l'impact de la stratégie opportuniste décroit avec le raffinement de l'étape de sonde de l'algorithme utilisé pour les méthodes directes directionnelles. Son impact sur la méthode de filtrage implicite est en apparence négatif. On y observe aussi que l'ordonnancement par modèle est la stratégie d'ordonnancement qui offre le meilleure rendement, suivi de la stratégie aléatoire et la stratégie de la direction du dernier succès. En général, on observe que l'opportunisme avec ordonnancement lexicographique nuit à la résolution. Les stratégies de comparaison permettent d'affirmer que les stratégies utilisées dans cette étude ne sont pas optimales et que l'opportunisme jumelé à une mauvaise stratégie d'ordonnancement peut nuire à la résolution de problèmes. Les résolutions de problèmes contraints montrent que l'intéraction entre la stratégie opportuniste et l'algorithme de la barrière progressive rends le classement des performances moins évident. Ce travail mène à la conclusion que l'opportunisme, jumelé à une stratégie d'ordonnancement adéquate, peut être bénéfique aux méthodes de recherche directe directionnelles, mais qu'il s'agit d'un outil à utiliser avec soin.
+\section{Limitations de la solution proposée}\label{sec:Limitations}
+Une boîte noire est un problème souvent long, bruité, non-différentiable et instable. Les problèmes analytiques proposés par Moré et Wild~\cite{MoWi2009} ne sont pas représentatifs des problèmes pour lesquels les algorithmes de résolution de boîte noire existent. Leurs aspects non-différentiables est limité et les amplitudes des bruits introduits sont faibles.
+
+L'ensemble de problèmes contraints avec points de départ non-réalisables n'est pas suffisamment volumineux pour obtenir une tendance nette pour la performance de chaque stratégie d'ordonnancement identifiée sur cette catégorie de problème. L'ensemble de boîtes noires est limité à une seule, et les tendances sur ces problèmes complexes ne peuvent être validés ou infirmés sur d'autres boîtes noires.
+\section{Améliorations futures}
+Afin d'élargir les connaissances sur l'impact de la stratégie opportuniste en soit, il est envisageable d'identifier d'avantage de méthodes d'optimisation dans lesquelles elle pourrait être implémentée. Dans~\cite{JoPeSt93a}, les auteurs introduisent l'algorithme \textsf{DiRect}. Cet algorithme semble à première vue être un candidat qui possède les caractéristiques nécessaires pour l'implémentation de la stratégie. D'autres méthodes basées sur la recherche par coordonnées, notamment \textsf{PSwarm}~\cite{VaVi07}, figurent dans les algorithmes susceptibles d'être compatible avec la stratégie opportuniste.
+
+Dans l'esprit de \GSS, un succès est accepté seulement si il entraîne une diminution suffisante de la fonction objectif. Ce critère de diminution suffisante pourrait être appliqué seulement comme critère d'opportunisme dans des algorithmes dont l'analyse de convergence ne nécessite pas la diminution suffisante. De cette façon, les succès marginaux seraient ignorés.
+
+Les stratégies de comparaison montrent que le gain de performance de l'opportunisme pourrait être supérieur avec une stratégie d'ordonnancement plus efficace. Une utilisation future des modèles plus sophistiqués pour guider l'ordonnancement, tels que ceux proposés dans~\cite{AuKoLedTa2016}, serait à envisager. D'avantage de stratégie d'ordonnancement pourraient être identifiées. Dans \cite{CoScVibook}, les auteurs mentionnent une stratégie d'ordonnancement déterministe comme la stratégie lexicographique, qui consisterait en l'ordonnancement des points sans remise à zéro de l'ordre des points à chaque nouvelle sonde. De cette façon, aucune direction ne serait priorisée et la probabilité de choisir deux nouveaux centre de sonde issus de la même direction seraient nulles, ce que la stratégie aléatoire ne garanti pas. Les stratégies présentes dans les travaux de Custodio et Al.~\cite{CuDeVi08} pourraient être testées sur une série d'algorithmes.
+
+Dans ce travail, l'ordonnancement en situation de barrière progressive est fixé à une dominance élaborée à la section~\ref{sec:omq}. Différentes relation d'ordre entre les points pourraient être étudiées pour déterminer les impacts de l'ordre d'évaluation de ces points en concert avec l'utilisation de la stratégie opportuniste.

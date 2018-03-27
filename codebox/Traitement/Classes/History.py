@@ -20,6 +20,7 @@ class History:
         self.startpoint = 'undefined'
         self.nbVar = 1
         self.instance = ''
+        self.opportunism = 'undefined'
         self.table = npy.array([])
         self.bbOutputType = []
         self.cleaned = False
@@ -195,6 +196,9 @@ class History:
             for i in pb_ind:
                 if tempArray[x, i] > 0:
                     realisable = False
+            for i in eb_ind:
+                if tempArray[x, i] > 0:
+                    realisable = False
 
             if tempArray[x, obj_ind] < currentbest and realisable:
                 # Beaucoup commentaires pour trucs qui marchent pas
@@ -223,7 +227,6 @@ class History:
         self.cleaned = True
         return
 
-    @property
     def findBestSolution(self):
         temporaryHistory = copy.deepcopy(self)
         temporaryTable = npy.array(temporaryHistory.table)

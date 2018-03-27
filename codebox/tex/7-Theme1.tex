@@ -102,7 +102,7 @@ Par ailleurs, il est à noter que les algorithmes de recherche directe énoncés
 \end{algorithm}
 L'opportunisme pourra être implémenté dans l'étape de \POLL{} selon la même logique que dans \CS, c'est à dire à même la liste des points $x^k + \delta^k d : d \in D^k$. Pour ce qui est de la \SEARCH, l'implémentation de la stratégie est faisable mais sa performance n'en vient qu'à dépendre de la pertinence de la méthode pour générer $S^k$.
 \section{Mesh Adaptive Direct Search}\label{sec:mad}
-Le troisième algorithme présenté est dans les même lignée que \CS et \GPS. Il s'agit de la recherche direct sur maillage adaptif (\emph{Mesh Adaptive Direct Search} ou \MADS), formulé par Audet et Dennis~\cite{AuDe2006}. Contrairement aux algorithmes précédents, \MADS est un algorithme basé sur un maillage, c'est à dire que chaque évaluation de la fonction objectif se fera à un point sur une discrétisation de l'espace des variables. On dénotera $M^k:=\{x^k + \delta^kDy : y \in \N^p\} \subset \R^n$ le maillage à l'itération $k$ sur lequel les itérés seront définis, généré par l'ensemble générateur positif $D = GZ$ et $y$ les entiers naturels. Il s'agit ici d'un maillage de cardinalité infini. Dans leur formulation de Audet et Hate reprise ici, les algorithmes \CS et \GPS sont aussi considéré comme étant basé sur un maillage, quoique leurs premières références~\cite{HoJe61a,Torc97a} n'en indique pas autant.\\
+Le troisième algorithme présenté est dans les même lignée que \CS et \GPS. Il s'agit de la recherche directe par maillage adaptatif (\emph{Mesh Adaptive Direct Search} ou \MADS), formulé par Audet et Dennis~\cite{AuDe2006}. Contrairement aux algorithmes précédents, \MADS est un algorithme basé sur un maillage, c'est à dire que chaque évaluation de la fonction objectif se fera à un point sur une discrétisation de l'espace des variables. On dénotera $M^k:=\{x^k + \delta^kDy : y \in \N^p\} \subset \R^n$ le maillage à l'itération $k$ sur lequel les itérés seront définis, généré par l'ensemble générateur positif $D = GZ$ et $y$ les entiers naturels. Il s'agit ici d'un maillage de cardinalité infini. Dans leur formulation de Audet et Hate reprise ici, les algorithmes \CS et \GPS sont aussi considéré comme étant basé sur un maillage, quoique leurs premières références~\cite{HoJe61a,Torc97a} n'en indique pas autant.\\
 La grande distinction de \MADS ne réside alors pas dans son utilisation d'un maillage comme structure, mais bien l'incorporation d'un cadre à son étape de sonde. On définit le cadre tel que $F^k:=\{x\in M^k : \norminf{x-x^k} \leq \Delta^k b \}$ à l'itération $k$, soit l'ensemble des points sur le maillage $M^k$ pour lesquels la distance de Chebyshev à l'itéré courant est inférieur à une valeur $\Delta ^k b$. Cette valeur est déterminée par $b = \max\{\norminf{d'}:d' \in \D\}$, soit la plus grande composante vectorielle présente dans tous les colonnes de la base positive $\D$ issue de l'ensemble générateur $D$, multipliée par un paramètre introduit dans \MADS, soit le paramètre de longueur du cadre $\Delta^k$.\\
 La figure \ref{fig:MADS} montre une itération hypothétique de \MADS pour laquelle $\Delta^k = \frac{1}{2}, \delta^k = \frac{1}{8}$ avec l'ensemble générateur étant
 $D = \begin{bmatrix*}[C]
@@ -161,9 +161,9 @@ Dans \GPS, quoique l'algorithme décrit n'inclue pas de maillage formellement, l
 		\STATE détermination d'un ensemble générateur positif $\D^k_\Delta \subset F^k$
 		%\STATE tel qu'il est un sous-ensemble du cadre $F^k$ de demi-coté $\Delta^k$.
 		\IF {$f(t) < f(x^k) $ pour un $t \in P^k := \{ x^k + \delta^k d : d \in \D ^k_\Delta\}$}
-		\STATE $x^{k+1} \leftarrow t$ et $\delta^{k+1} \leftarrow \tau ^{-1}\Delta^k$
+		\STATE $x^{k+1} \leftarrow t$ et $\Delta^{k+1} \leftarrow \tau ^{-1}\Delta^k$
 		\ELSE
-		\STATE $x^{k+1} \leftarrow t$ et $\delta^{k} \leftarrow \tau\Delta^k$
+		\STATE $x^{k+1} \leftarrow t$ et $\Delta^{k} \leftarrow \tau\Delta^k$
 		\ENDIF
 		\eindent
 		\STATE 4. \textsf{Terminaison}
@@ -201,7 +201,7 @@ Plusieurs paramètres supplémentaires sont nécessaires tels que la mesure du c
 				\end{tabular} 
 				&\begin{tabular}{@{}l@{}}une fonction continue tel que $\nabla(\rho(\delta)) < 0$ lorsque $\delta\rightarrow 0$\\
 					et $\frac{\rho(\delta)}{\delta}\rightarrow 0$ quand $\delta \downarrow 0$\end{tabular} \\
-				$\beta_{\max}\geq\beta_{\min}>0$ & les bornes sur la longueur des vecteurs de $G^k$\\
+				$\beta_{\max}\geq\beta_{\min}>0$ & les bornes sur la longueur des vecteurs de $D^k$\\
 				$\epsilon_{\text{stop}} \in \left[ 0,\infty \right) $ & le critère d'arrêt\\
 				$\kappa_{\min} \geq 0$ & La mesure cosinus minimale d'un ensemble\\
 				$k \leftarrow 0$ & le compteur d'itérations\\
@@ -222,7 +222,7 @@ Plusieurs paramètres supplémentaires sont nécessaires tels que la mesure du c
 		\bindent
 		\STATE détermination de $D^k = \{s\in\R^n,~\beta_{\min}\leq\norm{s}\leq\beta_{\max},~\kappa(H^k\cup D^k)\geq \kappa_{\min}\} $
 		\STATE un ensemble générateur
-		\IF {$f(t) < f(x^k) $ pour un $t \in P^k := \{x^k + \delta^k d : d \in D^k\}$}
+		\IF {$f(t) < f(x^k)-\rho(\delta^k)$ pour un $t \in P^k := \{x^k + \delta^k d : d \in D^k\}$}
 		\STATE $x^{k+1} \leftarrow t$ et $\delta^{k+1} \leftarrow \phi^k\delta^k$
 		\ELSE
 		\STATE $x^{k+1} \leftarrow t$ et $\delta^{k} \leftarrow \tau^k\delta^k$
