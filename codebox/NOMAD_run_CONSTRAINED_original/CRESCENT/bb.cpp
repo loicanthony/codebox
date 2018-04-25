@@ -33,7 +33,7 @@ int main ( int argc , char ** argv ) {
 
   in.close();
 
-  cout << z << " " << g1-N2 << " " << N2-g2 << endl;
+  cout << g1-N2 << " " << N2-g2 <<  " " << z << endl;
 
   return 0;
 }

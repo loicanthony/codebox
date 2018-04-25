@@ -1,4 +1,4 @@
-case  1: nprob =  1; n =  9; m = 45; ns = 0; break; // LINEAR_FULL
+  case  1: nprob =  1; n =  9; m = 45; ns = 0; break; // LINEAR_FULL
   case  2: nprob =  1; n =  9; m = 45; ns = 1; break; // LINEAR_FULL
   case  3: nprob =  2; n =  7; m = 35; ns = 0; break; // LINEAR_R1
   case  4: nprob =  2; n =  7; m = 35; ns = 1; break; // LINEAR_R1

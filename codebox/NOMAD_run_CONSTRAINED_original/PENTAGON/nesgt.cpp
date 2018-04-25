@@ -92,7 +92,8 @@ int main ( int argc, char ** argv ) {
   if ( f3 > z )
     z = f3;
 
-  cout << g[ 0] << " "
+  cout << -z << " "
+	   << g[ 0] << " "
        << g[ 1] << " "
        << g[ 2] << " "
        << g[ 3] << " "
@@ -106,8 +107,8 @@ int main ( int argc, char ** argv ) {
        << g[11] << " "
        << g[12] << " "
        << g[13] << " "
-       << g[14] << " "
-       <<     -z << endl;
+       << g[14] << endl;
+       
 
   return 0;
 }

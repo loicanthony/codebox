@@ -62,7 +62,7 @@ int main ( int argc , char ** argv ) {
     z  = - fabs ( ( sum1 - 2 * prod1 ) / sqrt(sum3) );
     
     cout << setprecision(16);
-    cout << g1 << " " << g2 << " " << z << endl;
+    cout << z << " " << g1 << " " << g2 << endl;
     
     return 0;
 }

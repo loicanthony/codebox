@@ -103,14 +103,14 @@ int main ( int argc, char ** argv ) {
       z = fabs(fi);
   }
 
-  cout << g1 << " "
+  cout <<  -z << " "
+	   << g1 << " "
        << g2 << " "
        << g3 << " "
        << g4 << " "
        << g5 << " "
        << g6 << " "
-       << g7 << " "
-       <<  -z << endl;
+       << g7 << endl;
 
   return 0;
 }
