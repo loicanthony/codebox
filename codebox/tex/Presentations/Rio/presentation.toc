@@ -1,0 +1,11 @@
+\select@language {french}
+\beamer@sectionintoc {1}{Introduction : M\IeC {\'e}thodes de recherche directe}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{M\IeC {\'e}thodes de recherche directe}{3}{0}{1}
+\beamer@sectionintoc {2}{M\IeC {\'e}thodes identifi\IeC {\'e}es}{29}{0}{2}
+\beamer@subsectionintoc {2}{1}{Algorithmes}{29}{0}{2}
+\beamer@sectionintoc {3}{Opportunisme et ordonnancement}{43}{0}{3}
+\beamer@subsectionintoc {3}{1}{Opportunisme}{43}{0}{3}
+\beamer@sectionintoc {4}{R\IeC {\'e}sultats num\IeC {\'e}riques}{67}{0}{4}
+\beamer@subsectionintoc {4}{1}{R\IeC {\'e}sultats num\IeC {\'e}riques}{67}{0}{4}
+\beamer@sectionintoc {5}{Conclusion}{95}{0}{5}
+\beamer@subsectionintoc {5}{1}{Conclusion}{95}{0}{5}

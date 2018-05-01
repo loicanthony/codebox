@@ -1,0 +1,11 @@
+\select@language {french}
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Optimisation sans d\IeC {\'e}riv\IeC {\'e}es}{3}{0}{1}
+\beamer@sectionintoc {2}{Recherche Directe}{32}{0}{2}
+\beamer@subsectionintoc {2}{1}{Algorithmes}{32}{0}{2}
+\beamer@sectionintoc {3}{Opportunisme et ordonnancement}{66}{0}{3}
+\beamer@subsectionintoc {3}{1}{Opportunisme}{66}{0}{3}
+\beamer@sectionintoc {4}{Tests num\IeC {\'e}riques}{90}{0}{4}
+\beamer@subsectionintoc {4}{1}{R\IeC {\'e}sultats num\IeC {\'e}riques}{90}{0}{4}
+\beamer@sectionintoc {5}{Conclusion}{118}{0}{5}
+\beamer@subsectionintoc {5}{1}{Conclusion}{118}{0}{5}
