@@ -58,8 +58,37 @@
 \headcommand {\beamer@framepages {80}{80}}
 \headcommand {\slideentry {4}{1}{4}{81/83}{Numerical results}{0}}
 \headcommand {\beamer@framepages {81}{83}}
-\headcommand {\beamer@partpages {1}{83}}
-\headcommand {\beamer@subsectionpages {69}{83}}
-\headcommand {\beamer@sectionpages {69}{83}}
-\headcommand {\beamer@documentpages {83}}
-\headcommand {\gdef \inserttotalframenumber {20}}
+\headcommand {\slideentry {4}{1}{5}{84/86}{Numerical results}{0}}
+\headcommand {\beamer@framepages {84}{86}}
+\headcommand {\slideentry {4}{1}{6}{87/89}{Numerical results}{0}}
+\headcommand {\beamer@framepages {87}{89}}
+\headcommand {\slideentry {4}{1}{7}{90/92}{Numerical results}{0}}
+\headcommand {\beamer@framepages {90}{92}}
+\headcommand {\slideentry {4}{1}{8}{93/95}{Numerical results}{0}}
+\headcommand {\beamer@framepages {93}{95}}
+\headcommand {\slideentry {4}{1}{9}{96/98}{Numerical results}{0}}
+\headcommand {\beamer@framepages {96}{98}}
+\headcommand {\beamer@sectionpages {69}{98}}
+\headcommand {\beamer@subsectionpages {69}{98}}
+\headcommand {\sectionentry {5}{Conclusion}{99}{Conclusion}{0}}
+\headcommand {\beamer@subsectionpages {99}{98}}
+\headcommand {\beamer@subsectionentry {0}{5}{1}{99}{Conclusion}}
+\headcommand {\beamer@subsectionpages {99}{99}}
+\headcommand {\beamer@subsectionentry {0}{5}{2}{100}{Conclusion}}
+\headcommand {\slideentry {5}{2}{1}{100/106}{Conclusion}{0}}
+\headcommand {\beamer@framepages {100}{106}}
+\headcommand {\slideentry {5}{2}{2}{107/112}{Conclusion}{0}}
+\headcommand {\beamer@framepages {107}{112}}
+\headcommand {\slideentry {5}{2}{3}{113/118}{Conclusion}{0}}
+\headcommand {\beamer@framepages {113}{118}}
+\headcommand {\slideentry {5}{2}{4}{119/124}{Conclusion}{0}}
+\headcommand {\beamer@framepages {119}{124}}
+\headcommand {\slideentry {5}{2}{5}{125/125}{Conclusion}{0}}
+\headcommand {\beamer@framepages {125}{125}}
+\headcommand {\slideentry {5}{2}{6}{126/126}{Conclusion}{0}}
+\headcommand {\beamer@framepages {126}{126}}
+\headcommand {\beamer@partpages {1}{126}}
+\headcommand {\beamer@subsectionpages {100}{126}}
+\headcommand {\beamer@sectionpages {99}{126}}
+\headcommand {\beamer@documentpages {126}}
+\headcommand {\gdef \inserttotalframenumber {31}}

@@ -1247,7 +1247,6 @@ Déterminer la \underline{meilleure} amélioration possible avec l'ordonnancemen
 \item[\mynum{2}] Stratégie réelles peu performantes.
 \end{enumerate}
 \end{center}
-
 \end{frame}
 
 \begin{frame}
@@ -1305,36 +1304,36 @@ Déterminer la \underline{meilleure} amélioration possible avec l'ordonnancemen
 \tableofcontents[currentsection,currentsubsection,subsectionstyle=show/hide]
 \subsection{Conclusion}
 \begin{frame}
-\frametitle{Conclusion : Les grandes lignes}
+\frametitle{Summary}
 \begin{itemize}
-\item\only<1->{L'opportunisme est bénéfique aux méthodes de recherche directe directionnelles.}
+\item\only<1->{In general, the opportunistic strategy benefits to directionnal direct-search methods.}
 \pause
-\item\only<1>{~}\only<2->{L'opportunisme peut aussi être nuisible avec le mauvais ordonnancement.}
+\item\only<1>{~}\only<2->{Opportunism can deteriorate a method's performance if coupled with an inadequate ordering strategy.}
 \pause
-\item\only<1-2>{~}\only<3->{Plus la sonde est raffinée, moins son impact est important}
+\item\only<1-2>{~}\only<3->{The more the poll step is refined the less opportunistism impacts it.}
 \pause
-\item\only<1-3>{~}\only<4->{Stratégies autres que opportunisme simple $\rightarrow$ Sonde complète}
+\item\only<1-3>{~}\only<4->{Strategies other than simple opportunism tend to behave like complete polling.}
 \pause
-\item\only<1-4>{~}\only<5->{Classements des stratégies : Modèles, Aléatoires, Direction du dernier succès, sonde complète et lexicographique}
+\item\only<1-4>{~}\only<5->{Ranking of strategies on unconstrained problems : Models, Random/Last success direction, Complete polling and Lexicographic ordering.}
 \pause
-\item\only<1-5>{~}\only<6->{Pour \IMFIL, l'opportunisme est inutile ou nuisible}
+\item\only<1-5>{~}\only<6->{For \IMFIL, the opportunistic strategy is harmful.}
 \end{itemize}
 \end{frame}
 
 \begin{frame}
-\frametitle{Conclusion : Suite?}
-Il y a place à l'amélioration dans l'ordonnancement.
+\frametitle{Future work}
+There is room for improvement in ordering strategies.
 \pause
 \begin{itemize}
-\item\only<2->{Ordonnancer avec d'autre types de modèles que quadratiques}
+\item\only<2->{Use other kind of models.}
 \pause
-\item\only<2>{~}\only<3->{Identifier d'autres stratégies d'ordonnancement (Distance à la solution d'un modèle, Distance à la cache).}
+\item\only<2>{~}\only<3->{Identify more ordering strategies (Distance from the solution of a model.)}
 \pause
-\item\only<2-3>{~}\only<4->{Identifier des stratégies avec la barrière progressive.}
+\item\only<2-3>{~}\only<4->{Identify more strategies in relation with the progressive barrier.}
 \pause
-\item\only<2-4>{~}\only<5->{Critère d'opportunisme : décroissance minimale}
+\item\only<2-4>{~}\only<5->{Use minimal decrease as an opportunism criteria.}
 \pause
-\item\only<2-5>{~}\only<6->{Opportunisme et parallélisme?}
+\item\only<2-5>{~}\only<6->{Opportunism and parallelism.}
 \end{itemize}
 \end{frame}
 %------------------------------------------------

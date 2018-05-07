@@ -7,3 +7,6 @@
 \beamer@subsectionintoc {3}{1}{Opportunism}{49}{0}{3}
 \beamer@sectionintoc {4}{Numerical results}{69}{0}{4}
 \beamer@subsectionintoc {4}{1}{Numerical results}{69}{0}{4}
+\beamer@sectionintoc {5}{Conclusion}{99}{0}{5}
+\beamer@subsectionintoc {5}{1}{Conclusion}{99}{0}{5}
+\beamer@subsectionintoc {5}{2}{Conclusion}{100}{0}{5}

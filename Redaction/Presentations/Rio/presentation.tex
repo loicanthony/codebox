@@ -1,0 +1,751 @@
+\documentclass{beamer}
+\mode<presentation> {
+	
+	% The Beamer class comes with a number of default slide themes
+	% which change the colors and layouts of slides. Below this is a list
+	% of all the themes, uncomment each in turn to see what they look like.
+	
+	%\usetheme{default}
+	%\usetheme{AnnArbor}
+	%\usetheme{Antibes}
+	%\usetheme{Bergen}
+	%\usetheme{Berkeley}
+	%\usetheme{Berlin}
+	%\usetheme{Boadilla}
+	%\usetheme{CambridgeUS}
+	%\usetheme{Copenhagen}
+	%\usetheme{Darmstadt}
+	%\usetheme{Dresden}
+	%\usetheme{Frankfurt}
+	%\usetheme{Goettingen}
+	%\usetheme{Hannover}
+	%\usetheme{Ilmenau}
+	%\usetheme{JuanLesPins}
+	%\usetheme{Luebeck}
+	\usetheme{Madrid}
+	%\usetheme{Malmoe}
+	%\usetheme{Marburg}
+	%\usetheme{Montpellier}
+	%\usetheme{PaloAlto}
+	%\usetheme{Pittsburgh}
+	%\usetheme{Rochester}
+	%\usetheme{Singapore}
+	%\usetheme{Szeged}
+	%\usetheme{Warsaw}
+	
+	% As well as themes, the Beamer class has a number of color themes
+	% for any slide theme. Uncomment each of these in turn to see how it
+	% changes the colors of your current slide theme.
+	
+	%\usecolortheme{albatross}
+	%\usecolortheme{beaver}
+	%\usecolortheme{beetle}
+	%\usecolortheme{crane}
+	%\usecolortheme{dolphin}
+	%\usecolortheme{dove}
+	%\usecolortheme{fly}
+	%\usecolortheme{lily}
+	%\usecolortheme{orchid}
+	%\usecolortheme{rose}
+	%\usecolortheme{seagull}
+	%\usecolortheme{seahorse}
+	%\usecolortheme{whale}
+	%\usecolortheme{wolverine}
+	
+	%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+	%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+	
+	%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+}
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage[utf8]{inputenc}
+\usepackage[english,frenchb]{babel}
+\usepackage[Algorithme]{algorithm}
+\usepackage{algorithmic}
+\usepackage{ulem}
+\newcommand\redout{\bgroup\markoverwith
+	{\textcolor{red}{\rule[0.5ex]{2pt}{0.8pt}}}\ULon}
+\usepackage{tikz}
+\usetikzlibrary{calc,shapes}
+\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}
+\def\checkmarkg{\tikz\fill[scale=0.4,black!30!green](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+\def\checkmarky{\tikz\fill[scale=0.4,black!30!yellow](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb
+\usepackage{pifont}% http://ctan.org/pkg/pifont
+\usepackage{color}
+\usepackage{filecontents}
+\usepackage{soul}
+\usepackage{bibentry}
+\usepackage{booktabs} % Allows the use of \toprule, 
+
+\newcommand{\xmark}{\ding{55}}%
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\setbeamertemplate{items}[circle]
+
+\newcommand\mynum[1]{%
+	\usebeamercolor{enumerate item}%
+	\tikzset{beameritem/.style={circle,inner sep=0,minimum size=2ex,text=enumerate item.bg,fill=enumerate item.fg,font=\footnotesize}}%
+	\tikz[baseline=(n.base)]\node(n)[beameritem]{#1};%
+}
+
+\usepackage{caption}
+\captionsetup{font=scriptsize,labelfont=scriptsize}
+
+\makeatletter
+\setbeamertemplate{headline}{%
+	\begin{beamercolorbox}[ht=2.25ex,dp=3.75ex]{section in head/foot}
+		\insertnavigation{\paperwidth}
+	\end{beamercolorbox}%
+}%
+\makeatother
+\newcommand{\CS}{\textsf{CS}}
+\newcommand{\GPS}{\textsf{GPS}}
+\newcommand{\GSS}{\textsf{GSS}}
+\newcommand{\MADS}{\textsf{MADS}}
+\newcommand{\IMFIL}{\textsf{IMFIL}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Opportunisme et ordonnancement]{Opportunisme et ordonnancement en optimisation sans dérivées} % The short title appears at the bottom of every slide, the full title is only on the title page
+
+\author{Loïc Anthony Sarrazin-Mc Cann} % Your name
+\institute[GERAD] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
+{
+	École Polytechnique de Montréal \\ % Your institution for the title page
+	\medskip
+}
+\date{\today} % Date, can be changed to a custom date
+
+\begin{document}
+	
+\begin{frame}
+	\titlepage % Print the title page as the first slide
+\end{frame}
+
+\begin{frame}
+\frametitle{Plan de la présentation} % Table of contents slide, comment this block out to remove it
+\tableofcontents[hideallsubsections] % Throughout your presentation, if you choose to use \section{} and \subsection{} commands, these will automatically be printed on this slide as an overview of your presentation
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+\section[Introduction]{Introduction : Méthodes de recherche directe} % Sections can be created in order to organize your presentation into discrete blocks, all sections and subsections are automatically printed in the table of contents as an overview of the talk
+\subsection{Méthodes de recherche directe}
+\begin{frame}
+\frametitle{Types de méthodes de recherche directe}
+\textbf{Méthodes de recherche directe} :
+\begin{itemize}
+	\pause
+	\item Échantillonne $f(x)$ et $c(x)$ sur un ensemble fini de points
+	\pause
+	\item Prends une action basée \underline{seulement sur ces valeurs}.
+\end{itemize}
+\bigskip
+\pause
+Les méthodes de recherche directe se divisent en :
+\begin{itemize}
+	\pause
+	\item Directionnelles (Mesh Adaptive Direct Search)
+	\pause
+	\item Simpliciales (Nelder-Mead)
+\end{itemize}
+\pause
+\medskip
+Elles peuvent aussi être jumelées à d'autre types de méthode :
+\begin{itemize}
+	\pause
+	\item Hybrides directionnelles et de recherche linéaire (Implicit Filtering)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Cadre de travail en recherche directe}
+Cadre de travail pour les méthodes de recherche directe directionnelles : 
+\begin{algorithm}[H]
+\begin{algorithmic}[]
+	\FOR{$k=1,2,\dots$}
+	\STATE \textbf{Étape de Recherche} : Calcule $f(x)$ à un ensemble de points $S^k$ issu de mécanismes heuristiques.
+	\STATE Si succès, mise à jour de $x^k$
+	\STATE
+	\STATE \textbf{Étape de sonde} : Calcule $f(x)$ à un ensemble de points 
+	\STATE $P^k:=\{x^k+\delta ^k d:d\in D\}$, où $D$ est un ensemble générateur positif. 
+	\STATE Si succès, mise à jour de $x^k$
+	\ENDFOR
+\end{algorithmic}
+\caption{Cadre de travail en recherche directe}
+\label{alg:seq}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\frametitle{Problématique}
+Notre but : réduire le nombre d'évaluations.
+\pause
+\medskip
+
+Est-il toujours nécessaire d'évaluer tous les points de l'ensemble $P^k$?
+\pause
+\medskip
+
+\textbf{NON, pas si on obtient un succès tel que $f(t) < f(x^k)$, $t\in P^k$}
+\pause
+\medskip
+
+On étudiera alors l'impact de \textbf{la stratégie opportuniste}.
+
+\pause
+{\begin{block}{Stratégie opportuniste}
+La stratégie opportuniste désigne l'arrêt prématuré de l'étape de sonde courante si celle-ci est déjà un succès.
+\end{block}}
+\pause
+\medskip
+
+Utilisée dans plusieurs publications mais jamais étudiée en soi.
+\end{frame}
+
+\begin{frame}
+\frametitle{Problématique}
+\begin{minipage}[t]{0.49\linewidth}
+{\footnotesize Sonde non-opportuniste
+	
+ $P^k := $
+\begin{itemize}
+\item[]\only<1>{$t_1 = (1,2,2)$}\only<2->{$t_1 = (1,2,2),~f(t_1) = 2 ${\color{red}\xmark}}
+\item[]\only<1-2>{$t_2 = (2,1,2)$}\only<3->{$t_2 = (2,1,2),~f(t_2) = 1${\color{red}\xmark}}
+\item[]\only<1-3>{$t_3 = (2,2,1)$}\only<4->{$t_3 = (2,2,1),~f(t_3) = -1$\checkmarkg}
+\item[]\only<1-4>{$t_4 = (2,2,3)$}\only<5->{$t_4 = (2,2,3),~f(t_3) = 5${\color{red}\xmark}}
+\item[]\only<1-5>{$t_5 = (2,3,2)$}\only<6->{$t_5 = (2,3,2),~f(t_3) = -1.5$\checkmarkg}
+\item[]\only<1-6>{$t_6 = (3,2,2)$}\only<7->{$t_6 = (3,2,1),~f(t_3) = 6${\color{red}\xmark}}
+\end{itemize}
+}
+\end{minipage}
+\begin{minipage}[t]{0.49\linewidth}
+{\footnotesize Sonde opportuniste
+	
+$P^k := $
+\begin{itemize}
+	\item[]\only<1-7>{$t_1 = (1,2,2)$}\only<8->{$t_1 = (1,2,2),~f(t_1) = 2 ${\color{red}\xmark}}
+	\item[]\only<1-8>{$t_2 = (2,1,2)$}\only<9->{$t_2 = (2,1,2),~f(t_2) = 1${\color{red}\xmark}}
+	\item[]\only<1-9>{$t_3 = (2,2,1)$}\only<10->{$t_3 = (2,2,1),~f(t_3) = -1$\checkmarkg}
+	\item[]\only<1-9>{$t_4 = (2,2,3)$}\only<10->{\sout{$t_4 = (2,2,3)$}}
+	\item[]\only<1-9>{$t_5 = (2,3,2)$}\only<10->{\sout{$t_5 = (2,3,2)$}}
+	\item[]\only<1-9>{$t_6 = (3,2,2)$}\only<10->{\sout{$t_6 = (3,2,1)$}}
+\end{itemize}
+}
+\end{minipage}
+\medskip
+\pause[11]
+
+Alors : 
+\begin{enumerate}
+\item Pour quelles méthodes est-elle valable?
+\item Quand doit-on arrêter la sonde?
+\item Comment doit-on ordonner les points de $P^k$?
+\end{enumerate}
+\end{frame}
+
+
+\section{Méthodes identifiées}
+\tableofcontents[currentsection,currentsubsection,subsectionstyle=show/hide]
+\subsection{Algorithmes}
+\begin{frame}
+\frametitle{Identification des méthodes}
+\begin{exampleblock}{Question 1.}
+Pour quelles méthode est-ce valable?
+\end{exampleblock}
+\begin{itemize}
+\item[]\only<2>{- Directionnelles}\only<3->{- \textbf{Directionnelles} \checkmarkg}
+\item[]\only<3->{Convergent vers un optimum indépendamment de l'arrêt prématuré.}
+\item[]\only<4>{- Simpliciales}\only<5->{- Simpliciales {\color{red}\xmark}}
+\item[]\only<5->{Déjà un arrêt prématuré et fonctionnement dépend de l'ordre des points.}
+\item[]\only<6>{- Directionnelles hybrides}\only<7->{- \textbf{Directionnelles hybrides} \checkmarky}
+\item[]\only<7->{Convergent mais on peut altérer le bon fonctionnement.}
+\end{itemize}
+\only<8>{\textit{Remarque : on ne s'intéresse qu'aux étapes de sonde.}}
+\end{frame}
+\begin{frame}
+\frametitle{Recherche par coordonnées (\CS)}
+\begin{algorithm}[H]
+\begin{algorithmic}[]
+\FOR{$k=1,2,\dots$}
+\STATE \textbf{Étape de sonde} : Calcule $f(x)$ à un ensemble de points $P^k:=\{x^k+\delta ^k d:d\in D_{\oplus}\}$, où $D_{\oplus} := \{\pm e_1,\pm e_2,\dots,\pm e_n\}$.
+\STATE
+\STATE Si $\exists~t$ tel que $f(t) < f(x^k)$, $t\in P^k$ : Succès
+\STATE \tab mise à jour de $x^{k+1}\leftarrow t$ et $\delta^{k+1} \leftarrow \delta^k$.
+\STATE
+\STATE Sinon $\nexists~t$ tel que $f(t) < f(x^k)$, $t\in P^k$ : Échec
+\STATE \tab mise à jour de $x^{k+1}\leftarrow x^k$ et $\delta^{k+1} \leftarrow \frac{\delta^k}{2}$.
+\ENDFOR
+\end{algorithmic}
+\caption{Recherche par coordonnées}
+\label{alg:cs}
+\end{algorithm}
+Si les évaluations sont séquentielles $\rightarrow$ On peut arrêter l'algorithme après un succès.
+\end{frame}
+
+\begin{frame}
+\frametitle{Recherche par motifs généralisée (\GPS)}
+\begin{algorithm}[H]
+\begin{algorithmic}[]
+\FOR{$k=1,2,\dots$}
+\STATE \textbf{Étape de sonde} : Calcule $f(x)$ à un ensemble de points $P^k:=\{x^k+\delta ^k d:d\in D\}$, où {\color{red}$D$ est un ensemble générateur.}
+\STATE
+\STATE Si $\exists~t$ tel que $f(t) < f(x^k)$, $t\in P^k$ : Succès
+\STATE \tab mise à jour de $x^{k+1}\leftarrow t$ et $\delta^{k+1} \leftarrow {\color{red}\tau^{-1}}\delta^k$.
+\STATE
+\STATE Sinon $\nexists~t$ tel que $f(t) < f(x^k)$, $t\in P^k$ : Échec
+\STATE \tab mise à jour de $x^{k+1}\leftarrow x^k$ et $\delta^{k+1} \leftarrow {\color{red}\tau}\delta^k$.
+\ENDFOR
+\end{algorithmic}
+\caption{Recherche par motifs généralisée}
+\label{alg:gps}
+\end{algorithm}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Recherche par ensemble générateurs (\GSS)}
+\begin{algorithm}[H]
+\begin{algorithmic}[]
+\FOR{$k=1,2,\dots$}
+\STATE \textbf{Étape de sonde} : Calcule $f(x)$ à un ensemble de points 
+\STATE $P^k:=\{x^k+\delta ^k d:d\in D\}$, où {\color{blue}$D$ est un ensemble générateur 
+\STATE respectant certaines conditions}.
+\STATE
+\STATE Si $\exists~t$ tel que $f(t) < f(x^k){\color{blue}-\rho(\delta^k)}$, $t\in P^k$ : Succès
+\STATE \tab mise à jour de $x^{k+1}\leftarrow t$ et $\delta^{k+1} \leftarrow {\color{blue}\phi}\delta^k$.
+\STATE
+\STATE Sinon $\nexists~t$ tel que $f(t) < f(x^k){\color{blue}-\rho(\delta^k)}$, $t\in P^k$ : Échec
+\STATE \tab mise à jour de $x^{k+1}\leftarrow x^k$ et $\delta^{k+1} \leftarrow {\color{red}\tau}\delta^k$.
+\ENDFOR
+\end{algorithmic}
+\caption{Recherche par ensemble générateurs}
+\label{alg:gps}
+\end{algorithm}
+L'analyse de converge est basée sur \textbf{la condition de décroissance minimale}.
+\end{frame}
+
+\begin{frame}
+\frametitle{Recherche par treillis adaptatifs (\MADS)}
+\begin{algorithm}[H]
+\begin{algorithmic}[]
+\FOR{$k=1,2,\dots$}
+\STATE {\color{red}Mise à jour : $\delta^k \leftarrow \min(\Delta^k,(\Delta^k)^2)$}
+\STATE \textbf{Étape de sonde} : Calcule $f(x)$ à un ensemble de points 
+\STATE $P^k:=\{x^k+\delta ^k d:d\in D\}$, où {\color{red}$D\subset F^k$,
+\STATE avec $F^k$ le cadre de demi côté $\Delta^k$.}
+\STATE
+\STATE Si $\exists~t$ tel que $f(t) < f(x^k)$, $t\in P^k$ : Succès
+\STATE \tab mise à jour de $x^{k+1}\leftarrow t$ et ${\color{red}\Delta^{k+1}} \leftarrow {\color{red}\tau^{-1}\Delta^k}$.
+\STATE
+\STATE Sinon $\nexists~t$ tel que $f(t) < f(x^k)$, $t\in P^k$ : Échec
+\STATE \tab mise à jour de $x^{k+1}\leftarrow x^k$ et ${\color{red}\Delta^{k+1}} \leftarrow {\color{red}\tau\Delta^k}$.
+\ENDFOR
+\end{algorithmic}
+\caption{Recherche par treillis adaptatifs}
+\label{alg:mads}
+\end{algorithm}
+\end{frame}
+
+\begin{frame}
+\begin{algorithm}[H]
+\begin{algorithmic}[]
+\FOR{$k=1,2,\dots$}
+\STATE \textbf{Étape de sonde} : Calcule $f(x)$ à un ensemble de points
+\STATE $P^k:=\{x^k+\delta ^k d:d\in D_{\oplus}\}$, où $D_{\oplus} := \{\pm e_1,\pm e_2,\dots,\pm e_n\}$.
+\STATE
+\STATE Si $\exists~t$ tel que $f(t) < f(x^k)$, $t\in P^k$ : Succès
+\STATE {\color{red}Effectuer une recherche linéaire avec $\nabla_s f(x^k)$.}
+\STATE \tab mise à jour de $x^{k+1}\leftarrow t$ et $\delta^{k+1} \leftarrow \delta^k$.
+\STATE
+\STATE Sinon $\nexists~t$ tel que $f(t) < f(x^k)$, $t\in P^k$ : Échec
+\STATE \tab mise à jour de $x^{k+1}\leftarrow x^k$ et $\delta^{k+1} \leftarrow \frac{\delta^k}{2}$.
+\ENDFOR
+\end{algorithmic}
+\caption{Filtrage implicite}
+\label{alg:cs}
+\end{algorithm}
+\frametitle{Filtrage implicite (\IMFIL)}
+\end{frame}
+
+\section{Opportunisme et ordonnancement}
+\tableofcontents[currentsection,currentsubsection,subsectionstyle=show/hide]
+\subsection{Opportunisme}
+\begin{frame}
+\frametitle{Définitions}
+\begin{exampleblock}{Question 2.}
+Quand doit-on arrêter la sonde?
+\end{exampleblock}
+\pause
+\bigskip
+
+\pause
+\bigskip
+
+{\begin{block}{Sonde complète}
+Désigne l'évaluation de la fonction objectif à tous les points de l'étape de sonde.
+\end{block}}
+\pause
+\bigskip
+
+\begin{block}{Stratégie opportuniste simple}
+	Désigne l'arrêt prématuré de la sonde à \textbf{l'obtention d'un point} satisfaisant le critère de succès. 
+\end{block}
+\end{frame}
+\begin{frame}
+\frametitle{Différentes stratégies opportunistes}
+
+\begin{block}{Stratégie opportuniste au $p$\textsuperscript{ème} succès}
+Arrêt de la sonde après \textbf{l'obtention de $p$ points} satisfaisant le critère de succès.\end{block}
+\pause
+\medskip
+
+{\begin{block}{Stratégie opportuniste avec au minimum $q$ évaluations}
+Arrêt de la sonde \textbf{après $q$ évaluations} si un point satisfaisant le critère de succès est évalué. \end{block}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Définitions}
+\begin{exampleblock}{Question 3.}
+Comment doit-on ordonner les points de $P^k$?
+\end{exampleblock}
+\pause
+\bigskip
+
+{\begin{block}{Stratégie d'ordonnancement}
+Stratégie guidant la permutation des points de l'ensemble $P^k$.
+\end{block}}
+\end{frame}
+
+\begin{frame}
+\frametitle{Stratégies d’ordonnancement}
+\begin{enumerate}
+\item\only<1->{\textbf{Lexicographique}}
+\pause
+\item[]\only<2->{Ordonnés comme dans un dictionnaire.}
+\pause
+\item\only<3->{\textbf{Aléatoire}}
+\pause
+\item\only<4->{\textbf{Direction du dernier succès}}
+\pause
+\item[]\only<5->{Ordonnés selon l'angle avec la direction du dernier succès.}
+\pause
+\item\only<6->{\textbf{Guidé par modèle quadratique}}
+\pause
+\item[]\only<7->{$A\prec B$ si $\tilde{f}(A) < \tilde{f}(B)$}
+\item[]\only<8->{$\tilde{f}$ une fonction substitut quadratique de $f$.}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Stratégies de comparaison}
+Déterminer la \underline{meilleure} amélioration possible avec l'ordonnancement :
+\pause
+\begin{itemize}
+\item[\mynum{5}]\only<2->{\textbf{Omnisciente}}
+\pause
+\item[]\only<3->{$A \prec B$ si $f(A)<f(B)$}
+\end{itemize}
+\pause
+\bigskip
+\only<4->{Déterminer le \underline{pire} ordonnancement possible : }
+\pause
+\begin{enumerate}
+\item[\mynum{6}]\only<5->{\textbf{Inverse-Omnisciente}}
+\pause
+\item[]\only<6->{$A \prec B$ si $f(A)>f(B)$}
+\end{enumerate}
+\bigskip
+\pause
+
+\begin{center}
+{\color{red} \Large Impossible à appliquer en pratique}
+\end{center}
+\end{frame}
+
+\section{Résultats numériques}
+\tableofcontents[currentsection,currentsubsection,subsectionstyle=show/hide]
+\subsection{Résultats numériques}
+\begin{frame}
+\frametitle{Problèmes tests}
+\begin{enumerate}
+\item\only<1->{212 instances de problèmes issus de \cite{MoWi2009}}
+\pause
+\item\only<2->{18 problèmes contraints issus de \cite{AuTr17}}
+\pause
+\item[]\only<3->{$x^0$ irréalisable, avec PB}
+\pause
+\item\only<4->{1 Boîte noire, STYRENE, issue de \cite{AuBeLe08}}
+\pause
+\item[]\only<5->{$f:R^8\mapsto R$, $c:R^8\mapsto R^{11}$, 4 contraintes EB, 7 contraintes PB}
+\end{enumerate}
+\pause
+\begin{center}
+\begin{figure}
+\includegraphics[width=7cm]{StyreneFlow.PNG}
+\caption{Organigramme de la production de Styrène, issu de \cite{AuBeLe08}}
+\end{figure}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparaison des stratégies opportunistes}
+\noindent
+\begin{center}
+\begin{figure}
+\vspace{-1em}
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{coppcomp.png}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{moppcomp.png}
+\end{minipage}
+\includegraphics[width=\linewidth]{Legende_comp.png}
+\vspace{-0.5em}
+\caption{À gauche : \CS~sur Moré-Wild, à droite \MADS~sur Moré-Wild}
+\vspace{-1.3em}
+\end{figure}
+\end{center}
+\begin{minipage}[t]{0.5\linewidth}
+\begin{enumerate}
+\pause
+\item Ordonnancement simple plus efficace.
+\pause
+\item Autres stratégies $\rightarrow$ Sonde complète.
+\end{enumerate}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.5\linewidth}
+\begin{enumerate}
+\pause
+\item[\mynum{3}] Impact moins important sur \MADS.
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparaison des stratégies d'ordonnancement}
+\noindent
+\begin{center}
+\begin{figure}
+\vspace{-1em}
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{cog.png}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{mog.png}
+\end{minipage}
+\includegraphics[width=\linewidth]{legende_mw.png}
+\vspace{-0.5em}
+\caption{À gauche : \CS~sur Moré-Wild, à droite \MADS~sur Moré-Wild}
+\vspace{-1.3em}
+\end{figure}
+\end{center}
+\begin{minipage}[t]{0.5\linewidth}
+\begin{enumerate}
+\pause
+\item Grand impact de l'ordonnancement sur \CS.
+\pause
+\item Hiérarchie des stratégies observable.
+\end{enumerate}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.5\linewidth}
+\begin{enumerate}
+\pause
+\item[\mynum{3}] Impact moins important sur \MADS.
+\pause
+\item[\mynum{4}] Classement différent sur \CS~ et \MADS.
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparaison des stratégies d'ordonnancement}
+\noindent
+\begin{center}
+\begin{figure}
+\vspace{-1em}
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{gss.png}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{imfil.png}
+\end{minipage}
+\includegraphics[width=\linewidth]{legende_mw.png}
+\vspace{-0.5em}
+\caption{À gauche : \GSS~sur Moré-Wild, à droite \IMFIL~sur Moré-Wild}
+\vspace{-1.3em}
+\end{figure}
+\end{center}
+\begin{minipage}[t]{0.5\linewidth}
+\begin{enumerate}
+\pause
+\item Sur \GSS, stratégie aléatoire domine la stratégie lexicographique.
+\end{enumerate}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.5\linewidth}
+\begin{enumerate}
+\pause
+\item[\mynum{2}] Sur \IMFIL, opportunisme nuisible.
+\end{enumerate}
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comparaison des stratégies d'ordonnancement}
+\noindent
+\begin{center}
+\begin{figure}
+\vspace{-1em}
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{const.png}
+\end{minipage}
+\includegraphics[width=\linewidth]{legende_mw.png}
+\vspace{-0.5em}
+\caption{Problèmes contraints avec \MADS}
+\vspace{-1.3em}
+\end{figure}
+\end{center}
+
+\begin{center}
+\begin{enumerate}
+\pause
+\item[\mynum{1}] Courbe de la stratégie omnisciente élevée.
+\pause
+\item[\mynum{2}] Stratégie réelles peu performantes.
+\end{enumerate}
+\end{center}
+
+\end{frame}
+
+\begin{frame}
+\noindent
+\begin{center}
+\begin{figure}
+\vspace{-1em}
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{sty1.png}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{sty2.png}
+\end{minipage}
+\vspace{-0.6em}
+\caption{Comparaison omnisciente, inverse-omnisciente et sonde complète}
+\vspace{-1em}
+\end{figure}
+\begin{enumerate}
+\pause
+\item Stratégie omnisciente montre un impact de l'opportunisme sur STYRENE.
+\pause
+\item[\mynum{2}] Sonde complète ressemble d'avantage à inverse-omnisciente.
+\end{enumerate}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\noindent
+\begin{center}
+\begin{figure}
+\vspace{-1em}
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{sty3.png}
+\end{minipage}%
+\hfill%
+\begin{minipage}[t]{0.5\linewidth}
+\includegraphics[width=\linewidth]{sty4.png}
+\end{minipage}
+\vspace{-0.6em}
+\caption{Comparaison omnisciente, sonde complète et avec modèles}
+\vspace{-1em}
+\end{figure}
+\begin{enumerate}
+\pause
+\item La stratégie avec modèles accélère la convergence si comparée à la sonde complète.
+\pause
+\item La stratégie avec modèles converge vers un moins bon optimum que la stratégie omnisciente.
+\item[\mynum{2}] Sonde complète ressemble d'avantage à inverse-omnisciente.
+\end{enumerate}
+\end{center}
+\end{frame}
+
+
+\section{Conclusion}
+\tableofcontents[currentsection,currentsubsection,subsectionstyle=show/hide]
+\subsection{Conclusion}
+\begin{frame}
+\frametitle{Conclusion : Les grandes lignes}
+\begin{itemize}
+\item\only<1->{L'opportunisme est bénéfique aux méthodes de recherche directe directionnelles.}
+\pause
+\item\only<1>{~}\only<2->{L'opportunisme peut aussi être nuisible avec le mauvais ordonnancement.}
+\pause
+\item\only<1-2>{~}\only<3->{Plus la sonde est raffinée, moins son impact est important}
+\pause
+\item\only<1-3>{~}\only<4->{Stratégies autres que opportunisme simple $\rightarrow$ Sonde complète}
+\pause
+\item\only<1-4>{~}\only<5->{Classements des stratégies : Modèles, Aléatoires, Direction du dernier succès, sonde complète et lexicographique}
+\pause
+\item\only<1-5>{~}\only<6->{Pour \IMFIL, l'opportunisme est inutile ou nuisible}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conclusion : Suite?}
+Il y a place à l'amélioration dans l'ordonnancement.
+\pause
+\begin{itemize}
+\item\only<2->{Ordonnancer avec d'autre types de modèles que quadratiques}
+\pause
+\item\only<2>{~}\only<3->{Identifier d'autres stratégies d'ordonnancement (Distance à la solution d'un modèle, Distance à la cache).}
+\pause
+\item\only<2-3>{~}\only<4->{Identifier des stratégies avec la barrière progressive.}
+\pause
+\item\only<2-4>{~}\only<5->{Critère d'opportunisme : décroissance minimale}
+\pause
+\item\only<2-5>{~}\only<6->{Opportunisme et parallélisme?}
+\end{itemize}
+\end{frame}
+%------------------------------------------------
+
+%------------------------------------------------
+
+\begin{frame}
+\frametitle{Réferences}
+\footnotesize{
+	\begin{thebibliography}{99} % Beamer does not support BibTeX so references must be nserted manually as below
+		\bibitem[J.J. Mor\'e and S.M. Wild 2009]{MoWi2009} J.J. Mor\'e and S.M. Wild (2009)
+		\newblock   Benchmarking Derivative-Free Optimization Algorithms
+		\newblock \emph{SIAM Journal on Optimization} 20(1). 172--191
+
+		\bibitem[Audet, Tribes, 2017]{AuTr17} C. Audet and C. Tribes (2017)
+		\newblock Mesh-based Nelder-Mead algorithm for inequality constrained
+		optimization
+		\newblock \emph{Les Cahiers du Gerad} G-2017-90.
+		
+		\bibitem[Audet, Béchard, Le Digabel 2008]{AuBeLe08}C. Audet and V. B\'echard and S. {Le~Digabel} (2008)
+		\newblock Nonsmooth optimization through Mesh Adaptive Direct Search
+		and Variable Neighborhood Search
+		\newblock \emph{Journal of Global Optimization} 41-2.
+		
+		\bibitem[Le Digabel 2009]{Le09b} S. {Le~Digabel} (2009)
+		\newblock Algorithm 909: NOMAD: Nonlinear Optimization with the MADS algorithm
+		\newblock \emph{{ACM} Transactions on Mathematical Software} 37-4.
+	\end{thebibliography}
+}
+\end{frame}
+
+
+\end{document}

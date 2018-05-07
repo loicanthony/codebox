@@ -1,7 +1,7 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2017.1.10)  7 MAY 2018 14:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (MiKTeX 2.9.6100 64-bit) (preloaded format=pdflatex 2017.1.10)  7 MAY 2018 16:23
 entering extended mode
-**./ChristopheTribes.tex
-(ChristopheTribes.tex
+**./opportunism_JOPT.tex
+(opportunism_JOPT.tex
 LaTeX2e <2016/03/31> patch level 3
 Babel <3.9r> and hyphenation patterns for 75 language(s) loaded.
 (C:\Users\Loic\AppData\Roaming\MiKTeX\2.9\tex\latex\beamer\beamer.cls
@@ -1452,7 +1452,7 @@ File: p2e-pdftex.def 2016/02/05 v0.1u Driver-dependant file (RN,HjG,JT)
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\\' on input line 166.
 
-(ChristopheTribes.aux
+(opportunism_JOPT.aux
 
 LaTeX Warning: Label `fig:CS1' multiply defined.
 
@@ -1466,7 +1466,7 @@ LaTeX Warning: Label `fig:CS1' multiply defined.
 LaTeX Warning: Label `fig:CS1' multiply defined.
 
 )
-\openout1 = `ChristopheTribes.aux'.
+\openout1 = `opportunism_JOPT.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 183.
 LaTeX Font Info:    ... okay on input line 183.
@@ -1561,9 +1561,9 @@ LaTeX Info: Redefining \ref on input line 183.
 LaTeX Info: Redefining \pageref on input line 183.
 LaTeX Info: Redefining \nameref on input line 183.
 
-(ChristopheTribes.out) (ChristopheTribes.out)
+(opportunism_JOPT.out) (opportunism_JOPT.out)
 \@outlinefile=\write6
-\openout6 = `ChristopheTribes.out'.
+\openout6 = `opportunism_JOPT.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 183.
@@ -1650,8 +1650,8 @@ Dictionary: translator-theorem-dictionary, Language: English
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
- (ChristopheTribes.nav)
-<bandeau.png, id=48, 131.49126pt x 559.08875pt>
+ (opportunism_JOPT.nav)
+<bandeau.png, id=60, 131.49126pt x 559.08875pt>
 File: bandeau.png Graphic file (type png)
  <use bandeau.png>
 Package pdftex.def Info: bandeau.png used on input line 183.
@@ -1674,8 +1674,8 @@ mss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/ma
 thkerncmss.
 )
-Overfull \hbox (12.28717pt too wide) detected at line 183
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) detected at line 183
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1683,13 +1683,13 @@ Overfull \hbox (145.67592pt too wide) in paragraph at lines 183--183
 [][][][][]  
  []
 
-<gerad.png, id=60, 286.06876pt x 131.49126pt>
+<gerad.png, id=73, 286.06876pt x 131.49126pt>
 File: gerad.png Graphic file (type png)
  <use gerad.png>
 Package pdftex.def Info: gerad.png used on input line 198.
 (pdftex.def)             Requested size: 71.13188pt x 32.69617pt.
 
-<polytechnique_genie_droite_fr_rgb.png, id=61, 282.8166pt x 134.4222pt>
+<polytechnique_genie_droite_fr_rgb.png, id=74, 282.8166pt x 134.4222pt>
 File: polytechnique_genie_droite_fr_rgb.png Graphic file (type png)
 
 <use polytechnique_genie_droite_fr_rgb.png>
@@ -1703,7 +1703,7 @@ Overfull \vbox (13.87355pt too high) detected at line 198
 [1
 
 {C:/Users/Loic/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map} <./gerad.png>
- <./polytechnique_genie_droite_fr_rgb.png>] (ChristopheTribes.toc)
+ <./polytechnique_genie_droite_fr_rgb.png>] (opportunism_JOPT.toc)
 Overfull \hbox (17.50272pt too wide) detected at line 206
  [] 
  []
@@ -1713,8 +1713,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 206.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1724,7 +1724,7 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 
 [2
 
- <./bandeau.png>] (ChristopheTribes.toc)
+ <./bandeau.png>] (opportunism_JOPT.toc)
 Overfull \hbox (17.50272pt too wide) detected at line 231
  [] 
  []
@@ -1738,8 +1738,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 231.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1755,8 +1755,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 231.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1774,8 +1774,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 231.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1785,7 +1785,7 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 
 [5
 
-] <blackbox.png, id=141, 744.98325pt x 436.63126pt>
+] <blackbox.png, id=161, 744.98325pt x 436.63126pt>
 File: blackbox.png Graphic file (type png)
  <use blackbox.png>
 Package pdftex.def Info: blackbox.png used on input line 238.
@@ -1800,8 +1800,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 238.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1831,8 +1831,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 300.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1862,8 +1862,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 300.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1893,8 +1893,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 300.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1924,8 +1924,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 300.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1955,8 +1955,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 300.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -1986,8 +1986,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 300.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2017,8 +2017,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 300.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2038,8 +2038,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 321.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2059,8 +2059,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 321.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2080,8 +2080,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 321.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2101,8 +2101,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 321.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2112,7 +2112,7 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 
 [17
 
-] (ChristopheTribes.toc)
+] (opportunism_JOPT.toc)
 Overfull \hbox (17.50272pt too wide) detected at line 348
  [] 
  []
@@ -2126,8 +2126,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2143,8 +2143,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2162,8 +2162,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2183,8 +2183,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2204,8 +2204,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2225,8 +2225,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2246,8 +2246,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2267,8 +2267,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2288,8 +2288,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2309,8 +2309,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2330,8 +2330,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2351,8 +2351,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 348.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2372,8 +2372,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 382.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2393,8 +2393,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 382.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2414,8 +2414,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 382.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2435,8 +2435,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 382.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2456,8 +2456,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 515.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2477,8 +2477,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 515.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2498,8 +2498,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 515.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2529,8 +2529,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 648.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2555,8 +2555,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 648.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2581,8 +2581,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 648.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2612,8 +2612,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 787.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2633,8 +2633,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 787.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2654,8 +2654,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 787.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2680,8 +2680,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 926.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2701,8 +2701,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 926.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2722,8 +2722,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 926.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2743,8 +2743,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1061.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2764,8 +2764,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1061.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2785,8 +2785,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1061.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2796,7 +2796,7 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 
 [48
 
-] (ChristopheTribes.toc)
+] (opportunism_JOPT.toc)
 Overfull \hbox (17.50272pt too wide) detected at line 1085
  [] 
  []
@@ -2810,8 +2810,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1085.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2827,8 +2827,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1085.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2846,8 +2846,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1085.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2867,8 +2867,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1085.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2888,8 +2888,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1085.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2909,8 +2909,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1110.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2930,8 +2930,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1110.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2951,8 +2951,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1110.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2972,8 +2972,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1110.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -2993,8 +2993,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1110.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3014,8 +3014,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1110.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3035,8 +3035,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1110.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3056,8 +3056,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1110.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3077,8 +3077,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1138.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3098,8 +3098,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1138.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3119,8 +3119,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1138.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3140,8 +3140,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1138.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3161,8 +3161,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1138.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3182,8 +3182,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1138.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3203,8 +3203,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1138.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3214,22 +3214,12 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 
 [68
 
-] (ChristopheTribes.toc)
-
-LaTeX Warning: Citation `MoWi2009' on page 69 undefined on input line 1166.
-
-<StyreneFlow.PNG, id=814, 611.886pt x 264.38776pt>
+] (opportunism_JOPT.toc) <StyreneFlow.PNG, id=901, 611.886pt x 264.38776pt>
 File: StyreneFlow.PNG Graphic file (type png)
- <use StyreneFlow.PNG>
+
+<use StyreneFlow.PNG>
 Package pdftex.def Info: StyreneFlow.PNG used on input line 1166.
 (pdftex.def)             Requested size: 199.16928pt x 86.05812pt.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 69 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 69 undefined on input line 1166.
-
 
 Overfull \hbox (17.50272pt too wide) detected at line 1166
  [] 
@@ -3244,8 +3234,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1166.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3261,8 +3251,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1166.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3271,23 +3261,10 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
  []
 
 [70 <./StyreneFlow.PNG>]
-
-LaTeX Warning: Citation `MoWi2009' on page 71 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuTr17' on page 71 undefined on input line 1166.
-
 File: StyreneFlow.PNG Graphic file (type png)
-<use StyreneFlow.PNG>
+ <use StyreneFlow.PNG>
 Package pdftex.def Info: StyreneFlow.PNG used on input line 1166.
 (pdftex.def)             Requested size: 199.16928pt x 86.05812pt.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 71 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 71 undefined on input line 1166.
-
 
 Overfull \hbox (17.50272pt too wide) detected at line 1166
  [] 
@@ -3298,8 +3275,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1166.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3310,23 +3287,10 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 [71
 
 ]
-
-LaTeX Warning: Citation `MoWi2009' on page 72 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuTr17' on page 72 undefined on input line 1166.
-
 File: StyreneFlow.PNG Graphic file (type png)
-<use StyreneFlow.PNG>
+ <use StyreneFlow.PNG>
 Package pdftex.def Info: StyreneFlow.PNG used on input line 1166.
 (pdftex.def)             Requested size: 199.16928pt x 86.05812pt.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 72 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 72 undefined on input line 1166.
-
 
 Overfull \hbox (17.50272pt too wide) detected at line 1166
  [] 
@@ -3337,8 +3301,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1166.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3349,26 +3313,10 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 [72
 
 ]
-
-LaTeX Warning: Citation `MoWi2009' on page 73 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuTr17' on page 73 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 73 undefined on input line 1166.
-
 File: StyreneFlow.PNG Graphic file (type png)
-<use StyreneFlow.PNG>
+ <use StyreneFlow.PNG>
 Package pdftex.def Info: StyreneFlow.PNG used on input line 1166.
 (pdftex.def)             Requested size: 199.16928pt x 86.05812pt.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 73 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 73 undefined on input line 1166.
-
 
 Overfull \hbox (17.50272pt too wide) detected at line 1166
  [] 
@@ -3379,8 +3327,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1166.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3391,29 +3339,17 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 [73
 
 ]
-
-LaTeX Warning: Citation `MoWi2009' on page 74 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuTr17' on page 74 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 74 undefined on input line 1166.
-
 File: StyreneFlow.PNG Graphic file (type png)
-<use StyreneFlow.PNG>
+ <use StyreneFlow.PNG>
 Package pdftex.def Info: StyreneFlow.PNG used on input line 1166.
 (pdftex.def)             Requested size: 199.16928pt x 86.05812pt.
 
-
-LaTeX Warning: Citation `AuBeLe08' on page 74 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 74 undefined on input line 1166.
-
-
 Overfull \hbox (17.50272pt too wide) detected at line 1166
  [] 
+ []
+
+
+Overfull \vbox (1.85237pt too high) detected at line 1166
  []
 
 File: bandeau.png Graphic file (type png)
@@ -3421,8 +3357,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1166.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3433,29 +3369,17 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 [74
 
 ]
-
-LaTeX Warning: Citation `MoWi2009' on page 75 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuTr17' on page 75 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 75 undefined on input line 1166.
-
 File: StyreneFlow.PNG Graphic file (type png)
-<use StyreneFlow.PNG>
+ <use StyreneFlow.PNG>
 Package pdftex.def Info: StyreneFlow.PNG used on input line 1166.
 (pdftex.def)             Requested size: 199.16928pt x 86.05812pt.
 
-
-LaTeX Warning: Citation `AuBeLe08' on page 75 undefined on input line 1166.
-
-
-LaTeX Warning: Citation `AuBeLe08' on page 75 undefined on input line 1166.
-
-
 Overfull \hbox (17.50272pt too wide) detected at line 1166
  [] 
+ []
+
+
+Overfull \vbox (1.85237pt too high) detected at line 1166
  []
 
 File: bandeau.png Graphic file (type png)
@@ -3463,8 +3387,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1166.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3474,19 +3398,19 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 
 [75
 
-] <coppcomp.png, id=886, 462.528pt x 346.896pt>
+] <coppcomp.png, id=1008, 462.528pt x 346.896pt>
 File: coppcomp.png Graphic file (type png)
  <use coppcomp.png>
 Package pdftex.def Info: coppcomp.png used on input line 1204.
 (pdftex.def)             Requested size: 146.15567pt x 109.61687pt.
 
-<moppcomp.png, id=887, 462.528pt x 346.896pt>
+<moppcomp.png, id=1009, 462.528pt x 346.896pt>
 File: moppcomp.png Graphic file (type png)
  <use moppcomp.png>
 Package pdftex.def Info: moppcomp.png used on input line 1204.
 (pdftex.def)             Requested size: 146.15567pt x 109.61687pt.
 
-<Legende_comp.png, id=888, 392.667pt x 20.4765pt>
+<Legende_comp.png, id=1010, 392.667pt x 20.4765pt>
 File: Legende_comp.png Graphic file (type png)
  <use Legende_comp.png>
 Package pdftex.def Info: Legende_comp.png used on input line 1204.
@@ -3501,8 +3425,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1204.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3536,8 +3460,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1204.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3570,8 +3494,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1204.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3604,8 +3528,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1204.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3615,13 +3539,13 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 
 [79
 
-] <cog.png, id=933, 462.528pt x 346.896pt>
+] <cog.png, id=1059, 462.528pt x 346.896pt>
 File: cog.png Graphic file (type png)
  <use cog.png>
 Package pdftex.def Info: cog.png used on input line 1223.
 (pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
 
-<legende_mw.png, id=934, 566.115pt x 18.66975pt>
+<legende_mw.png, id=1060, 566.115pt x 18.66975pt>
 File: legende_mw.png Graphic file (type png)
  <use legende_mw.png>
 Package pdftex.def Info: legende_mw.png used on input line 1223.
@@ -3636,8 +3560,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1223.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3647,7 +3571,7 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 
 [80
 
- <./cog.png> <./legende_mw.png>] <gog.png, id=947, 462.528pt x 346.896pt>
+ <./cog.png> <./legende_mw.png>] <gog.png, id=1074, 462.528pt x 346.896pt>
 File: gog.png Graphic file (type png)
 
 <use gog.png>
@@ -3667,8 +3591,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1263.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3697,8 +3621,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1263.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3727,8 +3651,8 @@ File: bandeau.png Graphic file (type png)
 Package pdftex.def Info: bandeau.png used on input line 1263.
 (pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
 
-Overfull \hbox (12.28717pt too wide) has occurred while \output is active
-$[]$ [] [] [] [] [] [] [] 
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
  []
 
 
@@ -3738,68 +3662,1114 @@ Overfull \hbox (145.67592pt too wide) has occurred while \output is active
 
 [83
 
+] <mog.png, id=1109, 462.528pt x 346.896pt>
+File: mog.png Graphic file (type png)
+ <use mog.png>
+Package pdftex.def Info: mog.png used on input line 1303.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: legende_mw.png Graphic file (type png)
+
+<use legende_mw.png>
+Package pdftex.def Info: legende_mw.png used on input line 1303.
+(pdftex.def)             Requested size: 324.79259pt x 10.71136pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1303
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1303.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[84
+
+ <./mog.png>]
+File: mog.png Graphic file (type png)
+ <use mog.png>
+Package pdftex.def Info: mog.png used on input line 1303.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: legende_mw.png Graphic file (type png)
+ <use legende_mw.png>
+Package pdftex.def Info: legende_mw.png used on input line 1303.
+(pdftex.def)             Requested size: 324.79259pt x 10.71136pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1303
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1303.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[85
+
+]
+File: mog.png Graphic file (type png)
+ <use mog.png>
+Package pdftex.def Info: mog.png used on input line 1303.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: legende_mw.png Graphic file (type png)
+ <use legende_mw.png>
+Package pdftex.def Info: legende_mw.png used on input line 1303.
+(pdftex.def)             Requested size: 324.79259pt x 10.71136pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1303
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1303.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[86
+
+] <imfil.png, id=1145, 462.528pt x 346.896pt>
+File: imfil.png Graphic file (type png)
+ <use imfil.png>
+Package pdftex.def Info: imfil.png used on input line 1335.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: legende_mw.png Graphic file (type png)
+
+<use legende_mw.png>
+Package pdftex.def Info: legende_mw.png used on input line 1335.
+(pdftex.def)             Requested size: 324.79259pt x 10.71136pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1335
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1335.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[87
+
+ <./imfil.png>]
+File: imfil.png Graphic file (type png)
+ <use imfil.png>
+Package pdftex.def Info: imfil.png used on input line 1335.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: legende_mw.png Graphic file (type png)
+ <use legende_mw.png>
+Package pdftex.def Info: legende_mw.png used on input line 1335.
+(pdftex.def)             Requested size: 324.79259pt x 10.71136pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1335
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1335.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[88
+
+]
+File: imfil.png Graphic file (type png)
+ <use imfil.png>
+Package pdftex.def Info: imfil.png used on input line 1335.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: legende_mw.png Graphic file (type png)
+ <use legende_mw.png>
+Package pdftex.def Info: legende_mw.png used on input line 1335.
+(pdftex.def)             Requested size: 324.79259pt x 10.71136pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1335
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1335.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[89
+
+] <const.png, id=1180, 462.528pt x 346.896pt>
+File: const.png Graphic file (type png)
+ <use const.png>
+Package pdftex.def Info: const.png used on input line 1363.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: legende_mw.png Graphic file (type png)
+
+<use legende_mw.png>
+Package pdftex.def Info: legende_mw.png used on input line 1363.
+(pdftex.def)             Requested size: 324.79259pt x 10.71136pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1363
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1363.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[90
+
+ <./const.png>]
+File: const.png Graphic file (type png)
+ <use const.png>
+Package pdftex.def Info: const.png used on input line 1363.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: legende_mw.png Graphic file (type png)
+ <use legende_mw.png>
+Package pdftex.def Info: legende_mw.png used on input line 1363.
+(pdftex.def)             Requested size: 324.79259pt x 10.71136pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1363
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1363.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[91
+
+]
+File: const.png Graphic file (type png)
+ <use const.png>
+Package pdftex.def Info: const.png used on input line 1363.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: legende_mw.png Graphic file (type png)
+ <use legende_mw.png>
+Package pdftex.def Info: legende_mw.png used on input line 1363.
+(pdftex.def)             Requested size: 324.79259pt x 10.71136pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1363
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1363.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[92
+
+] <sty1.png, id=1216, 462.528pt x 346.896pt>
+File: sty1.png Graphic file (type png)
+ <use sty1.png>
+Package pdftex.def Info: sty1.png used on input line 1391.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+
+<sty2.png, id=1217, 462.528pt x 346.896pt>
+File: sty2.png Graphic file (type png)
+ <use sty2.png>
+Package pdftex.def Info: sty2.png used on input line 1391.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1391
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1391.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[93
+
+ <./sty1.png> <./sty2.png>]
+File: sty1.png Graphic file (type png)
+ <use sty1.png>
+Package pdftex.def Info: sty1.png used on input line 1391.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: sty2.png Graphic file (type png)
+ <use sty2.png>
+Package pdftex.def Info: sty2.png used on input line 1391.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1391
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1391.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[94
+
+]
+File: sty1.png Graphic file (type png)
+ <use sty1.png>
+Package pdftex.def Info: sty1.png used on input line 1391.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: sty2.png Graphic file (type png)
+ <use sty2.png>
+Package pdftex.def Info: sty2.png used on input line 1391.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1391
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1391.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[95
+
+] <sty3.png, id=1253, 462.528pt x 346.896pt>
+File: sty3.png Graphic file (type png)
+ <use sty3.png>
+Package pdftex.def Info: sty3.png used on input line 1419.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+
+<sty4.png, id=1254, 462.528pt x 346.896pt>
+File: sty4.png Graphic file (type png)
+ <use sty4.png>
+Package pdftex.def Info: sty4.png used on input line 1419.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1419
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1419.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[96
+
+ <./sty3.png> <./sty4.png>]
+File: sty3.png Graphic file (type png)
+ <use sty3.png>
+Package pdftex.def Info: sty3.png used on input line 1419.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: sty4.png Graphic file (type png)
+ <use sty4.png>
+Package pdftex.def Info: sty4.png used on input line 1419.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1419
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1419.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[97
+
+]
+File: sty3.png Graphic file (type png)
+ <use sty3.png>
+Package pdftex.def Info: sty3.png used on input line 1419.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+File: sty4.png Graphic file (type png)
+ <use sty4.png>
+Package pdftex.def Info: sty4.png used on input line 1419.
+(pdftex.def)             Requested size: 162.39629pt x 121.79652pt.
+
+Overfull \hbox (17.50272pt too wide) detected at line 1419
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1419.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[98
+
+] (opportunism_JOPT.toc) (opportunism_JOPT.toc
+File: bandeau.png Graphic file (type png)
+ <use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 10.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[99
+
+])
+Overfull \hbox (17.50272pt too wide) detected at line 1443
+ [] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+File: bandeau.png Graphic file (type png)
+
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1443.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[100]
+File: bandeau.png Graphic file (type png)
+ <use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1443.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[101]
+Overfull \hbox (17.50272pt too wide) detected at line 1443
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1443.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[102
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1443
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1443.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[103
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1443
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1443.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[104
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1443
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1443.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[105
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1443
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1443.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[106
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1460
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1460.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[107
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1460
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1460.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[108
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1460
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1460.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[109
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1460
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1460.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[110
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1460
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1460.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[111
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1460
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1460.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[112
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1476
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1476.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[113
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1476
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1476.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[114
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1476
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1476.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[115
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1476
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1476.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[116
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1476
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1476.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[117
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1476
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1476.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[118
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1494
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1494.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[119
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1494
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1494.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[120
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1494
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1494.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[121
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1494
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1494.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[122
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1494
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1494.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[123
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1494
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1494.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[124
+
+]
+Overfull \hbox (17.50272pt too wide) detected at line 1519
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1519.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[125
+
+ <C:/Users/Loic/AppData/Roaming/MiKTeX/2.9/tex/latex/beamer/beamericonarticle.p
+df>]
+Overfull \hbox (17.50272pt too wide) detected at line 1524
+ [] 
+ []
+
+File: bandeau.png Graphic file (type png)
+<use bandeau.png>
+Package pdftex.def Info: bandeau.png used on input line 1524.
+(pdftex.def)             Requested size: 2.07861pt x 8.8409pt.
+
+Overfull \hbox (48.17621pt too wide) has occurred while \output is active
+$[]$ [] [] [] [] [] [] [] [] 
+ []
+
+
+Overfull \hbox (145.67592pt too wide) has occurred while \output is active
+[][][][][] 
+ []
+
+[126
+
 ]
 \tf@nav=\write7
-\openout7 = `ChristopheTribes.nav'.
+\openout7 = `opportunism_JOPT.nav'.
 
 \tf@toc=\write8
-\openout8 = `ChristopheTribes.toc'.
+\openout8 = `opportunism_JOPT.toc'.
 
 \tf@snm=\write9
-\openout9 = `ChristopheTribes.snm'.
+\openout9 = `opportunism_JOPT.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1265.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1265.
- (ChristopheTribes.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1265.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1265.
-
-Package rerunfilecheck Info: File `ChristopheTribes.out' has not changed.
-(rerunfilecheck)             Checksum: E6660C996730516C5312BF6DB6FD2804;1415.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1525.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1525.
+ (opportunism_JOPT.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1525.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1525.
 
 
-LaTeX Warning: There were undefined references.
 
+Package rerunfilecheck Warning: File `opportunism_JOPT.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `opportunism_JOPT.out':
+(rerunfilecheck)             Before: 0A32CACA8FB2C9860D4630712748FEBA;1729
+(rerunfilecheck)             After:  9E1718A031BF4A50A8F27AEB5D592943;1730.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 29504 strings out of 493333
- 565640 string characters out of 3139197
- 676864 words of memory out of 3000000
- 32200 multiletter control sequences out of 15000+200000
- 27050 words of font info for 70 fonts, out of 3000000 for 9000
+ 29778 strings out of 493333
+ 570483 string characters out of 3139197
+ 678841 words of memory out of 3000000
+ 32367 multiletter control sequences out of 15000+200000
+ 28582 words of font info for 72 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,21n,69p,804b,905s stack positions out of 5000i,500n,10000p,200000b,50000s
- <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
-css0900.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
-\dpi600\ecss0600.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
-nappen\ec\dpi600\ecsi1095.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\
-ljfour\jknappen\ec\dpi600\ecss1000.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\
-fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1000.pk> <C:\Users\Loic\AppData\Local\Mi
-KTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1200.pk> <C:\Users\Loic\AppData
-\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1095.pk> <C:\Users\Loi
-c\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx0800.pk> <C:\
-Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx0600
-.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600
-\ecss0800.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\
-ec\dpi600\ecss1095.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\
-jknappen\ec\dpi600\ecss1440.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
-amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts
-/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi
-6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/Program
- Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Program Files/Mi
-KTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi10.pfb><C:/Program Files/MiKTeX 2.
-9/fonts/type1/public/amsfonts/cm/cmssi8.pfb><C:/Program Files/MiKTeX 2.9/fonts/
-type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
-blic/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
-onts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symb
-ols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on ChristopheTribes.pdf (83 pages, 1147095 bytes).
+pdfTeX warning (dest): name{Outline0.5.2.99} has been referenced but does not
+ exist, replaced by a fixed one
+
+ <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecs
+x1728.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\d
+pi600\ecss0900.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jkna
+ppen\ec\dpi600\ecss0600.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\lj
+four\jknappen\ec\dpi600\ecsi1095.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fo
+nts\pk\ljfour\jknappen\ec\dpi600\ecss1000.pk> <C:\Users\Loic\AppData\Local\MiKT
+eX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1000.pk> <C:\Users\Loic\AppData\L
+ocal\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1200.pk> <C:\Users\Loic\
+AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx1095.pk> <C:\Us
+ers\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\ecsx0800.p
+k> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi600\e
+csx0600.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec
+\dpi600\ecss0800.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jk
+nappen\ec\dpi600\ecss1095.pk> <C:\Users\Loic\AppData\Local\MiKTeX\2.9\fonts\pk\
+ljfour\jknappen\ec\dpi600\ecss1440.pk><C:/Program Files/MiKTeX 2.9/fonts/type1/
+public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/a
+msfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmmi6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi8.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss10.pfb><C:/
+Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmss8.pfb><C:/Program F
+iles/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi10.pfb><C:/Program Files/Mi
+KTeX 2.9/fonts/type1/public/amsfonts/cm/cmssi8.pfb><C:/Program Files/MiKTeX 2.9
+/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/t
+ype1/public/amsfonts/cm/cmsy6.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/publ
+ic/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/symbols/msbm10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/urw/zapfding/uzd
+r.pfb>
+Output written on opportunism_JOPT.pdf (126 pages, 1516248 bytes).
 PDF statistics:
- 1441 PDF objects out of 1728 (max. 8388607)
- 182 named destinations out of 1000 (max. 500000)
- 208 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2178 PDF objects out of 2487 (max. 8388607)
+ 276 named destinations out of 1000 (max. 500000)
+ 273 words of extra memory for PDF output out of 10000 (max. 10000000)
 
