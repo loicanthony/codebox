@@ -1,0 +1,9 @@
+\select@language {english}
+\beamer@sectionintoc {1}{What are Derivative-Free and Blackbox Optimization?}{3}{0}{1}
+\beamer@subsectionintoc {1}{1}{Derivative-Free and Blackbox Optimization}{3}{0}{1}
+\beamer@sectionintoc {2}{Direct-search Methods}{18}{0}{2}
+\beamer@subsectionintoc {2}{1}{Algorithmes}{18}{0}{2}
+\beamer@sectionintoc {3}{Opportunism and ordering}{49}{0}{3}
+\beamer@subsectionintoc {3}{1}{Opportunism}{49}{0}{3}
+\beamer@sectionintoc {4}{Numerical results}{69}{0}{4}
+\beamer@subsectionintoc {4}{1}{Numerical results}{69}{0}{4}

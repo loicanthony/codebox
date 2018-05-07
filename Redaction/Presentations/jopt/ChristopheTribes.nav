@@ -1,0 +1,65 @@
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\beamer@sectionpages {1}{2}}
+\headcommand {\beamer@subsectionpages {1}{2}}
+\headcommand {\sectionentry {1}{Introduction}{3}{Introduction}{0}}
+\headcommand {\beamer@subsectionpages {3}{2}}
+\headcommand {\beamer@subsectionentry {0}{1}{1}{3}{Derivative-Free and Blackbox Optimization}}
+\headcommand {\slideentry {1}{1}{1}{3/5}{Derivative-Free and Blackbox Optimization}{0}}
+\headcommand {\beamer@framepages {3}{5}}
+\headcommand {\slideentry {1}{1}{2}{6/6}{Derivative-Free and Blackbox Optimization}{0}}
+\headcommand {\beamer@framepages {6}{6}}
+\headcommand {\slideentry {1}{1}{3}{7/13}{Derivative-Free and Blackbox Optimization}{0}}
+\headcommand {\beamer@framepages {7}{13}}
+\headcommand {\slideentry {1}{1}{4}{14/17}{Derivative-Free and Blackbox Optimization}{0}}
+\headcommand {\beamer@framepages {14}{17}}
+\headcommand {\beamer@sectionpages {3}{17}}
+\headcommand {\beamer@subsectionpages {3}{17}}
+\headcommand {\sectionentry {2}{Direct-search Methods}{18}{Direct-search Methods}{0}}
+\headcommand {\beamer@subsectionpages {18}{17}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{18}{Algorithmes}}
+\headcommand {\slideentry {2}{1}{1}{18/29}{Algorithmes}{0}}
+\headcommand {\beamer@framepages {18}{29}}
+\headcommand {\slideentry {2}{1}{2}{30/33}{Algorithmes}{0}}
+\headcommand {\beamer@framepages {30}{33}}
+\headcommand {\slideentry {2}{1}{3}{34/36}{Algorithmes}{0}}
+\headcommand {\beamer@framepages {34}{36}}
+\headcommand {\slideentry {2}{1}{4}{37/39}{Algorithmes}{0}}
+\headcommand {\beamer@framepages {37}{39}}
+\headcommand {\slideentry {2}{1}{5}{40/42}{Algorithmes}{0}}
+\headcommand {\beamer@framepages {40}{42}}
+\headcommand {\slideentry {2}{1}{6}{43/45}{Algorithmes}{0}}
+\headcommand {\beamer@framepages {43}{45}}
+\headcommand {\slideentry {2}{1}{7}{46/48}{Algorithmes}{0}}
+\headcommand {\beamer@framepages {46}{48}}
+\headcommand {\beamer@sectionpages {18}{48}}
+\headcommand {\beamer@subsectionpages {18}{48}}
+\headcommand {\sectionentry {3}{Opportunism and ordering}{49}{Opportunism and ordering}{0}}
+\headcommand {\beamer@subsectionpages {49}{48}}
+\headcommand {\beamer@subsectionentry {0}{3}{1}{49}{Opportunism}}
+\headcommand {\slideentry {3}{1}{1}{49/53}{Opportunism}{0}}
+\headcommand {\beamer@framepages {49}{53}}
+\headcommand {\slideentry {3}{1}{2}{54/61}{Opportunism}{0}}
+\headcommand {\beamer@framepages {54}{61}}
+\headcommand {\slideentry {3}{1}{3}{62/68}{Opportunism}{0}}
+\headcommand {\beamer@framepages {62}{68}}
+\headcommand {\beamer@sectionpages {49}{68}}
+\headcommand {\beamer@subsectionpages {49}{68}}
+\headcommand {\sectionentry {4}{Numerical results}{69}{Numerical results}{0}}
+\headcommand {\beamer@subsectionpages {69}{68}}
+\headcommand {\beamer@subsectionentry {0}{4}{1}{69}{Numerical results}}
+\headcommand {\slideentry {4}{1}{1}{69/75}{Numerical results}{0}}
+\headcommand {\beamer@framepages {69}{75}}
+\headcommand {\slideentry {4}{1}{2}{76/79}{Numerical results}{0}}
+\headcommand {\beamer@framepages {76}{79}}
+\headcommand {\slideentry {4}{1}{3}{80/80}{Numerical results}{0}}
+\headcommand {\beamer@framepages {80}{80}}
+\headcommand {\slideentry {4}{1}{4}{81/83}{Numerical results}{0}}
+\headcommand {\beamer@framepages {81}{83}}
+\headcommand {\beamer@partpages {1}{83}}
+\headcommand {\beamer@subsectionpages {69}{83}}
+\headcommand {\beamer@sectionpages {69}{83}}
+\headcommand {\beamer@documentpages {83}}
+\headcommand {\gdef \inserttotalframenumber {20}}
